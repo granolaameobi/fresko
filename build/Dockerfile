@@ -20,7 +20,7 @@ EXPOSE 5000
 ENV FLASK_APP=app.py
 
 # Set the label for the Docker image
-LABEL org.opencontainers.image.source=https://github.com/<username>/<repository>
+LABEL org.opencontainers.image.source=https://github.com/granolaameobi/fresko
 
 # Start the Flask web server
 CMD ["flask", "run", "--host=0.0.0.0"]
