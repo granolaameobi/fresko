@@ -1,4 +1,4 @@
-Flask==2.0.1
+Flask==2.2.2
 Flask-WTF==0.15.1
 SQLAlchemy==1.4.25
-pytest==6.2.5
+pytest==7.4.0
