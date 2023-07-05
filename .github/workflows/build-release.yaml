@@ -23,7 +23,9 @@ jobs:
       - name: Install Packages
         run: pip install -r requirements.txt
       - name: Run Tests
-        run: pytest
+        run: |
+          export PYTHONPATH=$(pwd)
+          pytest
   build_push:
     runs-on: ubuntu-latest
     if: github.event_name=='push'
