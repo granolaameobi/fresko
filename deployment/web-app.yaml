@@ -13,8 +13,8 @@ spec:
         app: my-website
     spec:
       containers:
-      - name: my-website-container
-        image: my-website-image:latest
+      - name: fresko
+        image: ghcr.io/granolaameoib/fresko/fresko:latest
         ports:
         - containerPort: 5000
 
@@ -31,5 +31,5 @@ spec:
   - name: http
     protocol: TCP
     port: 80
-    targetPort: 80
+    targetPort: 5000
   type: LoadBalancer
