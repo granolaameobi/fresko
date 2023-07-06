@@ -47,3 +47,28 @@ jobs:
           push: true
           file: build/Dockerfile
           tags: ghcr.io/granolaameobi/fresko/fresko:latest
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.event_name=='push' && success()
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Authenticate with GCP
+        uses: google-github-actions/auth@v1.1.1
+        with:
+          credentials_json: ${{ secrets.GKE_KEY }}
+      - name: Configure Secrets Helper
+        run: gcloud --quiet auth configure-docker
+      - name: GKE Credentials
+        uses: google-github-actions/get-gke-credentials@v1
+        with:
+          cluster_name: fresko-cluster-1
+          location: europe-west1
+      - name: Deploy
+        run: |
+          kubectl apply -f deployment/web-app.yaml
+          kubectl get services -o wide
