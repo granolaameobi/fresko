@@ -10,9 +10,9 @@ def index():
 def menu():
     # Retrieve menu items from a database or file
     menu_items = [
-        {'name': 'Hamburger', 'price': 9.99},
-        {'name': 'Cheese Pizza', 'price': 12.99},
-        {'name': 'Caesar Salad', 'price': 7.99}
+        {'name': 'Pork (GF)', 'price': 9.00},
+        {'name': 'Lamb (GF)', 'price': 9.00},
+        {'name': 'Falafel (GF)', 'price': 9.50}
     ]
     return render_template('menu.html', menu_items=menu_items)
 
