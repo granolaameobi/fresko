@@ -13,8 +13,8 @@ A GitHub Actions workflow is setup to carry out two jobs:
 - Validating Pull Requests to `main` branch by running Pytests defined [here](/tests/test_boot.py)
 - Releasing web app to production environment upon merge of valid Pull Requests
 
-Currently, the tests only assert that the web app can boot up and API requests return `200` status code responses.<br>
-The second job in the pipeline is also a work in progress as currently it only builds and publishes the web app Docker Image to GitHub Packages (in this repository). In future, we will look to have the pipeline deploy the new image to a managed Kubernetes service (possibly GKE).
+Currently, the tests assert that the web app can boot up and GET requests return `200` status code responses for each of the paths, as well as the POST request for the reservation form. <br>
+The second job in the pipeline builds and publishes the web app Docker Image to GitHub Packages (in this repository). If tis build and push is a success, the new image is deployed to our Google Kubernetes Engine cluster using our Kubernetes manifests found in [/deployment/](/deployment/).
 
 ## Contributing
 ### Requirements
