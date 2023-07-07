@@ -15,6 +15,7 @@ spec:
       containers:
       - name: fresko
         image: ghcr.io/granolaameobi/fresko/fresko:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 5000
 
