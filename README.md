@@ -30,3 +30,6 @@ Once this is done, the app can be spun up locally with `flask run` and can then 
 ### Branch Protection Rules
 There are branch protection rules configured in this repository such that commits cannot be pushed directly to `main` branch. Therefore, to push code to `main`, open a new branch with `git checkout -b <branch name>`, commit to the changes, publish the new branch to the remote repository, and open a Pull Request.<br>
  Note: Pull Requests can only be merged once the checks have passed (once the Pytests have passed in the GitHub Actions agent).
+### Semantic Release
+As releasing of our application of is handles by semantic-release, ensure to start your commit messages with `feat: ` for changes related to the web app.
+
