@@ -69,6 +69,8 @@ jobs:
           cluster_name: fresko-cluster-1
           location: europe-west1
       - name: Deploy
-        run: kubectl apply -f deployment/web-app.yaml
+        run: |
+          kubectl set image deployment/my-website-deployment fresko=ghcr.io/granolaameobi/fresko/fresko:latest --record
+          kubectl rollout status deployment/my-website-deployment
       - name: Get IP
         run: kubectl get services -o wide
