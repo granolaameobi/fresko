@@ -47,10 +47,12 @@ jobs:
           npm i fs
           npm i semantic-release
           npm i @semantic-release/exec
+          npm i @semantic-release/git
       - name: Release
         run: |
           npx semantic-release \
-          -p @semantic-release/exec
+          -p @semantic-release/exec \
+          -p @semantic-release/git
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Get Version
