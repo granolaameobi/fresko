@@ -17,6 +17,7 @@ module.exports = {
         prepareCmd: 'echo "${nextRelease.version}" > version.txt',
       },
     ],
+    '@semantic-release/git'
   ],
   // Write the version to a file after the release
   success: function (pluginConfig, { nextRelease }) {
