@@ -14,7 +14,7 @@ A GitHub Actions workflow is setup to carry out two jobs:
 - Releasing web app to production environment upon merge of valid Pull Requests
 
 Currently, the tests assert that the web app can boot up and GET requests return `200` status code responses for each of the paths, as well as the POST request for the reservation form. <br>
-The second job in the pipeline builds and publishes the web app Docker Image to GitHub Packages (in this repository). If tis build and push is a success, the new image is deployed to our Google Kubernetes Engine cluster using our Kubernetes manifests found in [/deployment/](/deployment/).
+The second job in the pipeline builds and publishes the web app Docker Image to GitHub Packages (in this repository). If tis build and push is a success, the new image is rolled out to our Google Kubernetes Engine cluster using our Kubernetes manifests found in [/deployment/](/deployment/). The versioning of the images is handled with semantic-release package.
 
 ## Contributing
 ### Requirements
