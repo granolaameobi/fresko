@@ -14,6 +14,14 @@ def test_menu(client):
     response = client.get('/menu')
     assert response.status_code == 200
 
+def test_lunch_menu(client):
+    response = client.get('/lunch')
+    assert response.status_code == 200
+
+def test_dinner_menu(client):
+    response = client.get('/dinner')
+    assert response.status_code == 200
+
 def test_reservation_form(client):
     response = client.get('/reservation')
     assert response.status_code == 200
