@@ -49,6 +49,10 @@ def reservation():
         # Render the reservation form
         return render_template('reservation_form.html')
 
+@app.route('/nutrition')
+def nutrition():
+    return render_template('nutrition.html')
+
 if __name__ == '__main__':
     app.run()
   
