@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Our Menu</title>
+    <style>
+        body {background-color: darkseagreen;}
+        h1 {font: 100px Arial, sans-serif;
+        text-align: center;}
+        h2 {font: 60px Arial, sans-serif;
+        color: white;}
+        h3 {font: 50px Arial, sans-serif;}
+        h4 {font: 40px Arial, sans-serif;}
+        p.a {font: 20px Arial, sans-serif;
+        color: white;}
+        p.b {font: 20px Arial, sans-serif;
+        text-align: right;
+        color: white;}
+        .text-container {
+            display: flex; /* Use flexbox to horizontally align the chunks */
+            justify-content: space-between; /* Add space between the chunks */
+        }
+    
+        .text-chunk {
+            flex: 1; /* Distribute the available space equally among the chunks */
+            text-align: center; /* Center the text horizontally */
+            background-color: darkgreen;
+        }
+    </style>
+</head>
+<body>
+    <h1>THE PEOPLE HAVE SPOKEN</h1>
+    <div class="text-container">
+        <div class="text-chunk">
+            <p>A hidden gem with outstanding service and delectable cuisine, Fresko is a culinary haven not to be missed!</p>
+            <p class="a">Samuel J.</p>
+        </div>
+        <div class="text-chunk">
+            <p>Exceptional quality, artful presentation, and friendly staff make Fresko my go-to spot for a memorable meal</p>
+            <p class="a">Lucille M.</p>
+        </div>
+        <div class="text-chunk">
+            <p>Brought my Greek mother here for her 60th birthday as a fun little eatery -- she was impressed! Recipes were authentic as she says. Will come again!</p>
+            <p class="a">Anthony R</p>
+        </div>
+    </div>
+</body>
+</html>

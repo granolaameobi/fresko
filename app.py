@@ -57,6 +57,10 @@ def nutrition():
 def delivery():
     return render_template('delivery.html')
 
+@app.route('/testimonials')
+def testimonials():
+    return render_template('testimonials.html')
+
 if __name__ == '__main__':
     app.run()
   
