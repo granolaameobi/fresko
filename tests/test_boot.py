@@ -1,6 +1,19 @@
 from app import app
 import pytest
+import datetime
 
+today = datetime.date.today()
+current_date = today.strftime('%d-%m-%Y')
+
+request = {
+        'first_name': 'Joe',
+        'last_name': 'Bloggs',
+        'email':'joe.bloggs@example.com',
+        'contact_number':'+441111111111',
+        'date': current_date,
+        'time': '18:00',
+        'party_size': '4'
+    }
 @pytest.fixture
 def client(scope="session"):
     with app.test_client() as test_client:
@@ -27,11 +40,5 @@ def test_reservation_form(client):
     assert response.status_code == 200
 
 def test_reservation_submission(client):
-    data = {
-        'name': 'John Smith',
-        'date': '2022-01-01',
-        'time': '18:00',
-        'party_size': '4'
-    }
-    response = client.post('/reservation', data=data)
+    response = client.post('/reservation', data=request)
     assert response.status_code == 200
