@@ -53,6 +53,10 @@ def reservation():
 def nutrition():
     return render_template('nutrition.html')
 
+@app.route('/delivery')
+def delivery():
+    return render_template('delivery.html')
+
 if __name__ == '__main__':
     app.run()
   
