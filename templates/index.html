@@ -2,6 +2,10 @@
 <html>
 <head>
     <title>Fresko</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@200&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="static/css/style.css">
 </head>
 <body>
@@ -10,7 +14,7 @@
             <a href="index.html"><img src="static/images/logo.png" alt="Restaurant Logo"></a>
             <div class="nav-links">
                 <ul>
-                    <li><a href="/" class="button">Home</a></li>
+                    <li><a href="/" class="button active">Home</a></li>
                     <li><a href="/menu" class="button">Menu</a></li>
                     <li><a href="/nutrition" class="button">Nutrition</a></li>
                     <li><a href="/delivery" class="button">Delivery</a></li>
@@ -20,11 +24,52 @@
             </div>
         </nav>
     </section>
-    <h1 class="section-title">A LITTLE GREEK FOR EVERYONE</h1>
-    <a href="menu.html">
-        <div class="menu-button">
+    <div class="center">
+      <div class="content">
+        <h1 class="section-title">A LITTLE GREEK <br> FOR EVERYONE</h1>
+        <a href="/menu">
+          <div class="menu-button">
             <p>View Menu</p>
+          </div>
+        </a>
+      </div>
+      <img src="static/images/landing_page_bowl.png" alt="Landing Page Image" width="600px" height="600px">
+    </div>
+    <section class="footer">
+        <div class="footer-section">
+          <img src="static/images/logo.png" alt="Restaurant Logo" class="small-logo">
+          <p class="address">
+            25-27 Clare Street<br>
+            Bristol<br>
+            City of Bristol<br>
+            BS1 1XA
+          </p>
+          <p class="footer-text">© 2023 Fresko. All Rights Reserved.</p>
         </div>
-    </a>
+        <div class="footer-section">
+            <h3 class="footer-heading">Useful Links</h3>
+            <ul class="footer-links">
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Terms of Use</a></li>
+              <li><a href="#">Cookie Notice</a></li>
+            </ul>
+            <div class="social-media">
+              <img src="static/images/twitter.png" alt="Twitter">
+              <img src="static/images/instagram.png" alt="Instagram">
+              <img src="static/images/tiktok.png" alt="TikTok">
+            </div>
+          </div>
+        <div class="subscription">
+          <p class="subscription-text">Stay connected. We'd love to share our latest offers!</p>
+          <div class="email-field">
+            <input type="email" placeholder="Enter your email">
+            <div class="join-button">
+              <p>Join</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 </body>
 </html>
