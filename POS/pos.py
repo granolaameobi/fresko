@@ -18,7 +18,7 @@ def connect_to_database():
             host="127.0.0.1",
             database="fresko",
             user="postgres", #Remember to change these details
-            password="Rockyroad0905"
+            password="password"
         )
         return connection
     except (Exception, psycopg2.Error) as error:
