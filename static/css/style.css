@@ -66,6 +66,7 @@ nav img {
     flex-basis: 50%;
     text-align: center;
     margin-bottom: 20px;
+    padding: 5%;
 }
 
 .menu-button {
@@ -231,14 +232,26 @@ h1, .menu-button, img {
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 10px;
 }
-   .grid-item {
+.grid-item {
     text-align: center;
 }
-   .grid-item img {
+.grid-item img {
     max-width: 100%;
     min-height: 75%;
     height: auto;
 }
-   .grid-item p {
+.grid-item p {
     margin: 0;
+}
+.curved-box {
+    background-color: #366B4C;
+    color: white;
+    padding: 20px;
+    border-radius: 20px;
+    text-align: justify;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.justify {
+    text-align: justify;
 }
