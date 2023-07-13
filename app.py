@@ -65,6 +65,12 @@ def testimonials():
 def about_us():
     return render_template('about-us.html')
 
+@app.route('/privacy')
+def privacy():
+    month='July'
+    year='2023'
+    return render_template('privacy.html', month=month, year=year)
+
 if __name__ == '__main__':
     app.run()
   
