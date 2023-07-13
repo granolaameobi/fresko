@@ -51,6 +51,10 @@ def test_testimonials(client):
     response = client.get('/testimonials')
     assert response.status_code == 200
 
+def test_about_us(client):
+    response = client.get('/about-us')
+    assert response.status_code == 200
+
 def test_reservation_submission(client):
     response = client.post('/reservation', data=request)
     assert response.status_code == 200
