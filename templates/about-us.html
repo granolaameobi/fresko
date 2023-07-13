@@ -10,38 +10,60 @@
         color: white;}
         h3 {font: 50px Arial, sans-serif;}
         h4 {font: 40px Arial, sans-serif;}
-        p.a {font: 20px Arial, sans-serif;
+        p.a {font: 20px Arial, sans-serif;}
+        p.b {font: 30px Arial, sans-serif;
+        text-align: center;
         color: white;}
-        p.b {font: 20px Arial, sans-serif;
-        text-align: right;
-        color: white;}
-        .text-container {
-            display: flex; /* Use flexbox to horizontally align the chunks */
-            justify-content: space-between; /* Add space between the chunks */
+        .grid-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 10px;
         }
-    
-        .text-chunk {
-            flex: 1; /* Distribute the available space equally among the chunks */
-            text-align: center; /* Center the text horizontally */
-            background-color: darkgreen;
+       .grid-item {
+        text-align: center;
+        }
+       .grid-item img {
+        max-width: 100%;
+        min-height: 75%;
+        height: auto;
+        }
+       .grid-item p {
+        margin: 0;
+        }
+       .button-container {
+        width: 120px;
+        height: 30px;
+        border-radius: 5px;
+        border: 1px solid #366B4C;
+        background-color: #366B4C;
+        padding: 10px 0;
+        text-align: center;
+        display: inline-block;
+        color: white;
+        font-size: 16px;
+        line-height: 30px;
         }
     </style>
 </head>
 <body>
-    <h1>THE PEOPLE HAVE SPOKEN</h1>
-    <div class="text-container">
-        <div class="text-chunk">
-            <p>A hidden gem with outstanding service and delectable cuisine, Fresko is a culinary haven not to be missed!</p>
-            <p class="a">Samuel J.</p>
+    <div class="grid-container">
+        <div class="grid-item">
+                <img src="https://static.wixstatic.com/media/5d6688_20384bc77c4d4cbf8b4bf935f0dd46cb~mv2.png/v1/fill/w_600,h_600,al_c,q_85,enc_auto/pngegg%20(14).png" alt="Salad">
         </div>
-        <div class="text-chunk">
-            <p>Exceptional quality, artful presentation, and friendly staff make Fresko my go-to spot for a memorable meal</p>
-            <p class="a">Lucille M.</p>
-        </div>
-        <div class="text-chunk">
-            <p>Brought my Greek mother here for her 60th birthday as a fun little eatery -- she was impressed! Recipes were authentic as she says. Will come again!</p>
-            <p class="a">Anthony R</p>
+        <div class="grid-item">
+            <h3>ABOUT US</h3>
+            <p class="b">MISSION STATEMENT</p>
+            <p>At Fresko, we embark on a flavourful journey, where the spirit of Greece meets the convenience of modern life.<br>
+                <b>Our mission is clear</b>: to make Greek cuisine accessible to all. With a strong focus on inclusivity, we proudly cater to a diverse range of dietary requirements, offering gluten-free, Halal, vegan, and vegetarian options.<br>
+                Our menu invites you to savour the richness of Greek flavours while honouring your individual preferences and needs. Embracing the essence of the Mediterranean diet, we meticulously select fresh, high-quality ingredients, ensuring that each dish harmoniously combines taste and nourishment.<br>
+                But our commitment extends beyond the plate. We passionately champion sustainability, supporting local businesses, and caring for our planet. Join us on this culinary adventure, where every bite is a celebration of Greek flavours and the joy of sharing food, stories, and laughter with loved ones.
+                Experience the convenience of modern life without compromising authenticity at Fresko, where Greek cuisine becomes a delightful journey accessible to all who seek it.</p>
         </div>
     </div>
+    <a href="/menu">
+        <div class="button-container">
+            <p>Explore Menu</p> 
+        </div>
+    </a>
 </body>
 </html>

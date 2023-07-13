@@ -61,6 +61,10 @@ def delivery():
 def testimonials():
     return render_template('testimonials.html')
 
+@app.route('/about-us')
+def about_us():
+    return render_template('about-us.html')
+
 if __name__ == '__main__':
     app.run()
   
