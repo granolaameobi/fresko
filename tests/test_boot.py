@@ -63,6 +63,10 @@ def test_terms_of_use(client):
     response = client.get('/terms-of-use')
     assert response.status_code == 200
 
+def test_cookies(client):
+    response = client.get('/cookies')
+    assert response.status_code == 200
+
 def test_reservation_submission(client):
     response = client.post('/reservation', data=request)
     assert response.status_code == 200
