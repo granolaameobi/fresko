@@ -60,16 +60,18 @@
                 <a href="https://www.tiktok.com/@freskogreek_" target="_blank"><img src="static/images/tiktok.png" alt="TikTok"></a>
             </div>
           </div>
-        <div class="subscription">
-          <p class="subscription-text">Stay connected. We'd love to share our latest offers!</p>
-          <div class="email-field">
-            <input type="email" placeholder="Enter your email">
-            <div class="join-button">
-              <p>Join</p>
-            </div>
+          <div class="subscription">
+            <p class="subscription-text">Stay connected. We'd love to share our latest offers!</p>
+            <form action="/subscribe" method="POST">
+              <div class="email-field">
+                <input type="email" name="email" placeholder="Enter your email" required>
+                <div class="join-button">
+                  <button type="submit">Join</button>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
-      </div>
     </section>
 </body>
 </html>
