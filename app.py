@@ -77,6 +77,10 @@ def terms_of_use():
     year='2023'
     return render_template('terms-of-use.html', month=month, year=year)
 
+@app.route('/cookies')
+def cookies():
+    return render_template('cookies.html')
+
 if __name__ == '__main__':
     app.run()
   
