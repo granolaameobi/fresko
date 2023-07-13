@@ -226,3 +226,19 @@ h1, .menu-button, img {
     font-size: 14px;
     cursor: pointer;
 }
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+}
+   .grid-item {
+    text-align: center;
+}
+   .grid-item img {
+    max-width: 100%;
+    min-height: 75%;
+    height: auto;
+}
+   .grid-item p {
+    margin: 0;
+}

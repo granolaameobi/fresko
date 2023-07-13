@@ -1,77 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Fresko</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@200&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="static/css/style.css">
-</head>
-<body>
-    <section class="header">
-        <nav>
-            <a href="/"><img src="static/images/logo.png" alt="Restaurant Logo"></a>
-            <div class="nav-links">
-                <ul>
-                    <li><a href="/" class="button active">Home</a></li>
-                    <li><a href="/menu" class="button">Menu</a></li>
-                    <li><a href="/nutrition" class="button">Nutrition</a></li>
-                    <li><a href="/delivery" class="button">Delivery</a></li>
-                    <li><a href="/reservation" class="button">Reservation</a></li>
-                    <li><a href="/testimonials" class="button">Testimonials</a></li>
-                </ul>
-            </div>
-        </nav>
-    </section>
-    <div class="center">
-      <div class="content">
-        <h1 class="section-title">A LITTLE GREEK <br> FOR EVERYONE</h1>
-        <a href="/menu">
-          <div class="menu-button">
-            <p>View Menu</p>
-          </div>
-        </a>
-      </div>
-      <img src="static/images/landing_page_bowl.png" alt="Landing Page Image" width="600px" height="600px">
+{% extends 'base.html' %}
+    
+{% block title %}Fresko{% endblock %}
+
+{% block content %}
+  <div class="center">
+    <div class="content">
+      <h1 class="section-title">A LITTLE GREEK <br> FOR EVERYONE</h1>
+      <a href="/menu">
+        <div class="menu-button">
+          <p>View Menu</p>
+        </div>
+      </a>
     </div>
-    <section class="footer">
-        <div class="footer-section">
-          <img src="static/images/logo.png" alt="Restaurant Logo" class="small-logo">
-          <p class="address">
-            25-27 Clare Street<br>
-            Bristol<br>
-            City of Bristol<br>
-            BS1 1XA
-          </p>
-          <p class="footer-text">© 2023 Fresko. All Rights Reserved.</p>
-        </div>
-        <div class="footer-section">
-            <h3 class="footer-heading">Useful Links</h3>
-            <ul class="footer-links">
-              <li><a href="/about-us">About Us</a></li>
-              <li><a href="/privacy">Privacy Policy</a></li>
-              <li><a href="/terms-of-use">Terms of Use</a></li>
-              <li><a href="/cookies">Cookie Notice</a></li>
-            </ul>
-            <div class="social-media">
-                <a href="https://www.twitter.com/FreskoGreek" target="_blank"><img src="static/images/twitter.png" alt="Twitter"></a>
-                <a href="https://www.instagram.com/freskogreek_" target="_blank"><img src="static/images/instagram.png" alt="Instagram"></a>
-                <a href="https://www.tiktok.com/@freskogreek_" target="_blank"><img src="static/images/tiktok.png" alt="TikTok"></a>
-            </div>
-          </div>
-          <div class="subscription">
-            <p class="subscription-text">Stay connected. We'd love to share our latest offers!</p>
-            <form action="/subscribe" method="POST">
-              <div class="email-field">
-                <input type="email" name="email" placeholder="Enter your email" required>
-                <div class="join-button">
-                  <button type="submit">Join</button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-    </section>
-</body>
-</html>
+    <img src="static/images/landing_page_bowl.png" alt="Landing Page Image" width="600px" height="600px">
+  </div>
+{% endblock %}
