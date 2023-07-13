@@ -1,55 +1,53 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Privacy Policy</title>
-    <style>
-        body {background-color: darkseagreen;}
-        h1 {font: 100px Arial, sans-serif;}
-        h2 {font: 60px Arial, sans-serif;
-        color: white;}
-        h3 {font: 50px Arial, sans-serif;}
-        h4 {font: 40px Arial, sans-serif;}
-        p {font: 20px Arial, sans-serif;}
-    </style>
-</head>
-<body>
-    <h3>Privacy Policy</h3>
-    <p>
-        At Fresko, we are committed to protecting the privacy of our website visitors. 
-        This Privacy Policy outlines the types of personal information we collect, how we use and protect that information, and your rights regarding your personal data.
-    </p>
-    <ol>
-        <li>
-            Information We Collect: We may collect various types of personal information from you when you visit our website, make a reservation, or interact with our online services. 
-            This may include your name, contact details, payment information, and any other information you voluntarily provide to us.
-        </li>
-        <li>
-            Use of Personal Information: We use the personal information we collect to provide you with our services, process your reservations, communicate with you, and improve our website and customer experience. 
-            We may also use your information for marketing purposes, but only if you have provided your consent.
-        </li>
-        <li>
-            Data Security: We take appropriate measures to protect your personal information from unauthorized access, alteration, disclosure, or destruction. 
-            We use industry-standard security technologies and procedures to safeguard your data.
-        </li>
-        <li>
-            Sharing of Personal Information: We may share your personal information with trusted third parties who assist us in providing our services, such as payment processors or reservation management systems.
-            We will only disclose your information to these parties to the extent necessary for them to perform their services.
-        </li>
-        <li>
-            Cookies and Tracking Technologies: Our website may use cookies and similar tracking technologies to enhance your browsing experience and collect information about your use of our website. 
-            You can manage your cookie preferences through your browser settings.
-        </li>
-        <li>
-            Your Rights: You have the right to access, correct, and delete your personal information that we hold.
-            You may also have the right to object to or restrict certain types of processing.
-            Please contact us at <b>customerservice@fresko.com</b> to exercise your rights.
-        </li>
-        <li>
-            Updates to this Privacy Policy: We may update this Privacy Policy from time to time to reflect changes in our practices or legal obligations. 
-            We encourage you to review this policy periodically for any updates.
-        </li>
-    </ol>
-    <p>If you have any questions or concerns about our Privacy Policy or the handling of your personal information, please contact us at <b>customerservice@fresko.com.</b></p>
-    <p>Last updated: {{ month }} {{ year }}</p>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Fresko | Privacy Policy{% endblock %}
+
+{% block content %}
+    <div class="center">
+        <div class="content">
+            <h1 class="section-title">Privacy Policy</h1>
+            <div class="justify">
+                <p>
+                    At Fresko, we are committed to protecting the privacy of our website visitors. 
+                    This Privacy Policy outlines the types of personal information we collect, how we use and protect that information, and your rights regarding your personal data.
+                </p>
+                <br>
+                <ol>
+                    <li>
+                        Information We Collect: We may collect various types of personal information from you when you visit our website, make a reservation, or interact with our online services. 
+                        This may include your name, contact details, payment information, and any other information you voluntarily provide to us.
+                    </li>
+                    <li>
+                        Use of Personal Information: We use the personal information we collect to provide you with our services, process your reservations, communicate with you, and improve our website and customer experience. 
+                        We may also use your information for marketing purposes, but only if you have provided your consent.
+                    </li>
+                    <li>
+                        Data Security: We take appropriate measures to protect your personal information from unauthorized access, alteration, disclosure, or destruction. 
+                        We use industry-standard security technologies and procedures to safeguard your data.
+                    </li>
+                    <li>
+                        Sharing of Personal Information: We may share your personal information with trusted third parties who assist us in providing our services, such as payment processors or reservation management systems.
+                        We will only disclose your information to these parties to the extent necessary for them to perform their services.
+                    </li>
+                    <li>
+                        Cookies and Tracking Technologies: Our website may use cookies and similar tracking technologies to enhance your browsing experience and collect information about your use of our website. 
+                        You can manage your cookie preferences through your browser settings.
+                    </li>
+                    <li>
+                        Your Rights: You have the right to access, correct, and delete your personal information that we hold.
+                        You may also have the right to object to or restrict certain types of processing.
+                        Please contact us at <b>customerservice@fresko.com</b> to exercise your rights.
+                    </li>
+                    <li>
+                        Updates to this Privacy Policy: We may update this Privacy Policy from time to time to reflect changes in our practices or legal obligations. 
+                        We encourage you to review this policy periodically for any updates.
+                    </li>
+                </ol>
+                <br>
+                <p>If you have any questions or concerns about our Privacy Policy or the handling of your personal information, please contact us at <b>customerservice@fresko.com.</b></p>
+                <br>
+            </div>
+            <p>Last updated: {{ month }} {{ year }}</p>
+        </div>
+    </div>
+{% endblock %}
