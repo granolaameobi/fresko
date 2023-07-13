@@ -61,6 +61,12 @@ def delivery():
 def testimonials():
     return render_template('testimonials.html')
 
+@app.route('/subscribe', methods=['POST'])
+def subscribe():
+    email = request.form['email']
+    # Process the email and save it to the database
+    return 'Thank you for subscribing!'
+
 if __name__ == '__main__':
     app.run()
   
