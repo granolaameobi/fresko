@@ -71,6 +71,12 @@ def privacy():
     year='2023'
     return render_template('privacy.html', month=month, year=year)
 
+@app.route('/terms-of-use')
+def terms_of_use():
+    month='July'
+    year='2023'
+    return render_template('terms-of-use.html', month=month, year=year)
+
 if __name__ == '__main__':
     app.run()
   
