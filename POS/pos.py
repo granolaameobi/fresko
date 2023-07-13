@@ -1,8 +1,10 @@
+from tkinter import *
+from tkinter import ttk, Scrollbar, messagebox
 import tkinter as tk
-from tkinter import messagebox
+import random
+import os
 import psycopg2
 from collections import Counter
-from tkinter import ttk
 
 # Connect to the PostgreSQL database
 def connect_to_database():
@@ -14,9 +16,9 @@ def connect_to_database():
     try:
         connection = psycopg2.connect(
             host="127.0.0.1",
-            database="DB_NAME_HERE",
-            user="YOUR_USER_HERE", #Remember to change these details
-            password="YOUR_PASSWORD HERE"
+            database="fresko",
+            user="postgres", #Remember to change these details
+            password="password"
         )
         return connection
     except (Exception, psycopg2.Error) as error:
@@ -27,7 +29,8 @@ class WelcomeWindow(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("POS System")
-        self.geometry('1050x600+0+0')
+        self.configure(background = '#C0D5B2')
+        self.state("zoomed")
         
         label_title = tk.Label(self, text="Welcome to the POS System!")
         label_title.pack(padx=10, pady=10)
@@ -41,13 +44,14 @@ class WelcomeWindow(tk.Tk):
     
     def open_sign_in(self):
         self.withdraw()
-        SignInMenu(self)
+        SignInMenu(self) # change this during testing
 
 class SignInMenu(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.title("POS System")
-        self.geometry('1050x600+0+0')
+        self.configure(background = '#C0D5B2')
+        self.state("zoomed")
         
         label_title = tk.Label(self, text="Please sign in")
         label_title.pack(padx=10, pady=10)
@@ -101,7 +105,8 @@ class MainMenu(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.title("POS System")
-        self.geometry('1050x600+0+0')
+        self.configure(background = '#C0D5B2')
+        self.state("zoomed")
         
         label_title = tk.Label(self, text="Main Menu")
         label_title.pack(padx=10, pady=10)
@@ -151,8 +156,8 @@ class NewOrderSubmenu(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.title("POS System")
-        self.geometry('1050x600+0+0')
-        
+        self.configure(background = '#C0D5B2')
+        self.state("zoomed")
         
         #New order
         self.default_option_table = "Select a table number" # Default opion for table dropdown menu
@@ -163,20 +168,18 @@ class NewOrderSubmenu(tk.Toplevel):
         self.clear_order()
         
         # Menu Items -> Get from postgreSQL database
-        self.menu_ids, self.menu_names = self.get_menu_items()
+        self.menu_ids, self.menu_names, self.prices = self.get_menu_items()
         
         # Set up frame for food options
-        label_menu_options = tk.Label(self, text="Menu Options")
+        label_menu_options = tk.Label(self, text="Menu Options", font = ('arial', 12, 'bold'))
         label_menu_options.pack(padx=10, pady=10)
         
 
         # Create and place the buttons in a grid layout
-        frame_buttons = tk.Frame(self)
+        frame_buttons = tk.Frame(self, background = '#C0D5B2')
         frame_buttons.pack(padx=10, pady=5)
         self.buttons = []
         self.create_button_grid(frame_buttons)
-    
-        
         
         # Create Dropdown menu for table selection
         drop = tk.OptionMenu(self , self.selected_table , *table_list )
@@ -190,10 +193,14 @@ class NewOrderSubmenu(tk.Toplevel):
         button_back.pack(padx=10, pady=5)
         
         # Create the treeview to display the order
-        self.treeview = ttk.Treeview(self, columns=("Item Name", "Item ID"))
+        self.treeview = ttk.Treeview(self, columns=("Item Name", "Price"))
         self.treeview.heading("#0", text="Item Name")
-        self.treeview.heading("#1", text="Item ID")
+        self.treeview.heading("#1", text="Price")
         self.treeview.pack(padx=10, pady=10)
+        
+        # Show the total of the order
+        Total_Input = StringVar()
+        
         
         # Show the order in the treeview
         self.show_order()
@@ -212,18 +219,18 @@ class NewOrderSubmenu(tk.Toplevel):
             cursor = connection.cursor()
 
             # Execute the SQL query to select menu item IDs and names
-            select_query = "SELECT menu_item_id, menu_item_name FROM \"MenuItem\";"
+            select_query = "SELECT menu_item_id, menu_item_name, price FROM \"MenuItem\";"
             cursor.execute(select_query)
 
             # Fetch all the rows returned by the query
             rows = cursor.fetchall()
 
             # Extract item names/ids
-            menu_name, menu_id =  zip(*rows)
+            menu_name, menu_id, prices =  zip(*rows)
             
             # Close the cursor
             cursor.close()
-            return list(menu_name), list(menu_id) 
+            return list(menu_name), list(menu_id), list(prices) 
         except (Exception, psycopg2.Error) as error:
             # Handle any errors that occur during the execution
             print(f"An error occurred: {str(error)}")
@@ -264,27 +271,29 @@ class NewOrderSubmenu(tk.Toplevel):
 
         self.buttons = []
         for i, item in enumerate(self.menu_names):
-            button = tk.Button(frame, text=item, command=lambda i=i: self.add_to_order(self.menu_names[i], self.menu_ids[i]))
-            button.grid(row=i // 2, column=i % 2, padx=5, pady=5)
+            button = tk.Button(frame, text=item, width = 15, height = 2, command=lambda i=i: self.add_to_order(self.menu_names[i], self.menu_ids[i], self.prices[i]))
+            button.grid(row=i // 5, column=i % 5, padx=5, pady=5)
             self.buttons.append(button)
             
             
-    def add_to_order(self, name, item_id):        
+    def add_to_order(self, name, item_id, price):        
         self.order_names.append(name)
         self.order_ids.append(item_id)
+        self.order_prices.append(price)
         self.show_order()  # Update the treeview with the new item
    
     def show_order(self):
         self.treeview.delete(*self.treeview.get_children())
 
         # Insert the items from the order into the treeview
-        for name, item_id in zip(self.order_names, self.order_ids):
-            self.treeview.insert("", tk.END, text=name, values=(item_id,))
+        for name, price in zip(self.order_names, self.order_prices):
+            self.treeview.insert("", tk.END, text=name, values=(price))
         
         
     def clear_order(self):
         self.order_names = []
         self.order_ids = []
+        self.order_prices = []
         self.selected_table.set(self.default_option_table)
         try:
             self.show_order()
@@ -349,7 +358,8 @@ class ViewOrderSubmenu(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.title("POS System")
-        self.geometry('1050x600+0+0')
+        self.configure(background = '#C0D5B2')
+        self.state("zoomed")
 
         # Create a tabbed layout
         tab_control = ttk.Notebook(self)
@@ -423,7 +433,8 @@ class StockSubmenu(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.title("Stock Submenu")
-        self.geometry('1050x600+0+0')
+        self.configure(background = '#C0D5B2')
+        self.state("zoomed")
         
         self.treeview = ttk.Treeview(self, columns=("Ingredient Name", "Expiry Date", "Quantity", "Units"))
         self.treeview.heading("#0", text="Ingredient ID")
@@ -476,7 +487,8 @@ class PaymentSubmenu(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.title("Payment Submenu")
-        self.geometry('1050x600+0+0')
+        self.configure(background = '#C0D5B2')
+        self.state("zoomed")
         
         self.total_names = ['Full order total', 'Select items total']
         
@@ -484,7 +496,7 @@ class PaymentSubmenu(tk.Toplevel):
         
         
         #New payment
-        self.default_option_table = "Select a table number" # Default opion for table dropdown menu
+        self.default_option_table = "Select a table number" # Default option for table dropdown menu
         # The selected table will be shown as a string
         self.selected_table = tk.StringVar(self)
         #List of tables
