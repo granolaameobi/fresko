@@ -61,6 +61,26 @@ def delivery():
 def testimonials():
     return render_template('testimonials.html')
 
+@app.route('/about-us')
+def about_us():
+    return render_template('about-us.html')
+
+@app.route('/privacy')
+def privacy():
+    month='July'
+    year='2023'
+    return render_template('privacy.html', month=month, year=year)
+
+@app.route('/terms-of-use')
+def terms_of_use():
+    month='July'
+    year='2023'
+    return render_template('terms-of-use.html', month=month, year=year)
+
+@app.route('/cookies')
+def cookies():
+    return render_template('cookies.html')
+
 @app.route('/subscribe', methods=['POST'])
 def subscribe():
     email = request.form['email']

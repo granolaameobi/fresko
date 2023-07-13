@@ -51,6 +51,27 @@ def test_testimonials(client):
     response = client.get('/testimonials')
     assert response.status_code == 200
 
+def test_about_us(client):
+    response = client.get('/about-us')
+    assert response.status_code == 200
+
+def test_privacy(client):
+    response = client.get('/privacy')
+    assert response.status_code == 200
+
+def test_terms_of_use(client):
+    response = client.get('/terms-of-use')
+    assert response.status_code == 200
+
+def test_cookies(client):
+    response = client.get('/cookies')
+    assert response.status_code == 200
+
 def test_reservation_submission(client):
     response = client.post('/reservation', data=request)
     assert response.status_code == 200
+
+def test_subscribe(client):
+    response = client.post('/subscribe', data={'email':request['email']})
+    assert response.status_code == 200
+    assert response.data == b'Thank you for subscribing!'
