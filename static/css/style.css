@@ -229,20 +229,10 @@ h1, .menu-button, img {
 }
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     grid-gap: 10px;
 }
-.grid-item {
-    text-align: center;
-}
-.grid-item img {
-    max-width: 100%;
-    min-height: 75%;
-    height: auto;
-}
-.grid-item p {
-    margin: 0;
-}
+
 .curved-box {
     background-color: #366B4C;
     color: white;
@@ -251,7 +241,13 @@ h1, .menu-button, img {
     text-align: justify;
     margin-left: 20px;
     margin-right: 20px;
+    flex-basis: 30%;
+    flex-grow: 1;
 }
 .justify {
     text-align: justify;
+}
+.row {
+    display: flex;
+    justify-content: space-between;
 }
