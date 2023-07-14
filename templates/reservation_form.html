@@ -1,107 +1,109 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Make a Reservation</title>
-</head>
-<body>
-    <h1>Make a Reservation</h1>
-    <form method="POST" action="/reservation" onsubmit="return validateForm()">
-        <label>First Name:</label>
-        <input type="text" name="first_name"><br>
-        <label>Last Name:</label>
-        <input type="text" name="last_name"><br>
-        <label>Email:</label>
-        <input type="email" name="email"><br>
-        <label>Contact Number:</label>
-        <input type="tel" name="contact_number"><br>
-        <label>Date:</label>
-        <input type="date" name="date"><br>
-        <label>Time:</label>
-        <select name="time" id="time_select">
-            <option value="">Select a time</option>
-        </select><br>
-        <label>Party Size:</label>
-        <input type="number" name="party_size" min="1" max="10"><br>
-        <input type="submit" value="Submit">
-    </form>
+{% extends 'base.html' %}
 
-    <script>
-        // Generate time options from 17:00 (5pm) to 22:00 (10pm) in half-hour intervals
-        const timeSelect = document.getElementById("time_select");
-        for (let hour = 17; hour <= 22; hour++) {
-            for (let minute = 0; minute <= 30; minute += 30) {
-                const time = `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`;
-                const option = new Option(time, time);
-                timeSelect.appendChild(option);
+{% block title %}Fresko | Reservation{% endblock %}
+
+{% block content %}
+    <div class="content">
+        <h1 class="section-title">Make a Reservation</h1>
+        <div class="center">
+            <form method="POST" action="/reservation" onsubmit="return validateForm()" align="justify">
+                <label>First Name:</label>
+                <input type="text" name="first_name"><br>
+                <label>Last Name:</label>
+                <input type="text" name="last_name"><br>
+                <label>Email:</label>
+                <input type="email" name="email"><br>
+                <label>Contact Number:</label>
+                <input type="tel" name="contact_number"><br>
+                <label>Date:</label>
+                <input type="date" name="date"><br>
+                <label>Time:</label>
+                <select name="time" id="time_select">
+                    <option value="">Select a time</option>
+                </select><br>
+                <label>Party Size:</label>
+                <input type="number" name="party_size" min="1" max="10"><br>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+
+        <script>
+            // Generate time options from 17:00 (5pm) to 22:00 (10pm) in half-hour intervals
+            const timeSelect = document.getElementById("time_select");
+            for (let hour = 17; hour <= 22; hour++) {
+                for (let minute = 0; minute <= 30; minute += 30) {
+                    const time = `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`;
+                    const option = new Option(time, time);
+                    timeSelect.appendChild(option);
+                }
             }
+
+            function validateForm() {
+
+        const firstNameInput = document.querySelector('input[name="first_name"]');
+        const firstNameValue = firstNameInput.value.trim();
+        if (firstNameValue === '') {
+            alert("Please enter your first name.");
+            firstNameInput.focus();
+            return false;
         }
 
-        function validateForm() {
+        const lastNameInput = document.querySelector('input[name="last_name"]');
+        const lastNameValue = lastNameInput.value.trim();
+        if (lastNameValue === '') {
+            alert("Please enter your last name.");
+            lastNameInput.focus();
+            return false;
+        }
+        const partySizeInput = document.querySelector('input[name="party_size"]');
+        const partySize = parseInt(partySizeInput.value);
+        if (partySize < 1 || partySize > 10) {
+            alert("Party size must be between 1 and 10 people.");
+            partySizeInput.focus();
+            return false;
+        }
 
-    const firstNameInput = document.querySelector('input[name="first_name"]');
-    const firstNameValue = firstNameInput.value.trim();
-    if (firstNameValue === '') {
-        alert("Please enter your first name.");
-        firstNameInput.focus();
-        return false;
+        const dateInput = document.querySelector('input[name="date"]');
+        const dateValue = new Date(`${dateInput.value}T${timeSelect.value}`);
+        const currentDate = new Date();
+        const maxFutureDate = new Date();
+        maxFutureDate.setFullYear(maxFutureDate.getFullYear() + 1);
+
+        if (dateValue.getTime() < currentDate.getTime()) {
+            alert("Date must be in the future.");
+            dateInput.focus();
+            return false;
+        }
+
+        if (dateValue.getTime() > maxFutureDate.getTime()) {
+            alert("Date must be within a year from now.");
+            dateInput.focus();
+            return false;
+        }
+
+        const emailInput = document.querySelector('input[name="email"]');
+        const emailValue = emailInput.value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailValue.match(emailRegex)) {
+            alert("Please enter a valid email address.");
+            emailInput.focus();
+            return false;
+        }
+
+        const phoneInput = document.querySelector('input[name="contact_number"]');
+        const phoneValue = phoneInput.value.trim();
+        const phoneRegex = /^\+44\d{10}$/;
+
+
+        if (!phoneValue.match(phoneRegex)) {
+            alert("Please enter a valid phone number in the format +44<number>.");
+            phoneInput.focus();
+            return false;
+        }
+        
+        return true;
     }
-
-    const lastNameInput = document.querySelector('input[name="last_name"]');
-    const lastNameValue = lastNameInput.value.trim();
-    if (lastNameValue === '') {
-        alert("Please enter your last name.");
-        lastNameInput.focus();
-        return false;
-    }
-    const partySizeInput = document.querySelector('input[name="party_size"]');
-    const partySize = parseInt(partySizeInput.value);
-    if (partySize < 1 || partySize > 10) {
-        alert("Party size must be between 1 and 10 people.");
-        partySizeInput.focus();
-        return false;
-    }
-
-    const dateInput = document.querySelector('input[name="date"]');
-    const dateValue = new Date(`${dateInput.value}T${timeSelect.value}`);
-    const currentDate = new Date();
-    const maxFutureDate = new Date();
-    maxFutureDate.setFullYear(maxFutureDate.getFullYear() + 1);
-
-    if (dateValue.getTime() < currentDate.getTime()) {
-        alert("Date must be in the future.");
-        dateInput.focus();
-        return false;
-    }
-
-    if (dateValue.getTime() > maxFutureDate.getTime()) {
-        alert("Date must be within a year from now.");
-        dateInput.focus();
-        return false;
-    }
-
-    const emailInput = document.querySelector('input[name="email"]');
-    const emailValue = emailInput.value.trim();
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!emailValue.match(emailRegex)) {
-        alert("Please enter a valid email address.");
-        emailInput.focus();
-        return false;
-    }
-
-    const phoneInput = document.querySelector('input[name="contact_number"]');
-    const phoneValue = phoneInput.value.trim();
-    const phoneRegex = /^\+44\d{10}$/;
-
-
-    if (!phoneValue.match(phoneRegex)) {
-        alert("Please enter a valid phone number in the format +44<number>.");
-        phoneInput.focus();
-        return false;
-    }
-    
-    return true;
-}
-    </script>
-</body>
-</html>
+        </script>
+    </div>
+{% endblock %}
