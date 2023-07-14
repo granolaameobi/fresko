@@ -3,6 +3,8 @@
 {% block title %}Fresko{% endblock %}
 
 {% block content %}
+
+
 <div class="curved-box" align="center" style="margin-top: 100px; margin-left: 100px; width: 1000px">
     <h1 class="section-title" style="color: white">GREEK FOOD<br>HAS NEVER<br>BEEN FASTER</h1>
     <div class="left">
@@ -13,14 +15,16 @@
 
 <p class="a" style="margin-left: 100px; margin-top: 10px"><b>Our Prospective Delivery Partners</b></p>
 
-<div class="image-container" style="display: flex; margin-top: 10px; margin-bottom: 100px; justify-content: space-between; margin-left: -383px;">
-    <img src="static/images/ubereats.png" alt="Uber Eats" style="max-width: 200px; margin-right: -470px;">
-    <img src="static/images/justeat.png" alt="Just Eat" style="max-width: 200px; margin-right: -470px;">
-    <img src="static/images/deliveroo.png" alt="Deliveroo" style="max-width: 200px;">
+<div class="delivery-container" style="display: flex; margin-left: 100px;">
+    <img src="static/images/ubereats.png" alt="Uber Eats" class="delivery-logo">
+    <img src="static/images/justeat.png" alt="Just Eat" class="delivery-logo">
+    <img src="static/images/deliveroo.png" alt="Deliveroo" class="delivery-logo">
 </div>
 
-<img src="static/images/souvlaki_on_board.png" alt="Souvlaki" style="float: right; margin: -650px 0 0 0; height: 520px; width: 520px;">
-<img src="static/images/basil_leaves.png" alt="Basil" style="float: left; margin: -670px 0 0 0; margin-left: -100px; height: 250px; width: 250px">
-<img src="static/images/tomato.png" alt="Tomato" style="float: right; margin: -640px 0 0 0; margin-right: 450px; height: 200px; width: 220px">
+<div class="image-container" style="position: relative;">
+    <img src="static/images/souvlaki_on_board.png" alt="Souvlaki" class="delivery-image">
+    <img src="static/images/basil_leaves.png" alt="Basil" class="delivery-image">
+    <img src="static/images/tomato.png" alt="Tomato" class="delivery-image">
+</div>
 
 {% endblock %}

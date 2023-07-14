@@ -263,4 +263,51 @@ h1, .menu-button, img {
     height: 250px;
   }
   
+  .delivery-container {
+    margin-top: 10px;
+    margin-bottom: 100px;
+    width: 200px;
+  }
+  
+  .delivery-logo {
+    width: 150px;
+    margin-right: 10px;
+  }
+  
+  .top-image {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  
+  .image-container {
+    position: relative;
+  }
+  
+  .delivery-image {
+    position: absolute;
+  }
+  
+  .delivery-image:nth-child(1) {
+    top: -650px;
+    left: 700px;
+    height: 520px;
+    width: 540px;
+  }
+  
+  .delivery-image:nth-child(2) {
+    top: -670px;
+    left: -100px;
+    height: 250px;
+    width: 250px;
+  }
+  
+  .delivery-image:nth-child(3) {
+    top: -640px;
+    left: 600px;
+    height: 200px;
+    width: 220px;
+  }
+  
+  
   
