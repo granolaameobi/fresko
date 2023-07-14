@@ -251,3 +251,16 @@ h1, .menu-button, img {
     display: flex;
     justify-content: space-between;
 }
+
+.tzatziki-container {
+    position: relative;
+    z-index: -1;
+    margin-left: -1000px;
+    margin-top: -135px;
+  }
+  
+  .tzatziki-image {
+    height: 250px;
+  }
+  
+  
