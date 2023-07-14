@@ -290,23 +290,29 @@ h1, .menu-button, img {
   
   .delivery-image:nth-child(1) {
     top: -650px;
-    left: 700px;
+    left: 550px;
     height: 520px;
     width: 540px;
   }
   
   .delivery-image:nth-child(2) {
     top: -670px;
-    left: -100px;
+    left: -120px;
     height: 250px;
     width: 250px;
   }
   
   .delivery-image:nth-child(3) {
     top: -640px;
-    left: 600px;
+    left: 475px;
     height: 200px;
     width: 220px;
+  }
+
+  .delivery-page-contents {
+    position: relative;
+    margin: 0 auto;
+    max-width: 1000px;
   }
   
   
