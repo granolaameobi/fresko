@@ -85,7 +85,7 @@ def cookies():
 def subscribe():
     email = request.form['email']
     # Process the email and save it to the database
-    return 'Thank you for subscribing!'
+    return render_template('subscribe.html')
 
 if __name__ == '__main__':
     app.run()
