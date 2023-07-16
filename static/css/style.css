@@ -309,11 +309,64 @@ h1, .menu-button, img {
     width: 220px;
   }
 
-  .delivery-page-contents {
+  .page-contents {
     position: relative;
     margin: 0 auto;
     max-width: 1000px;
   }
   
-  
-  
+  .aboutus-image {
+    position: absolute;
+}
+
+#falafel-image {
+    left: -275px;
+    top: 100px;
+    height: 400px;
+    width: 400px;
+    z-index: -1;
+}
+
+#bowl1-image {
+    right: 0px;
+    top: -50px;
+    height: 400px;
+    width: 450px;
+    z-index: -1;
+}
+
+.mission-title {
+    color: white;
+}
+
+.tomato_garlic {
+    position: absolute;
+    left: -200px;
+    top: 120px;
+    width: 500px;
+    z-index: -1;
+}
+
+.lemon_slice {
+    position: absolute;
+    left: 150px;
+    top: 50px;
+    width: 200px;
+    z-index: -1;
+}
+
+.salad_throw {
+    position: absolute;
+    right: 30px;
+    top: 673px;
+    width: 300px;
+    z-index: -1;
+}
+
+.tomato_chilli {
+    position: absolute;
+    right: 0px;
+    top: 1000px;
+    width: 400px;
+    z-index: -1;
+}
