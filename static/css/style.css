@@ -251,3 +251,122 @@ h1, .menu-button, img {
     display: flex;
     justify-content: space-between;
 }
+
+.tzatziki-container {
+    position: relative;
+    z-index: -1;
+    margin-left: -1000px;
+    margin-top: -135px;
+  }
+  
+  .tzatziki-image {
+    height: 250px;
+  }
+  
+  .delivery-container {
+    margin-top: 10px;
+    margin-bottom: 100px;
+    width: 200px;
+  }
+  
+  .delivery-logo {
+    width: 150px;
+    margin-right: 10px;
+  }
+  
+  .top-image {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  
+  .image-container {
+    position: relative;
+  }
+  
+  .delivery-image {
+    position: absolute;
+  }
+  
+  .delivery-image:nth-child(1) {
+    top: -650px;
+    left: 550px;
+    height: 520px;
+    width: 540px;
+  }
+  
+  .delivery-image:nth-child(2) {
+    top: -670px;
+    left: -120px;
+    height: 250px;
+    width: 250px;
+  }
+  
+  .delivery-image:nth-child(3) {
+    top: -640px;
+    left: 475px;
+    height: 200px;
+    width: 220px;
+  }
+
+  .page-contents {
+    position: relative;
+    margin: 0 auto;
+    max-width: 1000px;
+  }
+  
+  .aboutus-image {
+    position: absolute;
+}
+
+#falafel-image {
+    left: -275px;
+    top: 100px;
+    height: 400px;
+    width: 400px;
+    z-index: -1;
+}
+
+#bowl1-image {
+    right: 0px;
+    top: -50px;
+    height: 400px;
+    width: 450px;
+    z-index: -1;
+}
+
+.mission-title {
+    color: white;
+}
+
+.tomato_garlic {
+    position: absolute;
+    left: -200px;
+    top: 120px;
+    width: 500px;
+    z-index: -1;
+}
+
+.lemon_slice {
+    position: absolute;
+    left: 150px;
+    top: 50px;
+    width: 200px;
+    z-index: -1;
+}
+
+.salad_throw {
+    position: absolute;
+    right: 30px;
+    top: 673px;
+    width: 300px;
+    z-index: -1;
+}
+
+.tomato_chilli {
+    position: absolute;
+    right: 0px;
+    top: 1000px;
+    width: 400px;
+    z-index: -1;
+}

@@ -25,7 +25,7 @@ BEGIN
   -- Insert order items into the "OrderItem" table for each menu item
   FOR i IN 1..array_length
   LOOP
-    INSERT INTO "OrderItem" (order_id, menu_item_id, quantity)
+    INSERT INTO "Order_item" (order_id, menu_item_id, quantity)
     VALUES (new_order_id, p_menu_item_ids[i], p_quantities[i]);
   END LOOP;
 
@@ -40,7 +40,7 @@ Get todays orders
 -> TODO : Change to get either open or closed orders (might have to split into two funcs)
 */
 
--- DROP FUNCTION get_todays_orders();
+DROP FUNCTION get_todays_orders();
 CREATE OR REPLACE FUNCTION get_todays_orders()
   RETURNS TABLE (
     order_id INT,
@@ -66,9 +66,9 @@ BEGIN
     FROM
       "Order" o
     INNER JOIN
-      "OrderItem" oi ON o.order_id = oi.order_id
+      "Order_item" oi ON o.order_id = oi.order_id
     INNER JOIN
-      "MenuItem" mi ON oi.menu_item_id = mi.menu_item_id
+      "Menu_item" mi ON oi.menu_item_id = mi.menu_item_id
 	LEFT JOIN
       "Payment" pa ON o.order_id = pa.order_id
 	WHERE
@@ -83,6 +83,34 @@ BEGIN
     ORDER BY
 --       o.table_id,
       o.order_id desc;
+END;
+$$ LANGUAGE plpgsql;
+
+
+/*
+---------------------------------------------------------------------------------------------
+To create a dummy order of 5-6 items on each table for testing
+*/
+
+
+-- Create the function
+CREATE OR REPLACE FUNCTION create_dummy_orders()
+RETURNS VOID AS $$
+DECLARE
+  table_id INT;
+BEGIN
+  -- Loop through table IDs
+  FOR table_id IN SELECT DISTINCT "Table_number".table_id FROM "Table_number"
+  LOOP
+    -- Generate random menu_item_ids and quantities
+    DECLARE
+      menu_item_ids INT[] := ARRAY(SELECT menu_item_id FROM "Menu_item" ORDER BY random() LIMIT floor(random() * 2) + 5);
+      quantities INT[] := ARRAY(SELECT floor(random() * 3) + 1 FROM generate_series(1, array_length(menu_item_ids, 1)));
+    BEGIN
+      -- Create the order
+      PERFORM create_new_order(menu_item_ids, quantities, table_id);
+    END;
+  END LOOP;
 END;
 $$ LANGUAGE plpgsql;
 
