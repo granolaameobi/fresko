@@ -10,7 +10,7 @@ class WelcomeWindow(tk.Tk):
     '''
     Represents the welcome window of the POS System.
 
-    Inherits from tk.Tk class.
+    Inherits from tk.Tk class
 
     Methods:
     - __init__: Initializes the WelcomeWindow object.
