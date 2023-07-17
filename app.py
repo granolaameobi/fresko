@@ -41,10 +41,11 @@ def reservation():
         date = request.form['date']
         time = request.form['time']
         party_size = request.form['party_size']
+        comment = request.form['comment']
         # Save reservation to a database or file
         return render_template('reservation_confirmation.html', first_name=first_name, last_name=last_name,
                                email=email,contact_number=contact_number,date=date,
-                               time=time, party_size=party_size)
+                               time=time, party_size=party_size, comment=comment)
     else:
         # Render the reservation form
         return render_template('reservation_form.html')
