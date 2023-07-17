@@ -7,22 +7,22 @@
         <h1 class="section-title">Make a Reservation</h1>
         <div class="center">
             <form method="POST" action="/reservation" onsubmit="return validateForm()" align="justify">
-                <label>First Name:</label>
+                <label>First Name: *</label>
                 <input type="text" name="first_name"><br>
-                <label>Last Name:</label>
+                <label>Last Name: *</label>
                 <input type="text" name="last_name"><br>
-                <label>Email:</label>
+                <label>Email: *</label>
                 <input type="email" name="email"><br>
-                <label>Contact Number:</label>
+                <label>Contact Number: *</label>
                 <input type="tel" name="contact_number"><br>
-                <label>Date:</label>
+                <label>Date: *</label>
                 <input type="date" name="date"><br>
-                <label>Time:</label>
+                <label>Time: *</label>
                 <select name="time" id="time_select">
                     <option value="">Select a time</option>
                 </select><br>
-                <label>Party Size:</label>
-                <input type="number" name="party_size" min="1" max="10"><br>
+                <label>Party Size: *</label>
+                <input type="number" name="party_size" min="1" max="6"><br>
                 <input type="submit" value="Submit">
             </form>
         </div>
@@ -57,8 +57,8 @@
         }
         const partySizeInput = document.querySelector('input[name="party_size"]');
         const partySize = parseInt(partySizeInput.value);
-        if (partySize < 1 || partySize > 10) {
-            alert("Party size must be between 1 and 10 people.");
+        if (partySize < 1 || partySize > 6) {
+            alert("Party size must be between 1 and 6 people.");
             partySizeInput.focus();
             return false;
         }
