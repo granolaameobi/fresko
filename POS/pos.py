@@ -960,8 +960,8 @@ class TableAssignmentSubmenu(tk.Toplevel):
         try:
             # SQL query to insert a booking
             query = f"SELECT insert_booking(ARRAY{self.selected_tables}, \
-                                            '{self.start_time}', \
                                             {self.group_size}, \
+                                            '{self.start_time}', \
                                             '{self.duration}');"
             
             # Add the new booking to the database
