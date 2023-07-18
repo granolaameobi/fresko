@@ -617,3 +617,56 @@ h4 {
     width: 500px;
     height: auto;
   }
+
+.lunch-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+.lunch-item {
+    color: white;
+    text-align: justify;
+    flex-basis: 1;
+    min-width: 40%;
+    max-width: 40%;
+    padding-bottom: 20px;
+}
+.lunch-box {
+    background-color: #366B4C;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.lunch {
+    margin-bottom: 20px;
+    padding: 5%;
+}
+
+.left-column,
+.right-column {
+    width: 50%;
+}
+
+.left-column ul,
+.right-column ul {
+    padding-left: 0;
+}
+
+.left-column ul li,
+.right-column ul li {
+    list-style: none;
+}
+
+.left-column ul li {
+    text-align: left;
+}
+
+.right-column ul li {
+    text-align: right;
+}
