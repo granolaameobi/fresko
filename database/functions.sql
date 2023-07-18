@@ -114,6 +114,40 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+/*
+---------------------------------------------------------------------------------------------
+Insert booking on a table/list of tables
+*/
+
+-- Create the function
+CREATE OR REPLACE FUNCTION insert_booking(
+    new_table_ids INT[],
+	new_group_size INT,
+    new_start_time TIMESTAMP DEFAULT NULL,
+    new_duration INTERVAL DEFAULT '1.5 hours'
+)
+RETURNS VOID AS
+$$
+DECLARE
+    table_id INT;
+BEGIN
+    -- Check if new_start_time is NULL and assign current timestamp if it is
+    IF new_start_time IS NULL THEN
+        new_start_time := now();
+    END IF;
+
+    -- Loop through each table ID in the list
+    FOREACH table_id IN ARRAY new_table_ids
+    LOOP
+        -- Insert a new booking into the Booking table
+        INSERT INTO "Booking" (group_size, start_time, duration, table_id)
+        VALUES (new_group_size, new_start_time, new_duration, table_id);
+    END LOOP;
+END;
+$$
+LANGUAGE plpgsql;
+
+
 
 
 /*

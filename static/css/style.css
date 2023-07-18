@@ -539,3 +539,70 @@ h4 {
     height: auto;
 }
 
+.reservation-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+.reservation-form {
+    flex-basis: 2;
+    max-width: 600px;
+    flex-wrap: nowrap;
+}
+.reservation-form-box {
+    background-color: #366B4C;
+    color: white;
+    border-radius: 20px;
+    text-align: justify;
+    padding: 10px;
+}
+.reservation-image {
+    flex-basis: 1;
+}
+.form-container {
+    display: grid;
+    grid-template-rows: repeat(5, auto);
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 10px;
+  }
+  
+  .form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .form-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+  
+  label {
+    margin-bottom: 5px;
+  }
+  
+  input, select {
+    width: 90%;
+    box-sizing: border-box;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  
+  input[type="submit"] {
+    width: auto;
+    padding: 5px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  input[type="submit"]:hover {
+    background-color: #3e8e41;
+  }

@@ -12,7 +12,8 @@ request = {
         'contact_number':'+441111111111',
         'date': current_date,
         'time': '18:00',
-        'party_size': '4'
+        'party_size': '4',
+        'comment':'gluten free'
     }
 @pytest.fixture
 def client(scope="session"):
