@@ -549,6 +549,8 @@ h4 {
     flex-basis: 2;
     max-width: 600px;
     flex-wrap: nowrap;
+    margin-right: 100px;
+    margin-bottom: 60px;
 }
 .reservation-form-box {
     background-color: #366B4C;
@@ -571,6 +573,9 @@ h4 {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 5px;
+    margin-left: 10px;
+    margin-top: 10px;
   }
   
   .form-col {
@@ -601,8 +606,14 @@ h4 {
     border: none;
     border-radius: 3px;
     cursor: pointer;
+    margin-left: 37.5px;
   }
   
   input[type="submit"]:hover {
     background-color: #3e8e41;
+  }
+
+  .spinach-cheese {
+    width: 500px;
+    height: auto;
   }
