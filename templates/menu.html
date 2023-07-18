@@ -1,142 +1,108 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Our Menu</title>
-    <style>
-        body {background-color: darkseagreen;}
-        h1 {font: 100px Arial, sans-serif;}
-        h2 {font: 60px Arial, sans-serif;
-        color: white;}
-        h3 {font: 50px Arial, sans-serif;}
-        h4 {font: 40px Arial, sans-serif;}
-        p {font: 20px Arial, sans-serif;}
-        .grid-container {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-gap: 10px;
-        }
-       .grid-item {
-        text-align: center;
-        }
-       .grid-item img {
-        max-width: 100%;
-        min-height: 75%;
-        height: auto;
-        }
-       .grid-item p {
-        margin: 0;
-        }
-       .button-container {
-        text-align: right;
-        }
-        </style>
-</head>
-<body>
-    <h1>LUNCH</h1>
-    <h3>Flavours, textures, and innovation unite in our unforgettable menu.</h3>
+{% extends 'base.html' %}
+    
+{% block title %}Fresko | Menu{% endblock %}
+
+{% block content %}
+<br><br>
+
+<div class="content" style="margin: 0 auto; max-width: 1000px;">
+    <h1 class="section-title">LUNCH</h1>
+    <h3 class="menu_subheading">Flavours, textures, and innovation unite in our unforgettable menu.</h3>
     <h4>V = Vegetarian | Ve = Vegan | GF = Gluten-free | GFO = Gluten-free option</h4>
-        <div class="grid-container">
-            <div class="grid-item">
-                <h2>GYROS</h2>
-                <div class="grid-container">
-                    <div class="grid-item">
-                        <img src="https://static.wixstatic.com/media/5d6688_4265d58c7a32481f92a5dd5a4a718549~mv2.png/v1/crop/x_23,y_71,w_650,h_353/fill/w_284,h_154,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/pngwing_com%20(4).png" alt="Gyro" width="150" height="150">
-                    </div>
-                    <div class="grid-item">
-                        <p>Tender rotisserie-roasted meat or plant option, served in a pita (GFO) with oregano chips, lettuce, tomato, cucumber, red onion, and your choice of tzatziki (V) or tahini sauce (Ve)</p>
-                    </div>
+    
+    <div class="menu-grid">
+        <img src="static/images/gyro.png" alt="Gyro" class="menu-image">
+        <div class="menu-item">
+            <h2 class="section-title" style="color: white;">GYROS</h2>
+            <p>Tender rotisserie-roasted meat or plant option, served in a pita (GFO) with oregano chips, lettuce, tomato, cucumber, red onion, and your choice of tzatziki (V) or tahini sauce (Ve)</p><br>
+            <div class="item-options">
+                <p>Available options:</p>
+                <div class="options-container">
+                    <img src="static/images/available_options_graphic.png" alt="Options Graphic" class="options">
+                </div>
+            </div>        
+        </div>
+        <img src="static/images/salad_bowl_2.png" alt="Salad Bowl 2" class="menu-image">
+        <div class="menu-item">
+            <h2 class="section-title" style="color: white;">SALAD BOWLS</h2>
+            <p>Choose from a variety of bowls including our fan-favourite Chicken Fresko! All salads come with a choice of tzatziki, tahini sauce, or mint yoghurt dressing.</p>
+        </div>
+        <img src="static/images/souvlaki_wrap.png" alt="Souvlaki Wrap" class="menu-image">
+        <div class="menu-item">
+            <h2 class="section-title" style="color: white;">SOUVLAKI</h2>
+            <p>Grilled meat, halloumi or falafel, served in a pita (GFO) with oregano chips, lettuce, tomato, cucumber, onion, olives, and your choice of tzatziki (V) or tahini sauce (Ve)</p><br>
+            <div class="item-options">
+                <p>Available options:</p>
+                <div class="options-container">
+                    <img src="static/images/available_options_graphic.png" alt="Options Graphic" class="options">
                 </div>
             </div>
-            <div class="grid-item">
-                <h2>SALAD BOWLS</h2>
-                <div class="grid-container">
-                    <div class="grid-item">
-                        <img src="https://static.wixstatic.com/media/5d6688_0ab401d649b3467f959ce567c1a8db1f~mv2.png/v1/fill/w_238,h_238,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/pngwing_com%20(5).png" alt="Salad Bowl" width="150" height="150">
-                    </div>
-                    <div class="grid-item">
-                        <p>Party in a bowl! Choose from a variety of bowls including our fan-favourite Chicken Fresko! All salads come with a choice of tzatziki, tahini sauce, or mint yoghurt dressing.</p>
-                    </div>
+        </div>        
+        <div class="menu-item">
+            <h2 class="section-title" style="color: white;">DRINKS</h2>
+            <p>Take your pick from flavored soda to water</p>
+        </div>
+        <div class="menu-item">
+            <h2 class="section-title" style="color: white;">EXTRAS</h2>
+            <p>Choose from as many as 10 different extras to spice up your meal</p>
+        </div>
+    </div>
+    <a href="/lunch">
+        <div class="lunchdinner-button">
+            <p>View Menu Prices</p> 
+        </div>
+    </a>
+</div>
+<div class="content" style="margin: 0 auto; max-width: 1000px;">
+    <h1 class="section-title">DINNER</h1>
+    <h3 class="menu_subheading">Stay longer with us and explore our dinner options!</h3>
+    <h4>V = Vegetarian | Ve = Vegan | GF = Gluten-free | GFO = Gluten-free option</h4>
+    
+    <div class="menu-grid">
+        <img src="static/images/meze.png" alt="Meze" class="menu-image" style="width: 200px;">
+        <div class="menu-item">
+            <h2 class="section-title" style="color: white;">MEZE</h2>
+            <p>The decision is all yours! Choose from a variety of foods to build the meze of your preference. Mixed green olives, hummus, calamari, prawns saganki, the list goes on...</p><br>
+            <div class="item-options">
+                <p>Available options:</p>
+                <div class="options-container">
+                    <img src="static/images/available_options_graphic_2.png" alt="Options Graphic 2" class="options">
+                </div>
+            </div>        
+        </div>
+        <img src="static/images/gyro.png" alt="Gyro" class="menu-image">
+        <div class="menu-item">
+            <h2 class="section-title" style="color: white;">GYROS</h2>
+            <p>Tender rotisserie-roasted meat or plant option, served in a pita (GFO) with oregano chips, lettuce, tomato, cucumber, red onion, and your choice of tzatziki (V) or tahini sauce (Ve)</p><br>
+            <div class="item-options">
+                <p>Available options:</p>
+                <div class="options-container">
+                    <img src="static/images/available_options_graphic.png" alt="Options Graphic" class="options">
+                </div>
+            </div>        
+        </div>
+        <img src="static/images/dip.png" alt="Dip" class="menu-image">
+        <div class="menu-item">
+            <h2 class="section-title" style="color: white;">DIPS</h2>
+            <p>Complement your main course with our handcrafted dips including our mint-infused tzatziki amongst others</p><br>
+        </div>
+        <img src="static/images/souvlaki_wrap.png" alt="Souvlaki Wrap" class="menu-image">
+        <div class="menu-item">
+            <h2 class="section-title" style="color: white;">SOUVLAKI</h2>
+            <p>Grilled meat, halloumi or falafel, served in a pita (GFO) with oregano chips, lettuce, tomato, cucumber, onion, olives, and your choice of tzatziki (V) or tahini sauce (Ve)</p><br>
+            <div class="item-options">
+                <p>Available options:</p>
+                <div class="options-container">
+                    <img src="static/images/available_options_graphic.png" alt="Options Graphic" class="options">
                 </div>
             </div>
-            <div class="grid-item">
-                <h2>SOUVLAKI</h2>
-                <div class="grid-container">
-                    <div class="grid-item">
-                        <img src="https://static.wixstatic.com/media/5d6688_e0a6b7cd138c40ba9ca3137f41ffa2f3~mv2.png/v1/crop/x_15,y_12,w_174,h_188/fill/w_173,h_187,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/output-onlinepngtools.png" alt="Souvlaki" width="150" height="150">
-                    </div>
-                    <div class="grid-item">
-                        <p>Grilled meat, halloumi or falafel, served in a pita (GFO) with oregano chips, lettuce, tomato, cucumber, onion, olives, and your choice of tzatziki (V) or tahini sauce (Ve)</p>
-                    </div>
-                </div>
-            </div>
-            <div class="grid-item">
-                <div class="grid-container">
-                    <div class="grid-item">
-                        <h2>DRINKS</h2>
-                        <p>Take your pick from flavoured soda to water</p>
-                    </div>
-                    <div class="grid-item">
-                        <h2>EXTRAS</h2>
-                        <p>Choose from as many as 10 different extras to spice up your meal</p>
-                    </div>
-                </div>
-            </div>
+        </div>  
+    </div>
+    <a href="/dinner">
+        <div class="lunchdinner-button">
+            <p>View Menu Prices and Drinks</p> 
         </div>
-        <div class="button-container">
-            <button onclick="window.location.href='/lunch'">View Menu Prices</button>
-        </div>
-        <h1>DINNER</h1>
-        <h3>Stay longer with us and explore our dinner options!</h3>
-        <h4>V = Vegetarian | Ve = Vegan | GF = Gluten-free | GFO = Gluten-free option</h4>
-            <div class="grid-container">
-                <div class="grid-item">
-                    <h2>MEZE</h2>
-                    <div class="grid-container">
-                        <div class="grid-item">
-                            <img src="https://static.wixstatic.com/media/5d6688_28fb8cc7244b40d8aa021e26730880bf~mv2.png/v1/fill/w_157,h_314,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/pngwing_com%20(7).png" alt="Gyro" width="150" height="150">
-                        </div>
-                        <div class="grid-item">
-                            <p>The decision is all yours! Choose from a variety of foods to build the meze of your preference. Mixed green olives, hummus, calamari, prawns saganki, the list goes on...</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="grid-item">
-                    <h2>GYROS</h2>
-                    <div class="grid-container">
-                        <div class="grid-item">
-                            <img src="https://static.wixstatic.com/media/5d6688_4265d58c7a32481f92a5dd5a4a718549~mv2.png/v1/crop/x_23,y_71,w_650,h_353/fill/w_284,h_154,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/pngwing_com%20(4).png" alt="Salad Bowl" width="150" height="150">
-                        </div>
-                        <div class="grid-item">
-                            <p>
-                                Tender rotisserie-roasted meat or plant option, served in a pita (GFO) with oregano chips, lettuce, tomato, cucumber, red onion, and your choice of tzatziki (V) or tahini sauce (Ve)</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="grid-item">
-                    <h2>DIPS</h2>
-                    <div class="grid-container">
-                        <div class="grid-item">
-                            <img src="https://static.wixstatic.com/media/5d6688_9e9842dc1f0541428cd66b0045ccc0a3~mv2.png/v1/crop/x_51,y_44,w_685,h_459/fill/w_293,h_196,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/pngwing_com%20(6).png" alt="Souvlaki" width="150" height="150">
-                        </div>
-                        <div class="grid-item">
-                            <p>Complement your main course with our handcrafted dips including our mint-infused tzatziki amongst others</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="grid-item">
-                    <h2>SOUVLAKI</h2>
-                    <div class="grid-container">
-                        <div class="grid-item">
-                            <img src="https://static.wixstatic.com/media/5d6688_e0a6b7cd138c40ba9ca3137f41ffa2f3~mv2.png/v1/crop/x_15,y_12,w_174,h_188/fill/w_173,h_187,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/output-onlinepngtools.png" alt="Souvlaki" width="150" height="150">
-                        </div>
-                        <div class="grid-item">
-                            <p>Grilled meat, halloumi or falafel, served in a pita (GFO) with oregano chips, lettuce, tomato, cucumber, onion, olives, and your choice of tzatziki (V) or tahini sauce (Ve)</p>
-                        </div>
-                    </div>
-                </div>
-        </div>
-        <div class="button-container">
-            <button onclick="window.location.href='/dinner'">View Menu Prices & Drinks</button>
-        </div>
-</body>
-</html>
+    </a>
+</div>
+
+{% endblock %}
