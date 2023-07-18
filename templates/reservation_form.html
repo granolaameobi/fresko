@@ -3,6 +3,7 @@
 {% block title %}Fresko | Reservation{% endblock %}
 
 {% block content %}
+<br><br><br><br>
     <div class="reservation-container">
         <div class="reservation-form">
             <h1 class="section-title">Reserve Your Seats</h1>
@@ -40,7 +41,7 @@
                     </div>
                     <div class="form-row">
                       <div class="form-col">
-                        <label for="contact_number">Contact Number: *</label>
+                        <label for="contact_number">Contact No: *</label>
                         <input type="tel" name="contact_number" id="contact_number" required>
                       </div>
                       <div class="form-col">
@@ -55,17 +56,21 @@
                       </div>
                     </div>
                     <div class="form-row">
-                      <br>
-                      <p>* Denotes Mandatory Field</p>
-                      <input type="submit" value="Submit">
+                      <div class="form-col">
+                        <p style="text-align: left;">* Denotes Mandatory Field</p>
+                      </div>
+                      <div class="form-col" style="text-align: right;">
+                        <input type="submit" value="Submit">
+                      </div>
                     </div>
                   </form>
                 </div>
             </div>
             <div class="reservation-image">
-                <img src="static/images/spinach-cheese.png" alt="Spinach and Cheese">
+                <img src="static/images/spinach_cheese.png" alt="Spinach and Cheese" class="spinach-cheese">
             </div>
         </div>
+        <br><br><br><br>
 
         <script>
             // Generate time options from 17:00 (5pm) to 22:00 (10pm) in half-hour intervals
