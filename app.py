@@ -12,13 +12,7 @@ def menu():
 
 @app.route('/lunch')
 def lunch():
-    # Retrieve menu items from a database or file
-    menu_items = [
-        {'name': 'Pork (GF)', 'price': '9.00'},
-        {'name': 'Lamb (GF)', 'price': '9.00'},
-        {'name': 'Falafel (GF)', 'price': '9.50'}
-    ]
-    return render_template('lunch.html',menu_items=menu_items)
+    return render_template('lunch.html')
 
 @app.route('/dinner')
 def dinner():
