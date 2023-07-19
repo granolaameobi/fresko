@@ -618,6 +618,94 @@ h4 {
     height: auto;
   }
 
+.menu-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.menu-table td {
+    padding: 5px;
+}
+
+.food-name {
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.food-price {
+    width: 30%;
+    text-align: right;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    column-width: 50px;
+}
+
+.food-description {
+    display: inline-block;
+    max-width: 100%;
+    font-style: italic;
+    text-align: left;
+}
+
+.menu-grid_2 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+    max-width: 940px;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: stretch;
+  }
+  
+  .curved-box_2 {
+    background-color: #366B4C;
+    color: white;
+    padding: 20px;
+    border-radius: 20px;
+    text-align: justify;
+    box-sizing: border-box;
+    margin: 10px;
+    max-width: 450px;
+    flex-grow: 1;
+    flex-basis: calc(50% - 20px);
+  }
+
+  .healthysalad-container {
+    position: relative;
+    z-index: -1;
+    margin-left: -1000px;
+    margin-top: -300px;
+  }
+  
+  .healthysalad-image {
+    height: 450px;
+  }
+
+  .tomato-container {
+    position: relative;
+    z-index: -1;
+    margin-right: -600px;
+    margin-top: -400px;
+  }
+  
+  .tomato-image {
+    height: 300px;
+  }
+
+  .salad-container {
+    position: relative;
+    z-index: -1;
+    margin-right: -600px;
+    margin-top: -650px;
+  }
+  
+  .salad-image {
+    height: 500px;
+  }
 .lunch-container {
     display: flex;
     justify-content: space-around;

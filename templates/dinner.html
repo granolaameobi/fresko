@@ -1,14 +1,607 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Our Menu</title>
-</head>
-<body>
-    <h1>Our Menu</h1>
-    <ul>
-    {% for item in menu_items %}
-        <li>{{ item.name }} - {{ item.price }}</li>
-    {% endfor %}
-    </ul>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Fresko | Dinner{% endblock %}
+
+{% block content %}
+
+<div class="center">
+    <div class="healthysalad-container">
+        <img src="/static/images/healthy_salad.png" alt="Healthy Salad" class="healthysalad-image">
+    </div>
+</div>
+
+<div class="content" style="margin-top: -100px;">
+    <h1 class="section-title">DINNER</h1>
+    <h4>V = Vegetarian | Ve = Vegan | GF = Gluten-free | GFO = Gluten-free option</h4>
+    <div class="menu-grid_2">
+        <div class="curved-box_2">
+            <h2 class="section-title" style="color: white; width: 400px; font-size: 24px;">HOT MEZE</h2>
+            <table class="menu-table" style="width: 400px;">                
+                <tr>
+                    <td class="food-name">
+                        <strong>Keftedes (GFO)</strong>
+                    </td>
+                    <td class="food-price">£5.00</td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        Lamb meatballs containing garlic and mint. Served with tzatziki and mixed leaves
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Prawn Saganaki (GF)</strong>
+                    </td>
+                    <td class="food-price">£5.50</td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        Pan-fried king prawns, peppers, garlic, chilies, tomatoes, and feta
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Calamari (GFO)</strong>
+                    </td>
+                    <td class="food-price">£6.00</td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        Crispy calamari rings served with tartar sauce and mixed leaves
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Grilled Halloumi (V) (GF)</strong>
+                    </td>
+                    <td class="food-price">£4.50</td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        Sliced, grilled halloumi cheese served with mixed leaves
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Garlic Mushrooms (Ve) (GF)</strong>
+                    </td>
+                    <td class="food-price">£4.00</td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        Mushrooms tossed in garlic, parsley, and cream
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="curved-box_2">
+            <h2 class="section-title" style="color: white; width: 400px; font-size: 24px">COLD MEZE</h2>
+            <table class="menu-table" style="width: 400px;">                
+                <tr>
+                    <td class="food-name">
+                        <strong>Mixed Kalamata Olives (Ve) (GF)</strong>
+                    </td>
+                    <td class="food-price">£4.00</td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        In olive oil and oregano
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Melitzanosalata (V) (GF)</strong>
+                    </td>
+                    <td class="food-price">£4.50</td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        A blend of smoked aubergine, feta cheese, garlic, roasted peppers, and olive oil
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Hummus (Ve) (GF)</strong>
+                    </td>
+                    <td class="food-price">£4.00</td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        Chickpeas blended with tahini, olive oil, lemon juice, salt, and garlic
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Feta Cheese (V) (GF)</strong>
+                    </td>
+                    <td class="food-price">£4.00</td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        Greek cheese with olive oil and oregano
+                    </td>
+                </tr>
+            </table>
+            <p style="text-align: center;" ><br><br>All mezes are served with pita (GFO).<br>Add extra pita for £1.00</p>
+        </div>
+
+        <div class="curved-box_2">
+            <h2 class="section-title" style="color: white; width: 400px; font-size: 24px">MINI MEZE</h2>
+            <table class="menu-table" style="width: 400px;">                
+                <tr>
+                    <td class="food-description">
+                        <p>Choice of two dips served with Kalamata olives and pita (GFO)</p>
+                    </td>
+                    <td class="food-price">£6.00</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="curved-box_2">
+            <h2 class="section-title" style="color: white; width: 400px; font-size: 24px">MEZE BOARD</h2>
+            <table class="menu-table" style="width: 400px;">                
+                <tr>
+                    <td class="food-description">
+                        <p>Choice of two hot and one cold meze dishes, served with pita (GFO) and two dips</p>
+                    </td>
+                    <td class="food-price">£15.00</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="curved-box_2">
+            <h2 class="section-title" style="color: white; width: 400px; font-size: 24px">GYROS</h2>
+            <p class="food-description" style="text-align: left;">Rotisserie-roasted meat, halloumi or falafel, served in a pita (GFO) with oregano chips, lettuce, tomato, cucumber, red onion, olives, and your choice of tzatziki (V) or tahini sauce (Ve)</p><br><br>
+            <table class="menu-table" style="width: 400px;">
+                <tr>
+                    <td class="food-name">
+                        <strong>Chicken (GF)</strong>
+                    </td>
+                    <td class="food-price">£9.00</td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Pork (GF)</strong>
+                    </td>
+                    <td class="food-price">£9.00</td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Lamb (GF)</strong>
+                    </td>
+                    <td class="food-price">£9.00</td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Halloumi (V) (GF)</strong>
+                    </td>
+                    <td class="food-price">£9.50</td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Falafel (Ve) (GF)</strong>
+                    </td>
+                    <td class="food-price">£9.50</td>
+                </tr>
+            </table>
+        </div> 
+        
+        <div class="curved-box_2">
+            <h2 class="section-title" style="color: white; width: 400px; font-size: 24px">SOUVLAKI</h2>
+            <p class="food-description style="text-align: left;">Grilled skewers, served in a pita (GFO) with oregano chips, lettuce, tomato, cucumber, red onion, olives, and your choice of tzatziki (V) or tahini sauce (Ve)</p><br><br>
+            <table class="menu-table" style="width: 400px;">
+                <tr>
+                    <td class="food-name">
+                        <strong>Chicken (GF)</strong>
+                    </td>
+                    <td class="food-price">£12.00</td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Pork (GF)</strong>
+                    </td>
+                    <td class="food-price">£12.00</td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Lamb (GF)</strong>
+                    </td>
+                    <td class="food-price">£12.50</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="curved-box_2">
+            <h2 class="section-title" style="color: white; width: 400px; font-size: 24px">DIPS</h2>
+            <table class="menu-table" style="width: 400px;">                
+                <tr>
+                    <td class="food-name">
+                        <strong>Tzatziki (V) (GF)</strong>
+                    </td>
+                    <td class="food-price">£1.50</td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        Greek yoghurt, cucumber, mint, and garlic
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Tirokafteri (V) (GF)</strong>
+                    </td>
+                    <td class="food-price">£1.50</td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        Roasted pepper, Greek feta, and chilli
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Taramasalata (V)</strong>
+                    </td>
+                    <td class="food-price">£1.50</td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        Classic smoked cod roe
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Tahini (Ve) (GF)</strong>
+                    </td>
+                    <td class="food-price">£1.50</td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        Sesame seed, lemon, garlic, and parsley
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <p style="margin-left: 100px;">If in doubt, please inquire at <br><b>customerservice@fresko.com</b><br> We're here to help!</p>
+    </div>
+
+    <div class="center">
+        <div class="tomato-container">
+            <img src="/static/images/tomato.png" alt="Tomato" class="tomato-image">
+        </div>
+    </div>
+
+    <h1 class="section-title">DRINKS</h1>
+    <div class="menu-grid_2">
+        <div class="curved-box_2">
+            <h2 class="section-title" style="color: white; width: 400px; font-size: 24px;">CLASSIC COCKTAILS</h2>
+            <table class="menu-table" style="width: 400px;">
+                <tr>
+                    <td class="food-name">
+                        <p>For aficionados of timeless flavours.<br>All vegan and gluten-free (of course!)</p><br>
+                    </td>
+                    <td class="food-price">£7.50</td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Pina Colada</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        Coconut rum, pineapple juice, coconut syrup, coconut milk
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Mojito</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        White rum, lime juice, mint, sugar, soda
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Margarita</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        Silver tequila, lime juice, Cointreau, agave syrup
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Strawberry Margarita</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        Silver tequila, strawberry puree, lime juice, Cointreau, Agave syrup
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Strawberry Daiquiri</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        White rum, strawberry puree, lime juice, agave syrup
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Aperol Spritz</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        Aperol, Prosecco, orange juice, soda
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Hugo</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        Elderflower cordial, prosecco, mint, lime juice
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Caipirinha</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        Cachaca, lime juice, sugar
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Coconut Caipirinha</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        Cachaca, lime juice, coconut syrup
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="curved-box_2">
+            <h2 class="section-title" style="color: white; width: 400px; font-size: 24px;">FRESKO COCKTAILS</h2>
+            <table class="menu-table" style="width: 400px;">
+                <tr>
+                    <td class="food-name">
+                        <p>A selection of carefully crafted, in-house cocktails.<br>Enjoy with a meze selection. All vegan!</p><br>
+                    </td>
+                    <td class="food-price">£9.00</td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Margarita Kick</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        Greek twist to the classic margarita made with ouzo instead of tequila
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Mastiha Mojito (GF)</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        Greek mastiha liqueur, lime juice, mint, sugar, soda
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Red Sangria (GF)</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        Greek-inspired sangria. Mavrodaphne Greek sweet red wine, orange juice, cranberry juice
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Ouzo Special</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        Ouzo, lemon juice, lemonade
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="curved-box_2">
+            <h2 class="section-title" style="color: white; width: 400px; font-size: 24px;">MOCKTAILS</h2>
+            <table class="menu-table" style="width: 400px;">
+                <tr>
+                    <td class="food-name">
+                        <p>All vegan and gluten-free.</p><br>
+                    </td>
+                    <td class="food-price">£6.00</td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Nojito</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        Stimulating mixture of mint, lime and sugar
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Strawberry Nojito</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        Strawberry, fresh mint, lime and sugar
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Juicy Julip</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        Pineapple juice, lime juice, chopped mint garnished with pineapple
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Orange Spritz</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        Orange juice, cranberry juice, sparkling elderflower with a sprig of mint
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="curved-box_2">
+            <h2 class="section-title" style="color: white; width: 400px; font-size: 24px;">BEERS & CIDERS</h2>
+            <table class="menu-table" style="width: 400px;">
+                <tr>
+                    <td class="food-name">
+                        <p>All made locally in the heart of Bristol.<br>All vegan.</p><br>
+                    </td>
+                    <td class="food-price">£4.50</td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Joy of Sesh</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        IPA with tropical, citrus and stone-fruit notes
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Macho Mucho</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        A smooth, creamy, tropical IPA. Contains lactose.
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Bristol Lager</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        A clean, ultra-pale lager with a citrus finish.
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Mango Cider (GF)</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        West Country cider apples and Indian Mango
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Peary Cider (GF)</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        A refreshing Bristol pear and apple cider
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Elder Cider (GF)</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        A light and fruity, sweet elderflower cider
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="curved-box_2">
+            <h2 class="section-title" style="color: white; width: 400px; font-size: 24px;">WINE BY THE GLASS</h2>
+            <table class="menu-table" style="width: 400px;">
+                <tr>
+                    <td class="food-name">
+                        <p>All vegan and gluten-free.</p><br>
+                    </td>
+                    <td class="food-price">£5.50</td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Notos Red - Merlot & Mavroudi</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        A modern Mediterranean red wine, with aromas of small red fruits and red flowers
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Blender Rosé</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        Aromas of cherries, raspberries with rose petal notes
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-name">
+                        <strong>Retsina White</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food-description">
+                        Produced in Greek vineyards. Green apple aromas and bergamot
+                    </td>
+                </tr>
+            </table>
+        </div>  
+    </div>
+    <a href="/menu">
+        <div class="menu-button" style="background-color: black; text-decoration: white;">
+          <p>Back to Menu</p>
+        </div>
+    </a>
+</div>
+
+<div class="center">
+    <div class="salad-container">
+        <img src="/static/images/salad.png" alt="Salad" class="salad-image">
+    </div>
+</div>
+{% endblock %}
