@@ -718,7 +718,7 @@ h4 {
     height: 500px;
   }
 
-  .sliced_onion-container {
+.sliced_onion-container {
     position: relative;
     z-index: 1;
     margin-right: -1000px;
