@@ -758,3 +758,13 @@ h4 {
 .right-column ul li {
     text-align: right;
 }
+.new-box{
+    align-items: center;
+    justify-content: center;
+    text-align: justify;
+    background-color: #366B4C;
+    color: white;
+    padding: 20px;
+    border-radius: 20px;
+    width: 100%;
+}
