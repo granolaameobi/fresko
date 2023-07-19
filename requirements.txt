@@ -2,3 +2,4 @@ Flask==2.2.2
 Flask-WTF==0.15.1
 SQLAlchemy==1.4.25
 pytest==7.4.0
+psychopg==2.9.6

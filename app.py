@@ -1,6 +1,18 @@
 from flask import Flask, render_template, request
+import psycopg2
+import os
 
 app = Flask(__name__)
+
+def get_db_connection():
+    connection = psycopg2.connect(
+        host="35.205.66.81",
+        port=5432, # This is the default port for PostgreSQL
+        database="Fresko",
+        user="postgres",
+        password=os.getenv('SQL_PASSWORD')
+    )
+    return connection
 
 @app.route('/')
 def index():
@@ -36,10 +48,20 @@ def reservation():
         time = request.form['time']
         party_size = request.form['party_size']
         comment = request.form['comment']
-        # Save reservation to a database or file
-        return render_template('reservation_confirmation.html', first_name=first_name, last_name=last_name,
-                               email=email,contact_number=contact_number,date=date,
-                               time=time, party_size=party_size, comment=comment)
+
+        conn=get_db_connection()
+        try:
+            with conn.cursor() as cursor:
+                sql="""INSERT INTO public."Booking" (booking_id, booking_name, group_size, contact_phone, contact_email, start_time, duration, table_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s);"""
+                cursor.execute(sql, 
+                               (5, first_name+' '+last_name, party_size, contact_number, email, date+' '+time+'.000000', '02:00:00.000000', 1))
+                conn.commit()
+                conn.close()
+                return render_template('reservation_confirmation.html', first_name=first_name, last_name=last_name,
+                                    email=email,contact_number=contact_number,date=date,
+                                    time=time, party_size=party_size, comment=comment)
+        except:
+            return 'Error inserting data into database'
     else:
         # Render the reservation form
         return render_template('reservation_form.html')
