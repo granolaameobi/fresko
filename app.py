@@ -1,18 +1,28 @@
 from flask import Flask, render_template, request
 import psycopg2
 import os
+from static.sql.functions import *
+from kubernetes import client, config
+import base64
 
 app = Flask(__name__)
 
-def get_db_connection():
-    connection = psycopg2.connect(
-        host="35.205.66.81",
-        port=5432, # This is the default port for PostgreSQL
-        database="Fresko",
-        user="postgres",
-        password=os.getenv('SQL_PASSWORD')
-    )
-    return connection
+# Set db Constants
+host='35.205.66.81'
+database='Fresko'
+user='postgres'
+
+# Set db Password
+
+import os
+
+if 'KUBERNETES_SERVICE_HOST' in os.environ:
+    config.load_incluster_config()
+    v1 = client.CoreV1Api()
+    secret = v1.read_namespaced_secret("my-secret", "")
+    password = base64.b64decode(secret.data["DB_PASSWORD"]).decode('utf-8')
+else:
+    password=os.getenv('DB_PASSWORD')
 
 @app.route('/')
 def index():
@@ -49,13 +59,22 @@ def reservation():
         party_size = request.form['party_size']
         comment = request.form['comment']
 
-        conn=get_db_connection()
+        # get tables(s)
+        available_tables=find_available_tables(start_time=date+' '+time+'.000000',duration='02:00:00.000000',
+                                               host=host,database=database,
+                                               user=user, password=password)
+        tables=table_assigner(available_tables=available_tables, party_size=party_size)
+
+        # write to db
+        sql="""INSERT INTO public."Booking" (booking_id, booking_name, group_size, contact_phone, contact_email, start_time, duration, table_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s);"""
+        data=(9, first_name+' '+last_name, party_size, contact_number, email, date+' '+time+'.000000', '02:00:00.000000', tables[0])
+        conn=connect_to_database(host=host, database=database, user=user,
+                                 password=password)
         try:
             with conn.cursor() as cursor:
-                sql="""INSERT INTO public."Booking" (booking_id, booking_name, group_size, contact_phone, contact_email, start_time, duration, table_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s);"""
-                cursor.execute(sql, 
-                               (5, first_name+' '+last_name, party_size, contact_number, email, date+' '+time+'.000000', '02:00:00.000000', 1))
+                cursor.execute(sql, data)
                 conn.commit()
+                cursor.close()
                 conn.close()
                 return render_template('reservation_confirmation.html', first_name=first_name, last_name=last_name,
                                     email=email,contact_number=contact_number,date=date,
