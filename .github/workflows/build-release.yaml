@@ -107,5 +107,6 @@ jobs:
         run: |
           kubectl set image deployment/my-website-deployment fresko=ghcr.io/granolaameobi/fresko/fresko:${{ needs.release.outputs.version }} --record
           kubectl rollout status deployment/my-website-deployment
+          kubectl apply -f deployment/secretmap.yaml
       - name: Get IP
         run: kubectl get services -o wide
