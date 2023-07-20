@@ -1,6 +1,7 @@
 # Fresko 
 
-![Fresko Logo](/docs/fresko.png)
+![Fresko_logo](https://github.com/granolaameobi/fresko/assets/107860691/8bf3aea6-7a7d-4624-8bc6-d5b39a13b9b9)
+
 
 ## Overview
 Central Repository for Fresko IT. Hosts code for Flask web app for Fresko website.
