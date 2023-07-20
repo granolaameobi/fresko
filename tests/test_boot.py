@@ -3,7 +3,7 @@ import pytest
 import datetime
 
 today = datetime.date.today()
-current_date = today.strftime('%d-%m-%Y')
+current_date = today.strftime('%Y-%m-%d')
 
 request = {
         'first_name': 'Joe',
@@ -11,7 +11,7 @@ request = {
         'email':'joe.bloggs@example.com',
         'contact_number':'+441111111111',
         'date': current_date,
-        'time': '18:00',
+        'time': '18:00:00',
         'party_size': '4',
         'comment':'gluten free'
     }
