@@ -2,8 +2,6 @@ from flask import Flask, render_template, request
 import psycopg2
 import os
 from static.sql.functions import *
-from kubernetes import client, config
-import base64
 
 app = Flask(__name__)
 
@@ -13,16 +11,7 @@ database='Fresko'
 user='postgres'
 
 # Set db Password
-
-import os
-
-if 'KUBERNETES_SERVICE_HOST' in os.environ:
-    config.load_incluster_config()
-    v1 = client.CoreV1Api()
-    secret = v1.read_namespaced_secret("my-secret", "")
-    password = base64.b64decode(secret.data["DB_PASSWORD"]).decode('utf-8')
-else:
-    password=os.getenv('DB_PASSWORD')
+password=os.getenv('DB_PASSWORD')
 
 @app.route('/')
 def index():
