@@ -6,12 +6,13 @@ from static.sql.functions import *
 app = Flask(__name__)
 
 # Set db Constants
-host='35.205.66.81'
+host='/cloudsql/evident-zone-391812:europe-west1:freskodb-23'
 database='Fresko'
 user='postgres'
 
 # Set db Password
-password=os.getenv('DB_PASSWORD')
+# password=os.getenv('DB_PASSWORD')
+password='Flask2023'
 
 @app.route('/')
 def index():
