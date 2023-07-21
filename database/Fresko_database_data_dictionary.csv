@@ -1,69 +1,73 @@
 Table Name,Column Name,Key,Data Type,Description,Example
-Allergen,allergen_id,PK,integer(32),Unique identifier for each allergen,1
-Allergen,allergen_name, ,text,Name of allergen,Peanut
-Booking,booking_id,PK,integer(32),Serial unique ID for each booking,31
-Booking,booking_name, ,text,Full name of customer making the booking,Max Collins
-Booking,group_size, ,integer(32),Number of people attending booking,5
-Booking,contact_phone, ,character varying(20),Phone number of customer making the booking,7237851980
-Booking,contact_email, ,text,Email address of customer making the booking,Max.Collins@email.com
-Booking,start_time, ,timestamp without time zone(6),Time when booked slot begins,14:45
-Booking,duration, ,interval(6),Duration of booking in minutes,120
-Booking,table_id,FK,integer(32),Unique identifier for each table,11
-Current_stock,ingredient_id,"FK,PK",integer(32),Unique identifier for each ingredient (linked with location ID),71
-Current_stock,location_id,"FK,PK",integer(32),Unique identifier for each storage location (linked with ingredient ID),8
-Current_stock,expiry_date,PK,date(3),Expiry date on products,18/09/2023
-Current_stock,total_cost,PK,money,Sum total cost of food and drink,"£3,420.54"
-Current_stock,delivery_date, ,date(3),Date when product was delivered,05/07/2023
-Current_stock,quantity, ,numeric,Amount of each product in storage,110
-Employee,employee_id,PK,integer(32),Unique identifier for each employee,31
-Employee,first_name, ,text,Employee first name,Sean
-Employee,last_name, ,text,Employee last name,Smart
-Employee,job_title, ,text,Employee job title,Assistant manager
-Employee,employment_type, ,text,Whether an employee is full time or part time,Full-time
-Employee,employee_email, ,text,Employee email address,Sean.Smart@email.com
-Employee,employee_phone, ,character varying(20),Employee phone number,7847918443
-Employee,employee_address, ,character varying(50),Employee home address,"12A Melbury House, Wimbledon Hill Road, London"
-Employee,employee_dob, ,date(3),Employee date of birth,11/09/1974
-Employee,employee_gender, ,text,Employee gender,Female
-Ingredient,ingredient_id,PK,integer(32),Unique identifier for each ingredient,351
-Ingredient,ingredient_name, ,text,Name of ingredient,Chickpea Flour
-Ingredient,low_threshold, ,integer(32),Proportion of quantitiy at which a product is reordered (based on last delivery),0.3
-Ingredient,unit, ,text,Unit of measurment that product is measured in,kg
-Ingredient,supplier_id,FK,integer(32),Unique identifier for each supplier,63
-Ingredient_allergen,ingredient_id,"FK,PK",integer(32),Unique identifier for each ingredient (linked with allergen ID),351
-Ingredient_allergen,allergen_id,"FK,PK",integer(32),Unique identifier for each allergen (linked with ingredient ID),1
-Location,location_id,PK,integer(32),Unique identifier for each storage location,31
-Location,location_name, ,text,Name of storage location,Freezer
-Menu_item,course,,text,"Whether the product is a starter, main, dessert, or drink",Main
-Menu_item,menu_item_id,PK,integer(32),Unique identifier for each menu item,57
-Menu_item,menu_item_name, ,text,Name of each menu item ,Pork Souvlaki
-Menu_item,price, ,money,Price in GBP (£) of each menu item,£2.80
-Order,order_id,PK,integer(32),Unique identifer of each order,184
-Order,time_ordered, ,timestamp without time zone(6),Time when order was received,12:58
-Order,time_delivered, ,timestamp without time zone(6),Time when order is delivered,13:27
-Order,table_id,FK,integer(32),Unique identifier for each table,11
-Order,employee_id,FK,integer(32),Unique identifier for each employee,31
-Order_item,order_id,"FK,PK",integer(32),Unique identifer of each order (linked with menu item ID),184
-Order_item,menu_item_id,"FK,PK",integer(32),Unique identifer of each menu item (linked with order ID),57
-Order_item,quantity, ,integer(32),The number of each menu item ordered by a table,3
-Payment,payment_id,PK,integer(32),Unique identifier for each payment,23
-Payment,order_id,FK,integer(32),Unique identifer of each order,184
-Payment,payment_method, ,text,How the payment for the meal is received,Cash
-Payment,amount, ,money,Sum total cost of products ordered by a table,£134.80
-Payment,payment_time, ,timestamp without time zone(6),Time when payment is registered,14:09
-Payroll,salary_id,PK,integer(32),Unique identifier for each salary payment,271
-Payroll,employee_id,FK,integer(32),Unique identifier for each employee,31
-Payroll,year, ,integer(32),The current year,2023
-Payroll,month, ,character varying(10),The current month,7
-Payroll,hours_worked, ,double precision(53),Number of hours worked since last payment,63.5
-Payroll,hourly_rate, ,double precision(53),The rate of payment for each hour worked,11
-Recipe,menu_item_id,"FK,PK",integer(32),Unique identifer of each menu item (linked with ingredient ID),57
-Recipe,ingredient_id,"FK,PK",integer(32),Unique identifer of each ingredient (linked with menu item ID),351
-Recipe,quantity, ,numeric,The amount of ingredient needed to produce the menu item,400
-Supplier,supplier_id,PK,integer(32),Unique identifier for each supplier,63
-Supplier,supplier_name, ,text,Company name of supplier,Stream foods
-Supplier,supplier_address, ,text,Address of supplier administration,"131-138 Westbourne Park, Derby, Derbyshire"
-Supplier,supplier_phone, ,text,Phone number of supplier,1632960208
-Supplier,supplier_email, ,text,email address of supplier,streamfoods@email.com
-Table_number,table_id,PK,integer(32),Unique identifier for each table,11
-Table_number,capacity, ,integer(32),Number of people who can be seated at each table,6
+allergen,allergen_id,PK,integer(32),Unique identifier for each allergen,1
+allergen,allergen_name, ,text,Name of allergen,Peanut
+booking,booking_id,PK,integer(32),Serial unique ID for each booking,31
+booking,booking_name, ,text,Full name of customer making the booking,Max Collins
+booking,group_size, ,integer(32),Number of people attending booking,5
+booking,contact_phone, ,character varying(20),Phone number of customer making the booking,7237851980
+booking,contact_email, ,text,Email address of customer making the booking,Max.Collins@email.com
+booking,start_time, ,timestamp without time zone(6),Time when booked slot begins,14:45
+booking,duration, ,interval(6),Duration of booking in minutes,120
+booking,table_id,FK,integer(32),Unique identifier for each table,11
+booking,comments, ,varchar(100),Any comments the customer adds to the booking,Lactose intolerance
+current_stock,ingredient_id,"FK,PK",integer(32),Unique identifier for each ingredient (linked with location ID),71
+current_stock,location_id,"FK,PK",integer(32),Unique identifier for each storage location (linked with ingredient ID),8
+current_stock,delivery_date, ,date(3),Date when product was delivered in YYYY-MM-DD format,2023-07-05
+current_stock,total_cost,PK,money,Sum total cost of food and drink in GBP,"3,420.54"
+current_stock,expiry_date,PK,date(3),Expiry date on products in YYYY-MM-DD format,2023-09-18
+current_stock,quantity, ,numeric,Amount of each product in storage in grams,110
+employee,employee_id,PK,integer(32),Unique identifier for each employee,31
+employee,first_name, ,text,Employee first name,Sean
+employee,last_name, ,text,Employee last name,Smart
+employee,job_title, ,text,Employee job title,Assistant manager
+employee,employment_type, ,text,Whether an employee is full time or part time,Part
+employee,employee_email, ,text,Employee email address,Sean.Smart@email.com
+employee,employee_phone, ,character varying(20),Employee phone number,7847918443
+employee,employee_address, ,character varying(50),Employee home address,"12A Melbury House, Wimbledon Hill Road, London"
+employee,employee_dob, ,date(3),Employee date of birth in YYYY-MM-DD format,1974-09-11
+employee,employee_gender, ,text,Employee gender,Female
+ingredient,ingredient_id,PK,integer(32),Unique identifier for each ingredient,351
+ingredient,ingredient_name, ,text,Name of ingredient,Chickpea Flour
+ingredient,supplier_quantity, ,text,How much is in one unit of the product that the supplier sells,"12 x 500"
+ingredient,low_threshold, ,integer(32),Proportion of quantity at which a product is reordered (based on last delivery),0.3
+ingredient,unit, ,text,Unit of measurement used for supplier_quantity and low_threshold,kg
+ingredient,low_threshold_grams, ,integer,The same measurement as low_threshold but converted to grams,300
+ingredient,supplier_id,FK,integer(32),Unique identifier for each supplier,63
+ingredient_allergen,ingredient_id,"FK,PK",integer(32),Unique identifier for each ingredient (linked with allergen ID),351
+ingredient_allergen,allergen_id,"FK,PK",integer(32),Unique identifier for each allergen (linked with ingredient ID),1
+location,location_id,PK,integer(32),Unique identifier for each storage location,31
+location,location_name, ,text,Name of storage location,Freezer
+menu_item,menu_item_id,PK,integer(32),Unique identifier for each menu item,57
+menu_item,menu_item_name, ,text,Name of each menu item ,Pork Souvlaki
+menu_item,price, ,money,Price in GBP (Â£) of each menu item,Â£2.80
+menu_item,category, ,text,"Whether the product is a main, salad, drink, add-on, meze, dip or alcoholic drink",Main
+order,order_id,PK,integer(32),Unique identifer of each order,184
+order,time_ordered, ,timestamp without time zone(6),Time when order was received,12:58
+order,time_delivered, ,timestamp without time zone(6),Time when order is delivered,13:27
+order,table_id,FK,integer(32),Unique identifier for each table,11
+order,employee_id,FK,integer(32),Unique identifier for each employee,31
+order_item,order_id,"FK,PK",integer(32),Unique identifer of each order (linked with menu item ID),184
+order_item,menu_item_id,"FK,PK",integer(32),Unique identifer of each menu item (linked with order ID),57
+order_item,quantity, ,integer(32),The number of each menu item ordered by a table,3
+order_item,comments, ,varchar(100),Any comments the customer adds to the order,No tomato
+payment,payment_id,PK,integer(32),Unique identifier for each payment,23
+payment,order_id,FK,integer(32),Unique identifer of each order,184
+payment,payment_method, ,text,How the payment for the meal is received,Cash
+payment,amount, ,money,Sum total cost of products ordered by a table,Â£134.80
+payment,payment_time, ,timestamp without time zone(6),Time when payment is registered,14:09
+payroll,salary_id,PK,integer(32),Unique identifier for each salary payment,271
+payroll,employee_id,FK,integer(32),Unique identifier for each employee,31
+payroll,year, ,integer(32),The current year,2023
+payroll,month, ,character varying(10),The current month,7
+payroll,hours_worked, ,double precision(53),Number of hours worked since last payment,63.5
+payroll,hourly_rate, ,double precision(53),The rate of payment for each hour worked,11
+recipe,menu_item_id,"FK,PK",integer(32),Unique identifer of each menu item (linked with ingredient ID),57
+recipe,ingredient_id,"FK,PK",integer(32),Unique identifer of each ingredient (linked with menu item ID),351
+recipe,quantity, ,numeric,The amount of ingredient needed to produce the menu item in grams,400
+supplier,supplier_id,PK,integer(32),Unique identifier for each supplier,63
+supplier,supplier_name, ,text,Company name of supplier,Stream foods
+supplier,supplier_address, ,text,Address of supplier administration,"131-138 Westbourne Park, Derby, Derbyshire"
+supplier,supplier_phone, ,text,Phone number of supplier,1632960208
+supplier,supplier_email, ,text,email address of supplier,streamfoods@email.com
+table_number,table_id,PK,integer(32),Unique identifier for each table,11
+table_number,capacity, ,integer(32),Number of people who can be seated at each table,6
