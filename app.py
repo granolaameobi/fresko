@@ -6,12 +6,13 @@ from static.sql.functions import *
 app = Flask(__name__)
 
 # Set db Constants
-host='35.205.66.81'
+host='/cloudsql/evident-zone-391812:europe-west1:freskodb-23'
 database='Fresko'
 user='postgres'
 
 # Set db Password
-password=os.getenv('DB_PASSWORD')
+# password=os.getenv('DB_PASSWORD')
+password='Fresko2023'
 
 @app.route('/')
 def index():
@@ -27,13 +28,7 @@ def lunch():
 
 @app.route('/dinner')
 def dinner():
-    # Retrieve menu items from a database or file
-    menu_items = [
-        {'name': 'Pork (GF)', 'price': '9.00'},
-        {'name': 'Lamb (GF)', 'price': '9.00'},
-        {'name': 'Falafel (GF)', 'price': '9.50'}
-    ]
-    return render_template('dinner.html',menu_items=menu_items)
+    return render_template('dinner.html')
 
 @app.route('/reservation', methods=['GET', 'POST'])
 def reservation():
@@ -55,8 +50,8 @@ def reservation():
         tables=table_assigner(available_tables=available_tables, party_size=party_size)
 
         # write to db
-        sql="""INSERT INTO public."Booking" (booking_name, group_size, contact_phone, contact_email, start_time, duration, table_id) VALUES (%s, %s, %s, %s, %s, %s, %s);"""
-        data=(first_name+' '+last_name, party_size, contact_number, email, date+' '+time+'.000000', '02:00:00.000000', tables[0])
+        sql="""INSERT INTO public."Booking" (booking_name, group_size, contact_phone, contact_email, start_time, table_id) VALUES (%s, %s, %s, %s, %s, %s);"""
+        data=(first_name+' '+last_name, party_size, contact_number, email, date+' '+time+'.000000', tables[0])
         conn=connect_to_database(host=host, database=database, user=user,
                                  password=password)
         try:

@@ -24,8 +24,20 @@ spec:
             secretKeyRef:
               name: my-secret
               key: DB_PASSWORD
+      - name: cloud-sql-proxy
+        image: gcr.io/cloudsql-docker/gce-proxy:1.22.0
+        command: ["/cloud_sql_proxy",
+                  "-instances=evident-zone-391812:europe-west1:freskodb-23=tcp:3306",
+                  "-credential_file=/secrets/cloudsql/credentials.json"]
+        volumeMounts:
+        - name: cloudsql-instance-credentials
+          mountPath: /secrets/cloudsql
+          readOnly: true
+      volumes: 
+      - name: cloudsql-instance-credentials
+        secret:
+          secretName: cloudsql-instance-credentials
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
