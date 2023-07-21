@@ -2,7 +2,7 @@
 
 -- DELETE FROM "employee";
 -- Insert data into the employee table
-INSERT INTO "employee" (first_name, last_name, job_title, employment_type, employee_email, employee_phone, employee_address, employee_DOB, employee_gender
+INSERT INTO "employee" ("first_name", "last_name", "job_title", "employment_type", "employee_email", "employee_phone", "employee_address", "employee_dob", "employee_gender")
 VALUES
   ('Max', 'Collins', 'Server', 'Part', 'maxcollins@rockborne.com', '01234567890', '10 Max Road', '1946-03-01', 'Male'),
   ('Lucie', 'Cornwell-Lee', 'Server', 'Full', 'luciecornwell-lee@rockborne.com', '02345678901', '52 Lucie Lane', '1983-07-30', 'Female'),
@@ -13,7 +13,7 @@ VALUES
 
 -- DELETE FROM "payroll";
 -- Insert data into the payroll table
-INSERT INTO "payroll" (employee_id, year, month, hours_worked, hourly_rate)
+INSERT INTO "payroll" ("employee_id", "year", "month", "hours_worked", "hourly_rate")
 VALUES
   (1, 2023, 'July', 25.1, 11.62),
   (2, 2023, 'July', 45.2, 11.62),
@@ -24,7 +24,7 @@ VALUES
 
 -- DELETE FROM "table_number";
 -- Insert data into the table_number table
-INSERT INTO "table_number" (capacity)
+INSERT INTO "table_number" ("capacity")
 VALUES
   (4),
   (4),
@@ -47,7 +47,7 @@ VALUES
 
 -- DELETE FROM "menu_item";
 -- Insert data into the menu_item table
-INSERT INTO "menu_item" (menu_item_name, price, category)
+INSERT INTO "menu_item" ("menu_item_name", "price", "category")
 VALUES
   ('Chicken gyros', 9.00, 'main'),
   ('Pork gyros', 9.00, 'main'),
@@ -68,7 +68,7 @@ VALUES
   ('Bottled water', 1.50, 'drink'),
   ('Hummus', 1.00, 'add-on'),
   ('Tzatziki', 1.00, 'add-on'),
-  ('Tzatziki free', 0.00, 'add-on),)
+  ('Tzatziki free', 0.00, 'add-on'),
   ('Tahini sauce', 1.00, 'add-on'),
   ('Tahini sauce free', 0.00, 'add-on'),
   ('Mint yoghurt sauce', 1.00, 'add-on'),
@@ -124,7 +124,7 @@ VALUES
 
 -- DELETE FROM "allergen";
 -- Insert data into the allergen table
-INSERT INTO "allergen" (allergen_name)
+INSERT INTO "allergen" ("allergen_name")
 VALUES
   ('Celery'),
   ('Gluten'),
@@ -142,7 +142,7 @@ VALUES
 
 -- DELETE FROM "supplier";
 -- Insert data into the supplier table
-INSERT INTO "supplier" (supplier_name, supplier_address, supplier_phone, supplier_email)
+INSERT INTO "supplier" ("supplier_name", "supplier_address", "supplier_phone", "supplier_email")
 VALUES
   ('Meat supplier', '1 Meat Street, Bristol', '07745123456', 'meatsupplier@gmail.com'),
   ('Fruit and veg supplier', '5 Vitamin Road, Bristol', '07745456789', 'fruitveg@gmail.com'),
@@ -153,7 +153,7 @@ VALUES
 
 -- DELETE FROM "ingredient";
 -- Insert data into the ingredient table
-INSERT INTO "ingredient" (ingredient_name, supplier_quantity, low_threshold, unit, low_threshold_grams, supplier_id)
+INSERT INTO "ingredient" ("ingredient_name", "supplier_quantity", "low_threshold", "unit", "low_threshold_grams", "supplier_id")
 VALUES
   ('Chicken breast', '5', 30, 'kg', 3000, 1),
   ('Olive oil', '5', 10, 'l', 10000, 3),
@@ -179,7 +179,7 @@ VALUES
   ('Vegetable oil', '20', 60, 'l', 60000, 3),
   ('Halloumi', '6 x 750', 9000, 'g', 9000, 5),
   ('Dried thyme', '210', 1050, 'g', 1050, 3),
-  ('Mixed leaves', '1', 5, 'kg', 5000 2),
+  ('Mixed leaves', '1', 5, 'kg', 5000, 2),
   ('Bell pepper', '5', 5, 'kg', 5000, 2),
   ('Feta cheese', '900', 4500, 'g', 4500, 5),
   ('Farro grains', '1', 2, 'kg', 2000, 2),
@@ -255,7 +255,7 @@ VALUES
 
 -- DELETE FROM "recipe";
 -- Insert data into the recipe table
-INSERT INTO "recipe" (menu_item_id, ingredient_id, quantity)
+INSERT INTO "recipe" ("menu_item_id", "ingredient_id", "quantity")
 VALUES
   (1, 1, 125),
   (1, 2, 10),
@@ -332,7 +332,7 @@ VALUES
   (5, 18, 100),
   (5, 19, 50),
   (5, 4, 10),
-  (5, 15, 8),
+  (5, 15, 16),
   (5, 7, 2),
   (5, 20, 2),
   (5, 21, 2),
@@ -346,7 +346,6 @@ VALUES
   (5, 12, 50), 
   (5, 13, 25), 
   (5, 14, 50),
-  (5, 15, 8),
   (6, 1, 150),
   (6, 2, 10),
   (6, 3, 7),
@@ -495,7 +494,7 @@ VALUES
   (20, 4, 5),
   (20, 3, 15),
   (20, 34, 2),
-  (20 8, 2),
+  (20, 8, 2),
   (20, 9, 2),
   (21, 32, 15),
   (21, 3, 15),
@@ -730,7 +729,7 @@ VALUES
 
 -- DELETE FROM "ingredient_allergen";
 -- Insert data into the ingredient_allergen table
-INSERT INTO "ingredient_allergen" (ingredient_id, allergen_id)
+INSERT INTO "ingredient_allergen" ("ingredient_id", "allergen_id")
 VALUES
   (23, 7), 
   (27, 7), 
@@ -750,7 +749,7 @@ VALUES
 
 -- DELETE FROM "location";
 -- Insert data into the location table
-INSERT INTO "location" (location_name)
+INSERT INTO "location" ("location_name")
 VALUES
   ('Pantry'),
   ('Refrigerator'),
@@ -764,7 +763,7 @@ VALUES
 
 -- DELETE FROM "current_stock";
 -- Insert data into the current_stock table
-INSERT INTO "current_stock" (ingredient_id, location_id, delivery_date, total_cost, expiry_date, quantity)
+INSERT INTO "current_stock" ("ingredient_id", "location_id", "delivery_date", "total_cost", "expiry_date", "quantity")
 VALUES
 -- dates must be in YYYY-MM-DD format
 -- example entry: (6, 4, '2023-07-19', 200.14, '2023-07-26', 500)
