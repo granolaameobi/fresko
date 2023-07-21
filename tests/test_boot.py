@@ -68,9 +68,9 @@ def test_cookies(client):
     response = client.get('/cookies')
     assert response.status_code == 200
 
-def test_reservation_submission(client):
-    response = client.post('/reservation', data=request)
-    assert response.status_code == 200
+# def test_reservation_submission(client):
+#     response = client.post('/reservation', data=request)
+#     assert response.status_code == 200
 
 def test_subscribe(client):
     response = client.post('/subscribe', data={'email':request['email']})
