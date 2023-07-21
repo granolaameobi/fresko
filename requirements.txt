@@ -3,4 +3,3 @@ Flask-WTF==0.15.1
 SQLAlchemy==1.4.25
 pytest==7.4.0
 psycopg2-binary
-kubernetes==27.2.0
