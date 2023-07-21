@@ -61,6 +61,7 @@ CREATE TABLE "booking" (
   start_time TIMESTAMP,
   duration INTERVAL DEFAULT ('1.5 hours'), --Cannot do end_time as cannot reference start time for default
   table_id INT,
+  comments VARCHAR(100),
   FOREIGN KEY (table_id) REFERENCES "table_number" (table_id)
 );
 
@@ -98,6 +99,7 @@ CREATE TABLE IF NOT EXISTS "order_item" (
   order_id INT,
   menu_item_id INT,
   quantity INT,
+  comments VARCHAR(100),
   PRIMARY KEY (order_id, menu_item_id),
   FOREIGN KEY (order_id) REFERENCES "order" (order_id),
   FOREIGN KEY (menu_item_id) REFERENCES "menu_item" (menu_item_id)
