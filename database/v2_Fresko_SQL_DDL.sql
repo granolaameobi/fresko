@@ -5,21 +5,21 @@ CREATE OR REPLACE FUNCTION drop_all_tables()
   RETURNS VOID
 AS $$
 DECLARE
-  table_name TEXT;
+  table_name_var TEXT;
 BEGIN
   -- Get the names of all tables in the current schema
-  FOR table_name IN (SELECT table_name FROM information_schema.tables WHERE table_schema = current_schema())
+  FOR table_name_var IN (SELECT table_name FROM information_schema.tables WHERE table_schema = current_schema())
   LOOP
     -- Construct the DROP TABLE statement for each table and execute it
-    EXECUTE 'DROP TABLE IF EXISTS ' || table_name || ' CASCADE;';
+    EXECUTE 'DROP TABLE IF EXISTS "' || table_name_var || '" CASCADE;';
   END LOOP;
 END;
 $$ LANGUAGE plpgsql;
 
-
-
 SELECT drop_all_tables();
 */
+
+
 --Create employee table
 CREATE TABLE IF NOT EXISTS "employee" (
   employee_id SERIAL PRIMARY KEY,
