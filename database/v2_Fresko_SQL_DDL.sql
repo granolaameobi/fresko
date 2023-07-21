@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS "supplier" (
 CREATE TABLE IF NOT EXISTS "ingredient" (
   ingredient_id SERIAL PRIMARY KEY,
   ingredient_name TEXT,
-  supplier_quantity TEXT
+  supplier_quantity TEXT,
   low_threshold INT,
   unit TEXT,
   low_threshold_grams INT,
