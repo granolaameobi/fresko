@@ -12,7 +12,7 @@ user='postgres'
 
 # Set db Password
 # password=os.getenv('DB_PASSWORD')
-password='Flask2023'
+password='Fresko2023'
 
 @app.route('/')
 def index():
