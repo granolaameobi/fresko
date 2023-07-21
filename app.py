@@ -11,8 +11,7 @@ database='Fresko'
 user='postgres'
 
 # Set db Password
-# password=os.getenv('DB_PASSWORD')
-password='Fresko2023'
+password=os.getenv('DB_PASSWORD')
 
 @app.route('/')
 def index():
