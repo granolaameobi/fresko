@@ -6,7 +6,7 @@ from static.sql.functions import *
 app = Flask(__name__)
 
 # Set db Constants
-host='35.205.66.81'
+host='localhost:5432'
 database='Fresko'
 user='postgres'
 
