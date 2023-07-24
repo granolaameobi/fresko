@@ -7,8 +7,8 @@ app = Flask(__name__)
 
 # Set db Constants
 host='localhost:5432'
-database='Fresko'
-user='postgres'
+user=os.getenv('DB_USER')
+database=os.getenv('DB_NAME')
 
 # Set db Password
 password=os.getenv('DB_PASSWORD')
