@@ -6,7 +6,7 @@ from static.sql.functions import *
 app = Flask(__name__)
 
 # Set db Constants
-host='/cloudsql/evident-zone-391812:europe-west1:freskodb-23'
+host='localhost:5432'
 database='Fresko'
 user='postgres'
 
