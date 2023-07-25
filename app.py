@@ -50,13 +50,14 @@ def reservation():
 
         # write to db
         sql="""INSERT INTO public."booking" (booking_name, group_size, contact_phone, contact_email, start_time, table_id, comments) VALUES (%s, %s, %s, %s, %s, %s, %s);"""
-        data=(first_name+' '+last_name, party_size, contact_number, email, date+' '+time+'.000000', tables[0], comment)
+        # data=(first_name+' '+last_name, party_size, contact_number, email, date+' '+time+'.000000', tables[0], comment)
         conn=connect_to_database(host=host, database=database, user=user,
                                  password=password)
         try:
             with conn.cursor() as cursor:
-                cursor.execute(sql, data)
-                conn.commit()
+                for table in tables:
+                    cursor.execute(sql, (first_name+' '+last_name, party_size, contact_number, email, date+' '+time+'.000000', table, comment))
+                    conn.commit()
                 cursor.close()
                 conn.close()
                 return render_template('reservation_confirmation.html', first_name=first_name, last_name=last_name,
