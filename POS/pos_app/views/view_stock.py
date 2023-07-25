@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template , render_template, request, jsonify
+from flask import Blueprint, render_template
 from pos_app.models import get_stock
 
 view_stock_bp = Blueprint('view_stock', __name__)

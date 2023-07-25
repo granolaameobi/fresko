@@ -14,13 +14,41 @@ def connect_to_database():
         connection = psycopg2.connect(
             host="127.0.0.1",
             database="Restaurant",
-            user="postgres", #Remember to change these details
-            password="PostGres"
+            user="YOUR_USERNAME", #Remember to change these details
+            password="YOUR_POSTGRES"
         )
         return connection
     except (Exception, psycopg2.Error) as error:
         print("Database Connection Error", str(error))
         return None
+    
+
+def SQL_query(select_query, to_return_rows=True):
+    """
+    Executes the given SQL query and returns the result if specified.
+
+    Inputs:
+    - select_query (str): The SQL query to execute.
+    - to_return_rows (bool): Indicates whether to fetch and return rows (default: True).
+
+    Returns:
+    - rows (list): The fetched rows if `to_return_rows` is True, else None.
+    """
+    connection = connect_to_database()
+    cursor = connection.cursor()
+
+    cursor.execute(select_query)
+
+    if to_return_rows:
+        # Fetch all the rows returned by the query
+        rows = cursor.fetchall()
+        cursor.close()
+        connection.close()
+        return rows
+    else:
+        cursor.close()
+        connection.commit()  # Commit the transaction
+        connection.close()
 
 def find_available_tables(start_time, duration):
     '''
@@ -36,33 +64,15 @@ def find_available_tables(start_time, duration):
     '''
 
     # Connect to the PostgreSQL database
-    connection = connect_to_database()
-    cursor = connection.cursor()
-
-    
-    try:
-        # Execute the SQL query to find available tables
-        cursor.execute(f""" 
+    tables_query = f""" 
             SELECT t.table_id, t.capacity 
-            FROM "Table_number" t 
-            LEFT JOIN "Booking" b ON t.table_id = b.table_id 
+            FROM "table_number" t 
+            LEFT JOIN "booking" b ON t.table_id = b.table_id 
             WHERE (b.start_time IS NULL OR b.start_time + b.duration <= '{start_time}' 
                 OR '{start_time}' >= b.start_time + interval '{duration}')  
-        """)
+        """
 
-        # Fetch all the rows returned by the query
-        rows = cursor.fetchall()
-
-        # Extract table IDs and capacities from the rows
-        tables = rows
-    except Exception as e:
-        print(f"An error occurred: {str(e)}")
-        return 
-
-
-    # Close the database connection
-    cursor.close()
-    connection.close()
+    tables = SQL_query(tables_query)
 
     return tables
 
@@ -138,34 +148,7 @@ def table_assigner(available_tables, party_size, table_combination=[]):
     return table_assigner(available_tables, party_size, table_combination)
 
 
-def SQL_query(select_query, to_return_rows=True):
-    """
-    Executes the given SQL query and returns the result if specified.
 
-    Inputs:
-    - select_query (str): The SQL query to execute.
-    - to_return_rows (bool): Indicates whether to fetch and return rows (default: True).
-
-    Returns:
-    - rows (list): The fetched rows if `to_return_rows` is True, else None.
-    """
-    connection = connect_to_database()
-    cursor = connection.cursor()
-
-    cursor.execute(select_query)
-
-    if to_return_rows:
-        # Fetch all the rows returned by the query
-        rows = cursor.fetchall()
-        cursor.close()
-        connection.close()
-        return rows
-    else:
-        # Execute the query without returning rows
-        cursor.execute(select_query)
-        cursor.close()
-        connection.commit()  # Commit the transaction
-        connection.close()
     
 
 def get_menu_items(course=None):
@@ -185,9 +168,9 @@ def get_menu_items(course=None):
         # Execute the SQL query to select menu item IDs and names
         if course:
             select_query = f"SELECT menu_item_id, menu_item_name, price, course \
-                            FROM \"Menu_item\" where course = '{course}';"
+                            FROM \"menu_item\" where course = '{course}';"
         else:
-            select_query = f"SELECT menu_item_id, menu_item_name, price, course FROM \"Menu_item\";"
+            select_query = f"SELECT menu_item_id, menu_item_name, price, course FROM \"menu_item\";"
         
         menu_items = SQL_query(select_query)
 
@@ -207,7 +190,7 @@ def get_tables_numbers():
         '''
         try:
             # Execute the SQL query to select table numbers
-            select_query = "SELECT table_id FROM \"Table_number\";"
+            select_query = "SELECT table_id FROM \"table_number\";"
 
             # Fetch all the rows returned by the query
             table_numbers = SQL_query(select_query)
@@ -318,7 +301,24 @@ def get_stock():
         ]
 
 
-    # except (Exception, psycopg2.Error) as error:
-    #     # Handle any errors that occur during the execution
-    #     print(f"An error occurred: {str(error)}")
-    #     return
+
+def get_orders(status):
+    '''
+    Fetches the current orders
+    '''
+
+    query = f"SELECT table_id, menu_item_name, price, quantity \
+                    FROM get_todays_orders() WHERE status = '{status}'"
+            
+    orders = SQL_query(query)
+
+    return [
+        {
+            'table_id' : order[0],
+            'menu_item_name' : order[1],
+            'price' : order[2],
+            'quantity': order[3]
+        }
+
+        for order in orders
+    ]

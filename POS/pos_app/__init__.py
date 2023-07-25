@@ -3,6 +3,7 @@ from pos_app.views.new_order import new_order_bp
 from pos_app.views.auth import auth_bp
 from pos_app.views.home import home_bp
 from pos_app.views.view_stock import view_stock_bp
+from pos_app.views.view_orders import view_orders_bp
 from pos_app.models import get_accessible_pages
 
 # Set up the flask app
@@ -14,6 +15,7 @@ app.register_blueprint(new_order_bp)
 app.register_blueprint(auth_bp)
 app.register_blueprint(home_bp)
 app.register_blueprint(view_stock_bp)
+app.register_blueprint(view_orders_bp)
 
 # Home route to render index.html
 @app.route('/')
