@@ -49,8 +49,8 @@ def reservation():
         tables=table_assigner(available_tables=available_tables, party_size=party_size)
 
         # write to db
-        sql="""INSERT INTO public."Booking" (booking_name, group_size, contact_phone, contact_email, start_time, table_id) VALUES (%s, %s, %s, %s, %s, %s);"""
-        data=(first_name+' '+last_name, party_size, contact_number, email, date+' '+time+'.000000', tables[0])
+        sql="""INSERT INTO public."booking" (booking_name, group_size, contact_phone, contact_email, start_time, table_id, comments) VALUES (%s, %s, %s, %s, %s, %s, %s);"""
+        data=(first_name+' '+last_name, party_size, contact_number, email, date+' '+time+'.000000', tables[0], comment)
         conn=connect_to_database(host=host, database=database, user=user,
                                  password=password)
         try:
