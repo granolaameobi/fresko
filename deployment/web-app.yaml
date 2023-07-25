@@ -28,7 +28,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: cloudsql-db-credentials
-              key: password 
+              key: password
         - name: DB_NAME
           valueFrom:
             secretKeyRef:

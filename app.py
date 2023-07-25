@@ -6,7 +6,7 @@ from static.sql.functions import *
 app = Flask(__name__)
 
 # Set db Constants
-host='localhost:5432'
+host='127.0.0.1'
 user=os.getenv('DB_USER')
 database=os.getenv('DB_NAME')
 
