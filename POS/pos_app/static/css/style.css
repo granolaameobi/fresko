@@ -1,0 +1,228 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #C0D5B2;
+    font-family: 'Anuphan', sans-serif;
+    text-transform: sentencecase;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    text-transform: uppercase;
+    font-family: 'Josefin Sans', sans-serif;
+    color: #000000;
+    margin-bottom: 10px;
+    font-size: 54px;
+    line-height: 1;
+    letter-spacing: -0.05em;
+}
+
+.header {
+    background-color: #FFFFFF;
+    padding: 20px 20px;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+}
+
+nav img {
+    width: 150px;
+    margin-right: 20px;
+}
+
+.nav-links {
+    margin-left: auto;
+}
+
+.nav-links ul {
+    list-style: none;
+}
+
+.nav-links ul li {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.nav-links ul li a {
+    text-decoration: none;
+    color: #000000;
+    font-weight: 300;
+}
+
+.center {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.content {
+    flex-basis: 50%;
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 5%;
+}
+
+.menu-button {
+    margin-top: 20px;
+    text-align: center;
+    width: 120px;
+    height: 30px;
+    border-radius: 20px;
+    border: 1px solid #366B4C;
+    background-color: #366B4C;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.menu-button p {
+    margin: 0;
+    color: white;
+    font-size: 16px;
+    padding: 5px;
+}
+
+.menu-button:hover {
+    background-color: #458966; /* Lighter color when hovering */
+    border-color: #458966; /* Adjust border color accordingly */
+}
+
+img {
+    margin-left: auto;
+    flex-basis: 50%;
+    max-width: 600px;
+    height: auto;
+}
+
+h1, .menu-button, img {
+    display: block;
+    margin: 0 auto;
+}
+
+.landing_page_bowl {
+    width: 500px;
+    max-width: 100%;
+    height: auto;
+}
+
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.menu-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.tablinks {
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.tablinks:hover {
+    background-color: #ddd;
+}
+
+.tabcontent {
+    display: none;
+    padding-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Use CSS Grid for the buttons */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+    margin-bottom: 20px;
+}
+
+.dish-btn {
+    display: block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.dish-btn:hover {
+    background-color: #45a049;
+}
+
+
+#table-selection {
+    margin-top: 20px; /* Add margin at the top */
+    margin-bottom: 20px; /* Add margin at the bottom */
+}
+
+#buttons-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+#buttons-container button {
+    margin: 0 10px; /* Add horizontal gap between the buttons */
+}
+
+
+#back-to-home-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#back-to-home-container a {
+    color: #366B4C;
+    text-decoration: none;
+}
+
+#table-display {
+    margin: 0 auto;
+    max-width: 800px;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+#table-content {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+#table-content th, #table-content td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ccc;
+}
+#table-content th {
+    background-color: #f2f2f2;
+}
+#table-content tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+#table-content tr:hover {
+    background-color: #e6e6e6;
+}
+a {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+}
