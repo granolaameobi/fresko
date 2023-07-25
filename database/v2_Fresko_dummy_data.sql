@@ -1047,36 +1047,3 @@ VALUES
   (95, 8, '2023-08-01', 387.25, '2023-09-01', 8000), 
   (96, 8, '2023-08-01', 387.25, '2023-09-01', 8000), 
   (97, 8, '2023-08-01', 269.75, '2023-10-01', 12000);
-
--- Create the function
-CREATE OR REPLACE FUNCTION create_new_order(
-  p_menu_item_ids INT[],
-  p_quantities INT[],
-  p_table_id INT
-) RETURNS INT
-AS $$
-DECLARE
-  new_order_id INT;
-  array_length INT;
-  i INT;
-
-BEGIN
-  -- Insert a new order into the "order" table
-  INSERT INTO "order" (time_ordered, time_delivered, table_id)
-  VALUES (NOW(), NULL, p_table_id)
-  RETURNING order_id INTO new_order_id;
-
-  -- Determine the length of the input arrays
-  array_length := array_length(p_menu_item_ids, 1);
-
-  -- Insert order items into the "order_item" table for each menu item
-  FOR i IN 1..array_length
-  LOOP
-    INSERT INTO "order_item" (order_id, menu_item_id, quantity)
-    VALUES (new_order_id, p_menu_item_ids[i], p_quantities[i]);
-  END LOOP;
-
-  -- Return the new order_id
-  RETURN new_order_id;
-END;
-$$ LANGUAGE plpgsql;
