@@ -43,20 +43,19 @@ def reservation():
         comment = request.form['comment']
 
         # get tables(s)
-        available_tables=find_available_tables(start_time=date+' '+time+':00.000000',duration='01:30:00.000000',
+        available_tables=find_available_tables(start_time=date+' '+time, duration='01:30:00.000000',
                                                host=host,database=database,
                                                user=user, password=password)
         tables=table_assigner(available_tables=available_tables, party_size=party_size)
 
         # write to db
         sql="""INSERT INTO public."booking" (booking_name, group_size, contact_phone, contact_email, start_time, table_id, comments) VALUES (%s, %s, %s, %s, %s, %s, %s);"""
-        # data=(first_name+' '+last_name, party_size, contact_number, email, date+' '+time+'.000000', tables[0], comment)
         conn=connect_to_database(host=host, database=database, user=user,
                                  password=password)
         try:
             with conn.cursor() as cursor:
                 for table in tables:
-                    cursor.execute(sql, (first_name+' '+last_name, party_size, contact_number, email, date+' '+time+'.000000', table, comment))
+                    cursor.execute(sql, (first_name+' '+last_name, party_size, contact_number, email, date+' '+time, table, comment))
                     conn.commit()
                 cursor.close()
                 conn.close()
