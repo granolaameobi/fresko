@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@200&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="icon" href="static/images/favicon.ico">
+  </head>
+  <body>
+    <section class="header">
+        <nav>
+            <a href="/"><img src="static/images/logo.png" alt="Restaurant Logo"></a>
+            <div class="nav-links">
+                <ul>
+                    <li><a href="/" class="button active">Home</a></li>
+                    {% if accessible_pages.new_order %}
+                    <li><a href="/new-order" class="button">New order</a></li>
+                    {% endif %}
+                    {% if accessible_pages.view_order %}
+                    <li><a href="/view-order" class="button">View Orders</a></li>
+                    {% endif %}
+                    {% if accessible_pages.view_stock %}
+                    <li><a href="/view-stock" class="button">View Stock</a></li>
+                    {% endif %}
+                    {% if accessible_pages.payment %}
+                    <li><a href="/payment" class="button">Payment</a></li>
+                    {% endif %}
+                    {% if accessible_pages.table_assignment %}
+                    <li><a href="/table-assignment" class="button">Table Assignment</a></li>
+                    {% endif %}
+                    {% if accessible_pages.sign_out %}
+                    <li><a href="/" class="button">Sign out</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+    </section>
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+  </body>
+</html>

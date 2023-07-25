@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stock Submenu</title>
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <h1>Stock Submenu</h1>
+    <div id="table-display">
+        <h2>Current Stock</h2>
+        <table id="table-content">
+            <tr>
+                <th style="width: 15%;">Ingredient ID</th>
+                <th style="width: 30%;">Ingredient Name</th>
+                <th style="width: 15%;">Expiry Date</th>
+                <th style="width: 10%;">Quantity</th>
+                <th style="width: 10%;">Units</th>
+            </tr>
+            {% for stock in stock_data %}
+            <tr>
+                <td>{{ stock.ingredient_id }}</td>
+                <td>{{ stock.ingredient_name }}</td>
+                <td>{{ stock.expiry_date }}</td>
+                <td>{{ stock.quantity }}</td>
+                <td>{{ stock.units }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div id="back-to-home-container">
+        <a href="/home">Back to Home</a>
+    </div>
+</body>
+</html>

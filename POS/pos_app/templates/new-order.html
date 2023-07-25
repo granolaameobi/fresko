@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Restaurant Menu</title>
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <h1>Restaurant Menu</h1>
+    <div class="menu-tabs">
+        <button class="tablinks" onclick="openTab(event, 'starter')">Starters</button>
+        <button class="tablinks" onclick="openTab(event, 'main')">Main Courses</button>
+        <button class="tablinks" onclick="openTab(event, 'side')">Sides</button>
+        <button class="tablinks" onclick="openTab(event, 'drink')">Drinks</button>
+    </div>
+
+    <div id="starter" class="tabcontent">
+        <div class="grid-container">
+            {% for item in menu_data.starter %}
+                <button class="dish-btn" onclick="addToOrder('{{ item[0] }}', '{{ item[1] }}', '{{ item[2] }}')">{{ item[1] }}</button>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div id="main" class="tabcontent">
+        <div class="grid-container">
+            {% for item in menu_data.main %}
+                <button class="dish-btn" onclick="addToOrder('{{ item[0] }}', '{{ item[1] }}', '{{ item[2] }}')">{{ item[1] }}</button>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div id="side" class="tabcontent">
+        <div class="grid-container">
+            {% for item in menu_data.side %}
+                <button class="dish-btn" onclick="addToOrder('{{ item[0] }}', '{{ item[1] }}', '{{ item[2] }}')">{{ item[1] }}</button>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div id="drink" class="tabcontent">
+        <div class="grid-container">
+            {% for item in menu_data.drink %}
+                <button class="dish-btn" onclick="addToOrder('{{ item[0] }}', '{{ item[1] }}', '{{ item[2] }}')">{{ item[1] }}</button>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div id="table-selection">
+        <label for="table-dropdown">Select a table number:</label>
+        <select id="table-dropdown" onchange="updateSelectedTable()">
+            <option value="" selected disabled>{{ default_option_table }}</option>
+            {% for table_number in table_numbers %}
+            <option value="{{ table_number }}">{{ table_number }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div id="table-display">
+        <h2>Current Order:</h2>
+        <table id="table-content">
+            <tr>
+                <th>Item ID</th>
+                <th>Item Name</th>
+                <th>Price</th>
+            </tr>
+        </table>
+    </div>
+
+    <div id="buttons-container">
+        <button class="menu-button" id="confirm-order-btn" onclick="confirmOrder()">Confirm Order</button>
+        <button class="menu-button" id="clear-order-btn" onclick="clearOrder()">Clear Order</button>
+    </div>
+
+    <div id="back-to-home-container">
+        <a href="/home">Back to Home</a>
+    </div>
+
+    <script>
+        var current_order = [];
+        var selectedTable = null;
+
+        function updateSelectedTable(){
+            var dropdown = document.getElementById("table-dropdown");
+            selectedTable = dropdown.value;
+        }
+
+        function clearOrder() {
+            current_order = [];
+            updateOrderTable();
+        }
+
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        function addToOrder(itemId, itemName, itemPrice) {
+            current_order.push({id: itemId, name: itemName, price: itemPrice});
+            updateOrderTable();
+        }
+
+        function updateOrderTable() {
+            var table = document.getElementById("table-content");
+            // Clear existing rows except the header
+            while (table.rows.length > 1) {
+                table.deleteRow(1);
+            }
+            // Add items from current_order to the table
+            for (var i = 0; i < current_order.length; i++) {
+                var row = table.insertRow(-1);
+                var idCell = row.insertCell(0);
+                var nameCell = row.insertCell(1);
+                var priceCell = row.insertCell(2);
+                nameCell.innerHTML = current_order[i].name;
+                idCell.innerHTML = current_order[i].id;
+                priceCell.innerHTML = current_order[i].price;
+
+            }
+        }
+
+        function confirmOrder() {
+            if (selectedTable === null || selectedTable === "") {
+                alert("Please select a valid table number.");
+                return; // Exit the function if no table number is selected
+            }
+
+            var itemIds = current_order.map(item => item.id);
+
+            // Include the selected table number in the request data
+            var requestData = {
+                "itemIds": itemIds,
+                "tableNumber": selectedTable
+            };
+
+            console.log(requestData);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/confirm_order', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    clearOrder();
+                }
+            };
+            xhr.send(JSON.stringify(requestData));
+    }
+    </script>
+    
+</body>
+</html>
