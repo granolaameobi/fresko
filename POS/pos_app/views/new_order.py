@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template , render_template, request, jsonify
+from flask import Blueprint, render_template, request, jsonify
 from pos_app.models import get_menu_items, place_order, get_tables_numbers
 
 new_order_bp = Blueprint('new_order', __name__)

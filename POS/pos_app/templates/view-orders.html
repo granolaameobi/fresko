@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fresko POS</title>
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <h1>Today's Orders</h1>
+    <div class="menu-tabs">
+        <button class="tablinks active" onclick="openTab(event, 'open-orders')">Open Orders</button>
+        <button class="tablinks" onclick="openTab(event, 'closed-orders')">Closed Orders</button>
+    </div>
+
+    <div id="open-orders" class="tabcontent">
+        <div id="table-display">
+            <table id="table-content">
+                <tr>
+                    <th style="width: 15%;">Table ID</th>
+                    <th style="width: 30%;">Item Name</th>
+                    <th style="width: 10%;">Price</th>
+                    <th style="width: 10%;">Quantity</th>
+                </tr>
+                {% for order in open_orders_data %} 
+                <!-- table_id, menu_item_name, price, quantity -->
+                <tr>
+                    <td>{{ order.table_id }}</td>
+                    <td>{{ order.menu_item_name }}</td>
+                    <td>{{ order.price }}</td>
+                    <td>{{ order.quantity }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <div id="closed-orders" class="tabcontent">
+        <div id="table-display">
+            <table id="table-content">
+                <tr>
+                    <th style="width: 15%;">Table ID</th>
+                    <th style="width: 30%;">item Name</th>
+                    <th style="width: 10%;">Price</th>
+                    <th style="width: 10%;">Quantity</th>
+                </tr>
+                {% for order in closed_orders_data %} 
+                <!-- table_id, menu_item_name, price, quantity -->
+                <tr>
+                    <td>{{ order.table_id }}</td>
+                    <td>{{ order.menu_item_name }}</td>
+                    <td>{{ order.price }}</td>
+                    <td>{{ order.quantity }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <div id="back-to-home-container">
+        <a href="/home">Back to Home</a>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            openTab(event, 'open-orders');
+        });
+
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
+    
+</body>
+</html>

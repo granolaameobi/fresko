@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Restaurant Menu</title>
+    <title>Fresko POS</title>
     <link rel="stylesheet" href="static/css/style.css">
 </head>
 <body>
     <h1>Restaurant Menu</h1>
     <div class="menu-tabs">
-        <button class="tablinks" onclick="openTab(event, 'starter')">Starters</button>
+        <button class="tablinks active" onclick="openTab(event, 'starter')">Starters</button>
         <button class="tablinks" onclick="openTab(event, 'main')">Main Courses</button>
         <button class="tablinks" onclick="openTab(event, 'side')">Sides</button>
         <button class="tablinks" onclick="openTab(event, 'drink')">Drinks</button>
@@ -75,6 +75,10 @@
     </div>
 
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            openTab(event, 'starter');
+        });
+
         var current_order = [];
         var selectedTable = null;
 

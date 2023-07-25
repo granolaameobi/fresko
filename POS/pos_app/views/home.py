@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, session, request
+from flask import Blueprint, render_template, session
 from pos_app.models import get_accessible_pages
 
 home_bp = Blueprint('home', __name__)
