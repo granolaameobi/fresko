@@ -124,7 +124,8 @@ CREATE OR REPLACE FUNCTION insert_booking(
     new_table_ids INT[],
 	new_group_size INT,
     new_start_time TIMESTAMP DEFAULT NULL,
-    new_duration INTERVAL DEFAULT '1.5 hours'
+    new_duration INTERVAL DEFAULT '1.5 hours',
+    new_comment TEXT DEFAULT NONE
 )
 RETURNS VOID AS
 $$
@@ -140,8 +141,8 @@ BEGIN
     FOREACH table_id IN ARRAY new_table_ids
     LOOP
         -- Insert a new booking into the Booking table
-        INSERT INTO "booking" (group_size, start_time, duration, table_id)
-        VALUES (new_group_size, new_start_time, new_duration, table_id);
+        INSERT INTO "booking" (group_size, start_time, duration, table_id, comments)
+        VALUES (new_group_size, new_start_time, new_duration, table_id, new_comment);
     END LOOP;
 END;
 $$
