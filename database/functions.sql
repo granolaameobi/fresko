@@ -14,18 +14,18 @@ DECLARE
   array_length INT;
   i INT;
 BEGIN
-  -- Insert a new order into the "Order" table
-  INSERT INTO "Order" (time_ordered, time_delivered, table_id)
+  -- Insert a new order into the "order" table
+  INSERT INTO "order" (time_ordered, time_delivered, table_id)
   VALUES (NOW(), NULL, p_table_id)
   RETURNING order_id INTO new_order_id;
 
   -- Determine the length of the input arrays
   array_length := array_length(p_menu_item_ids, 1);
 
-  -- Insert order items into the "OrderItem" table for each menu item
+  -- Insert order items into the "order_item" table for each menu item
   FOR i IN 1..array_length
   LOOP
-    INSERT INTO "Order_item" (order_id, menu_item_id, quantity)
+    INSERT INTO "order_item" (order_id, menu_item_id, quantity)
     VALUES (new_order_id, p_menu_item_ids[i], p_quantities[i]);
   END LOOP;
 
@@ -100,11 +100,11 @@ DECLARE
   table_id INT;
 BEGIN
   -- Loop through table IDs
-  FOR table_id IN SELECT DISTINCT "Table_number".table_id FROM "Table_number"
+  FOR table_id IN SELECT DISTINCT "table_number".table_id FROM "Table_number"
   LOOP
     -- Generate random menu_item_ids and quantities
     DECLARE
-      menu_item_ids INT[] := ARRAY(SELECT menu_item_id FROM "Menu_item" ORDER BY random() LIMIT floor(random() * 2) + 5);
+      menu_item_ids INT[] := ARRAY(SELECT menu_item_id FROM "menu_item" ORDER BY random() LIMIT floor(random() * 2) + 5);
       quantities INT[] := ARRAY(SELECT floor(random() * 3) + 1 FROM generate_series(1, array_length(menu_item_ids, 1)));
     BEGIN
       -- Create the order
@@ -139,8 +139,8 @@ BEGIN
     -- Loop through each table ID in the list
     FOREACH table_id IN ARRAY new_table_ids
     LOOP
-        -- Insert a new booking into the Booking table
-        INSERT INTO "Booking" (group_size, start_time, duration, table_id)
+        -- Insert a new booking into the booking table
+        INSERT INTO "booking" (group_size, start_time, duration, table_id)
         VALUES (new_group_size, new_start_time, new_duration, table_id);
     END LOOP;
 END;
