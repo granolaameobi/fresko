@@ -43,7 +43,7 @@ def reservation():
         comment = request.form['comment']
 
         # get tables(s)
-        available_tables=find_available_tables(start_time=date+' '+time+'.000000',duration='01:30:00.000000',
+        available_tables=find_available_tables(start_time=date+' '+time+':00.000000',duration='01:30:00.000000',
                                                host=host,database=database,
                                                user=user, password=password)
         tables=table_assigner(available_tables=available_tables, party_size=party_size)
