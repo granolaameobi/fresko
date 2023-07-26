@@ -46,13 +46,14 @@ def reservation():
         available_tables=find_available_tables(start_time=date+' '+time, duration='01:30:00.000000',
                                                host=host,database=database,
                                                user=user, password=password)
-        tables=table_assigner(available_tables=available_tables, party_size=party_size)
+        # tables=table_assigner(available_tables=available_tables, party_size=party_size)
 
         # write to db
         sql="""INSERT INTO public."booking" (booking_name, group_size, contact_phone, contact_email, start_time, table_id, comments) VALUES (%s, %s, %s, %s, %s, %s, %s);"""
         conn=connect_to_database(host=host, database=database, user=user,
                                  password=password)
         try:
+            tables=table_assigner(available_tables=available_tables, party_size=party_size)
             with conn.cursor() as cursor:
                 for table in tables:
                     cursor.execute(sql, (first_name+' '+last_name, party_size, contact_number, email, date+' '+time, table, comment))
@@ -63,7 +64,7 @@ def reservation():
                                     email=email,contact_number=contact_number,date=date,
                                     time=time, party_size=party_size, comment=comment)
         except:
-            return 'Error inserting data into database'
+            return render_template('sorry.html')
     else:
         # Render the reservation form
         return render_template('reservation_form.html')
