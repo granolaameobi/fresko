@@ -1,0 +1,32 @@
+<!-- availability.html -->
+{% extends "base.html" %}
+
+{% block title %}Manage Availability{% endblock %}
+
+{% block content %}
+<h1>Manage Availability</h1>
+
+<!-- Display existing availabilities -->
+<h2>Existing Availabilities</h2>
+{% if current_user.availabilities %}
+    <ul>
+        {% for availability in current_user.availabilities %}
+            <li>{{ availability.start_time }} to {{ availability.end_time }}
+                <a href="{{ url_for('delete_availability', availability_id=availability.id) }}">Delete</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No availabilities found.</p>
+{% endif %}
+
+<!-- Add new availability form -->
+<h2>Add New Availability</h2>
+<form method="POST" action="{{ url_for('add_availability') }}">
+    <label for="start_time">Start Time</label>
+    <input type="datetime-local" name="start_time" required>
+    <label for="end_time">End Time</label>
+    <input type="datetime-local" name="end_time" required>
+    <button class="curved-box" type="submit">Add Availability</button>
+</form>
+{% endblock %}
