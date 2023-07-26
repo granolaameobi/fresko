@@ -2,16 +2,26 @@ from flask import Flask, render_template, request
 import psycopg2
 import os
 from static.sql.functions import *
+from flask_mail import Mail, Message
 
 app = Flask(__name__)
+app.config.update(
+    MAIL_SERVER='smtp.gmail.com',
+    MAIL_PORT=587,
+    MAIL_USE_TLS=True,
+    MAIL_USERNAME='freskoconfirmation@gmail.com',
+    MAIL_PASSWORD=os.getenv('MAIL_PASSWORD')
+)
+mail = Mail(app)
 
 # Set db Constants
 host='127.0.0.1'
 user=os.getenv('DB_USER')
 database=os.getenv('DB_NAME')
-
-# Set db Password
 password=os.getenv('DB_PASSWORD')
+
+# set email constants
+sender='freskogreek@gmail.com'
 
 @app.route('/')
 def index():
@@ -60,6 +70,14 @@ def reservation():
                     conn.commit()
                 cursor.close()
                 conn.close()
+
+                msg = Message(subject=f"{first_name}, you're going to Fresko!",
+                              sender=sender, recipients=[email])
+                msg.html=render_template('reservation_confirmation.html', first_name=first_name, last_name=last_name,
+                                    email=email,contact_number=contact_number,date=date,
+                                    time=time, party_size=party_size, comment=comment)
+                mail.send(message=msg)
+                
                 return render_template('reservation_confirmation.html', first_name=first_name, last_name=last_name,
                                     email=email,contact_number=contact_number,date=date,
                                     time=time, party_size=party_size, comment=comment)
