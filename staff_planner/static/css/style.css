@@ -1,0 +1,202 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #C0D5B2;
+    font-family: 'Anuphan', sans-serif;
+    text-transform: sentencecase;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.section-title {
+    text-transform: uppercase;
+    font-family: 'Josefin Sans', sans-serif;
+    color: #000000;
+    margin-bottom: 10px;
+    font-size: 54px;
+    line-height: 1;
+    letter-spacing: -0.05em;
+}
+
+.header {
+    background-color: #FFFFFF;
+    padding: 20px 20px;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+}
+
+nav img {
+    width: 150px;
+    margin-right: 20px;
+}
+
+.nav-links {
+    margin-left: auto;
+}
+
+.nav-links ul {
+    list-style: none;
+}
+
+.nav-links ul li {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.nav-links ul li a {
+    text-decoration: none;
+    color: #000000;
+    font-weight: 300;
+}
+
+.center {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; /* Set flex direction to column to center-align buttons vertically */
+    margin-top: 50px;
+}
+
+.content {
+    flex-basis: 50%;
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 5%;
+}
+
+.menu-button {
+    margin-top: 20px; /* Increase the top margin to move the buttons further down */
+    text-align: center;
+    width: 120px;
+    height: 30px;
+    border-radius: 20px;
+    background-color: #366B4C;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    /* Add more padding to make buttons smaller */
+    padding: 5px 10px;
+}
+
+.menu-button p {
+    margin: 0;
+    color: white;
+    font-size: 14px;
+    /* Adjust padding for smaller buttons */
+    padding: 2px;
+}
+
+img {
+    margin-left: auto;
+    flex-basis: 50%;
+    max-width: 600px;
+    height: auto;
+}
+
+h1, .menu-button, img {
+    display: block;
+    margin: 0 auto;
+}
+
+.footer {
+    background-color: #FFFFFF;
+    padding: 20px 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+.footer-section {
+    flex-basis: 33.33%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+.small-logo {
+    width: 120px;
+    height: auto;
+}
+
+.address {
+    font-style: normal;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.footer-text {
+    color: #000000;
+    font-size: 12px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+
+.body-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 100px; /* Add margin for white space */
+}
+
+form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    text-align: left;
+    padding: 20px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 10px;
+    text-align: left; 
+}
+
+form input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+.curved-box {
+    background-color: #366B4C;
+    color: white;
+    padding: 10px;
+    border-radius: 20px;
+    text-align: center;
+    margin: 20px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    width: 150px;
+}
+
+button.curved-box,
+a.curved-box {
+    background-color: #366B4C;
+    color: white;
+    padding: 10px;
+    border-radius: 20px;
+    text-align: center;
+    margin: 20px;
+    border: none;
+    outline: none;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    width: 150px;
+}
