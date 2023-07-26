@@ -42,11 +42,15 @@ def find_available_tables(start_time, duration, host, database, user, password):
     try:
         # Execute the SQL query to find available tables
         cursor.execute(f""" 
-            SELECT t.table_id, t.capacity 
-            FROM "table_number" t 
-            LEFT JOIN "booking" b ON t.table_id = b.table_id 
-            WHERE (b.start_time IS NULL OR b.start_time + b.duration <= '{start_time}' 
-                OR '{start_time}' >= b.start_time + interval '{duration}')  
+            SELECT t.table_id, t.capacity
+            FROM "table_number" t
+            LEFT JOIN (
+            SELECT DISTINCT table_id
+            FROM "booking"
+            WHERE start_time < '{start_time}'::timestamp + INTERVAL '{duration}'
+            AND start_time + duration > '{start_time}'
+            ) b ON t.table_id = b.table_id
+            WHERE b.table_id IS NULL 
         """)
 
         # Fetch all the rows returned by the query
