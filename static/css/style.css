@@ -732,10 +732,16 @@ h4 {
 
   .backtoreservation-button {
     display: inline-block;
-    background-color: #366B4C;
-    padding: 10px 20px;
     white-space: nowrap;
-    border-radius: 5px;
-    text-decoration: none;
-    color: white;
+    margin-top: 10px;
+    text-align: center;
+    width: 120px;
+    height: 30px;
+    border-radius: 20px;
+    border: 1px solid #366B4C;
+    background-color: #366B4C;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
   }
