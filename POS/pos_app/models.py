@@ -14,8 +14,8 @@ def connect_to_database():
         connection = psycopg2.connect(
             host="127.0.0.1",
             database="Restaurant",
-            user="YOUR_USERNAME", #Remember to change these details
-            password="YOUR_POSTGRES"
+            user="postgres", #Remember to change these details
+            password="PostGres"
         )
         return connection
     except (Exception, psycopg2.Error) as error:
@@ -50,7 +50,7 @@ def SQL_query(select_query, to_return_rows=True):
         connection.commit()  # Commit the transaction
         connection.close()
 
-def find_available_tables(start_time, duration):
+def find_available_tables(start_time, duration = '2 hours'):
     '''
     Finds the available tables based on the given start time and duration.
 
@@ -64,12 +64,16 @@ def find_available_tables(start_time, duration):
     '''
 
     # Connect to the PostgreSQL database
-    tables_query = f""" 
-            SELECT t.table_id, t.capacity 
-            FROM "table_number" t 
-            LEFT JOIN "booking" b ON t.table_id = b.table_id 
-            WHERE (b.start_time IS NULL OR b.start_time + b.duration <= '{start_time}' 
-                OR '{start_time}' >= b.start_time + interval '{duration}')  
+    tables_query = f"""
+            SELECT t.table_id, t.capacity
+            FROM "table_number" t
+            LEFT JOIN (
+            SELECT DISTINCT table_id
+            FROM "booking"
+            WHERE start_time < '{start_time}'::timestamp + INTERVAL '{duration}'
+            AND start_time + duration > '{start_time}'
+            ) b ON t.table_id = b.table_id
+            WHERE b.table_id IS NULL
         """
 
     tables = SQL_query(tables_query)
@@ -164,22 +168,19 @@ def get_menu_items(course=None):
     - prices: A list of menu item prices.
     - courses: A list of menu item courses.
     '''
-    try:
-        # Execute the SQL query to select menu item IDs and names
-        if course:
-            select_query = f"SELECT menu_item_id, menu_item_name, price, course \
-                            FROM \"menu_item\" where course = '{course}';"
-        else:
-            select_query = f"SELECT menu_item_id, menu_item_name, price, course FROM \"menu_item\";"
-        
-        menu_items = SQL_query(select_query)
+    if course:
+        select_query = f"SELECT menu_item_id, menu_item_name, price, category \
+                        FROM \"menu_item\" where category = '{course}';"
+    else:
+        select_query = f"SELECT menu_item_id, menu_item_name, price, category FROM \"menu_item\";"
+    
+    menu_items = SQL_query(select_query)
 
-        # Extract item names/ids
-        menu_ids, menu_names, prices, courses = zip(*menu_items)
+    # Extract item names/ids
+    menu_ids, menu_names, prices, courses = zip(*menu_items)
 
-        return list(menu_ids), list(menu_names), list(prices), list(courses)
-    except Exception as e:
-        print("Error", str(e))
+    return list(menu_ids), list(menu_names), list(prices), list(courses)
+
 
 def get_tables_numbers():
         '''
@@ -272,6 +273,7 @@ def get_accessible_pages(user_role):
         'view_orders': user_role in ['admin', 'manager', 'staff'],
         'payment': user_role in ['admin', 'manager', 'staff'],
         'view_stock': user_role in ['admin', 'manager'],
+        'table_assignment': user_role in ['admin', 'manager', 'staff'],
         'sign_out': user_role != None
     }
     return accessible_pages
@@ -322,3 +324,32 @@ def get_orders(status):
 
         for order in orders
     ]
+
+
+def make_booking(table_ids, group_size, start_time, comment, duration = '2 hours'):
+    """
+    Make a booking for a group at one or more tables.
+
+    Parameters:
+        table_ids (list): List of integers representing the IDs of the tables to book.
+        group_size (int): The size of the group for the booking.
+        start_time (str): The start time of the booking in 'YYYY-MM-DD HH:MM:SS' format.
+        comment (str): Any additional comment on the booking
+        duration (str): The duration of the booking in 'HH:MM:SS' format.
+
+    Returns:
+        None
+
+    Example:
+        make_booking([1, 2, 3], 6, '2023-07-25 14:30:00', '2 gluten free people', '2 hours')
+    """
+    if comment:
+        sql_booking = f"SELECT insert_booking(ARRAY{table_ids}, {group_size}, '{start_time}'::timestamp without time zone, '{duration}'::interval, '{comment}')"
+    else:
+        sql_booking = f"SELECT insert_booking(ARRAY{table_ids}, {group_size}, '{start_time}'::timestamp without time zone, '{duration}'::interval, 'None')"
+    
+    SQL_query(sql_booking, to_return_rows=False)
+
+
+    
+

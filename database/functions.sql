@@ -104,7 +104,7 @@ BEGIN
   LOOP
     -- Generate random menu_item_ids and quantities
     DECLARE
-      menu_item_ids INT[] := ARRAY(SELECT menu_item_id FROM "menu_item" ORDER BY random() LIMIT floor(random() * 2) + 5);
+      menu_item_ids INT[] := ARRAY(SELECT menu_item_id FROM "menu_item" ORDER BY random() LIMIT floor(random() * 2) + 3);
       quantities INT[] := ARRAY(SELECT floor(random() * 3) + 1 FROM generate_series(1, array_length(menu_item_ids, 1)));
     BEGIN
       -- Create the order
@@ -125,7 +125,7 @@ CREATE OR REPLACE FUNCTION insert_booking(
 	new_group_size INT,
     new_start_time TIMESTAMP DEFAULT NULL,
     new_duration INTERVAL DEFAULT '1.5 hours',
-    new_comment TEXT DEFAULT NONE
+    new_comment TEXT DEFAULT NULL
 )
 RETURNS VOID AS
 $$

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fresko POS</title>
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <h1>Table Assignment</h1>
+    <div class="container">
+        <div class="form-wrapper">
+            <form method="POST" action="/reservation" onsubmit="return validateForm()" class="form-container">
+                <div class="form-group">
+                    <label for="date">Date:</label>
+                    <input type="date" name="date" id="date">
+                </div>
+                <div class="form-group">
+                    <label for="time">Time:</label>
+                    <select name="time" id="time_select">
+                        <option value="">Select a time</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="party_size">Party Size:</label>
+                    <input type="number" name="party_size" id="party_size" min="1" max="6" required>
+                </div>
+                <div class="form-group">
+                    <label for="comment">Additional Comments:</label>
+                    <input type="text" name="comment" id="comment">
+                </div>
+                <div class="form-group" style="text-align: right;">
+                    <input type="submit" value="Submit">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="back-to-home-container">
+        <a href="/home">Back to Home</a>
+    </div>
+    
+    <script>
+        // Generate time options from 17:00 (5pm) to 22:00 (10pm) in half-hour intervals
+        const timeSelect = document.getElementById("time_select");
+        for (let hour = 17; hour <= 22; hour++) {
+            for (let minute = 0; minute <= 30; minute += 30) {
+                const time = `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`;
+                const option = new Option(time, time);
+                timeSelect.appendChild(option);
+            }
+        }
+
+        function validateForm() {
+    const partySizeInput = document.querySelector('input[name="party_size"]');
+    const partySize = parseInt(partySizeInput.value);
+    if (partySize < 1 || partySize > 6) {
+        alert("Party size must be between 1 and 6 people.");
+        partySizeInput.focus();
+        return false;
+    }
+
+    const dateInput = document.querySelector('input[name="date"]');
+    const dateValue = new Date(`${dateInput.value}T${timeSelect.value}`);
+    const currentDate = new Date();
+    const maxFutureDate = new Date();
+    maxFutureDate.setFullYear(maxFutureDate.getFullYear() + 1);
+
+    if (dateValue.getTime() < currentDate.getTime()) {
+        alert("Date must be in the future.");
+        dateInput.focus();
+        return false;
+    }
+
+    if (dateValue.getTime() > maxFutureDate.getTime()) {
+        alert("Date must be within a year from now.");
+        dateInput.focus();
+        return false;
+    }
+    
+    return true;
+    }
+    </script>
+    </div>
+</body>
+</html>

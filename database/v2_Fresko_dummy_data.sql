@@ -59,8 +59,8 @@ VALUES
   ('Lamb souvlaki', 12.50, 'main'),
   ('Chicken Fresko', 12.00, 'main'),
   ('Lamb Fresko', 12.50, 'main'),
-  ('The Greek', 10.50, 'main'),
-  ('The Medi', 9.00, 'main'),
+  ('The Greek', 10.50, 'salad'),
+  ('The Medi', 9.00, 'salad'),
   ('Green cola', 2.00, 'drink'),
   ('Green orangeade', 2.00, 'drink'),
   ('Green lemonade', 2.00, 'drink'),
@@ -95,43 +95,32 @@ VALUES
   ('Tirokafteri', 1.50, 'dip'),
   ('Taramasalata', 1.50, 'dip'),
   ('Tahini dip', 1.50, 'dip'),
-  ('Pina colada', 7.50, 'cocktail'),
-  ('Mojito', 7.50, 'cocktail'),
-  ('Margarita', 7.50, 'cocktail'),
-  ('Strawberry margarita', 7.50, 'cocktail'),
-  ('Strawberry daiquiri', 7.50, 'cocktail'),
-  ('Aperol spritz', 7.50, 'cocktail'),
-  ('Hugo', 7.50, 'cocktail'),
-  ('Caipirinha', 7.50, 'cocktail'),
-  ('Coconut caipirinha', 7.50, 'cocktail'),
-  ('Margarita kick', 9.00, 'cocktail'),
-  ('Mastiha mojito', 9.00, 'cocktail'),
-  ('Red sangria', 9.00, 'cocktail'),
-  ('Ouzo special', 9.00, 'cocktail'),
+  ('Pina colada', 7.50, 'classic cocktail'),
+  ('Mojito', 7.50, 'classic cocktail'),
+  ('Margarita', 7.50, 'classic cocktail'),
+  ('Strawberry margarita', 7.50, 'classic cocktail'),
+  ('Strawberry daiquiri', 7.50, 'classic cocktail'),
+  ('Aperol spritz', 7.50, 'classic cocktail'),
+  ('Hugo', 7.50, 'classic cocktail'),
+  ('Caipirinha', 7.50, 'classic cocktail'),
+  ('Coconut caipirinha', 7.50, 'classic cocktail'),
+  ('Margarita kick', 9.00, 'fresko cocktail'),
+  ('Mastiha mojito', 9.00, 'fresko cocktail'),
+  ('Red sangria', 9.00, 'fresko cocktail'),
+  ('Ouzo special', 9.00, 'fresko cocktail'),
   ('Nojito', 6.00, 'mocktail'),
   ('Strawberry nojito', 6.00, 'mocktail'),
   ('Juicy julip', 6.00, 'mocktail'),
   ('Orange spritz', 6.00, 'mocktail'),
-  ('Joy of sesh', 4.50, 'alcohol'),
-  ('Macho mucho', 4.50, 'alcohol'),
-  ('Bristol lager', 4.50, 'alcohol'),
-  ('Mango cider', 4.50, 'alcohol'),
-  ('Peary cider', 4.50, 'alcohol'),
-  ('Elder cider', 4.50, 'alcohol'),
-  ('Notos red', 5.50, 'alcohol'),
-  ('Blender rose', 5.50, 'alcohol'),
-  ('Retsina white', 5.50, 'alcohol'),
-  ('Chicken gyros (GF)', 9.00, 'main'),
-  ('Pork gyros (GF)', 9.00, 'main'),
-  ('Lamb gyros (GF)', 9.50, 'main'),
-  ('Halloumi gyros (GF)', 9.50, 'main'),
-  ('Falafel gyros (GF)', 9.50, 'main'),
-  ('Chicken souvlaki (GF)', 12.00, 'main'),
-  ('Pork souvlaki (GF)', 12.00, 'main'),
-  ('Lamb souvlaki (GF)', 12.50, 'main'),
-  ('The Greek (GF)', 10.50, 'main'),
-  ('Keftedes (GF)', 5.00, 'hot meze'),
-  ('Calamari (GF)', 6.00, 'hot meze');
+  ('Joy of sesh', 4.50, 'beer'),
+  ('Macho mucho', 4.50, 'beer'),
+  ('Bristol lager', 4.50, 'beer'),
+  ('Mango cider', 4.50, 'cider'),
+  ('Peary cider', 4.50, 'cider'),
+  ('Elder cider', 4.50, 'cider'),
+  ('Notos red', 5.50, 'wine'),
+  ('Blender rose', 5.50, 'wine'),
+  ('Retsina white', 5.50, 'wine');
 
 -- DELETE FROM "allergen";
 -- Insert data into the allergen table
@@ -1046,3 +1035,36 @@ VALUES
   (95, 8, '2023-08-01', 387.25, '2023-09-01', 8000), 
   (96, 8, '2023-08-01', 387.25, '2023-09-01', 8000), 
   (97, 8, '2023-08-01', 269.75, '2023-10-01', 12000);
+
+-- Create the function
+CREATE OR REPLACE FUNCTION create_new_order(
+  p_menu_item_ids INT[],
+  p_quantities INT[],
+  p_table_id INT
+) RETURNS INT
+AS $$
+DECLARE
+  new_order_id INT;
+  array_length INT;
+  i INT;
+
+BEGIN
+  -- Insert a new order into the "order" table
+  INSERT INTO "order" (time_ordered, time_delivered, table_id)
+  VALUES (NOW(), NULL, p_table_id)
+  RETURNING order_id INTO new_order_id;
+
+  -- Determine the length of the input arrays
+  array_length := array_length(p_menu_item_ids, 1);
+
+  -- Insert order items into the "order_item" table for each menu item
+  FOR i IN 1..array_length
+  LOOP
+    INSERT INTO "order_item" (order_id, menu_item_id, quantity)
+    VALUES (new_order_id, p_menu_item_ids[i], p_quantities[i]);
+  END LOOP;
+
+  -- Return the new order_id
+  RETURN new_order_id;
+END;
+$$ LANGUAGE plpgsql;

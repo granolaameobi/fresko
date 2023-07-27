@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fresko POS</title>
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <h1>Payment</h1>
+
+    <div id="table-selection">
+        <label for="table-dropdown">Select a table number:</label>
+        <select id="table-dropdown" onchange="updateSelectedTable()">
+            <option value="" selected disabled>Select a table...</option>
+            {% for table in table_numbers %}
+                <option value="Table {{ table }}">Table {{ table }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div id="table-display">
+        <table id="table-content">
+            <tr>
+                <th style="width: 15%;">Table ID</th>
+                <th style="width: 30%;">Item Name</th>
+                <th style="width: 10%;">Price</th>
+                <th style="width: 10%;">Quantity</th>
+            </tr>
+            {% if selectedTable %}
+                {% for order in open_orders %} 
+                    {% if order.table_id == selectedTable %}
+                        <tr>
+                            <td>{{ order.table_id }}</td>
+                            <td>{{ order.menu_item_name }}</td>
+                            <td>{{ order.price }}</td>
+                            <td>{{ order.quantity }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                {% for order in open_orders %} 
+                    <tr>
+                        <td>{{ order.table_id }}</td>
+                        <td>{{ order.menu_item_name }}</td>
+                        <td>{{ order.price }}</td>
+                        <td>{{ order.quantity }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+
+
+            <tr id="total-row">
+                <td colspan="3">Total</td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="back-to-home-container">
+        <a href="/home">Back to Home</a>
+    </div>
+
+    <script>
+        var selectedTable = null;
+      
+        function updateSelectedTable() {
+          var dropdown = document.getElementById("table-dropdown");
+          selectedTable =  extractTableNumber(dropdown.value); // Extract table number from dropdown value
+          console.log("Selected Table:", selectedTable);
+          updateTableDisplay();
+          updateTotalRow();
+        }
+
+        function updateTotalRow() {
+            var totalAmount = calculateTotal(selectedTable);
+            var totalRow = document.getElementById("total-row");
+
+            if (selectedTable !== null) {
+                totalRow.style.display = "";
+                totalRow.getElementsByTagName("td")[1].innerText = totalAmount;
+            } else {
+                totalRow.style.display = "none";
+            }
+        }
+
+        function extractTableNumber(tableString) {
+            var tableNumberMatch = tableString.match(/\d+/); // Use regex to extract numeric part
+            if (tableNumberMatch !== null) {
+                var tableNumber = parseInt(tableNumberMatch[0]); // Parse the matched numeric part
+                return tableNumber;
+            } else {
+                return null; // Or any other default value or appropriate handling
+            }
+        }
+
+      
+
+      
+        function updateTableDisplay() {
+            var table = document.getElementById("table-content");
+            var rows = table.getElementsByTagName("tr");
+            for (var i = 1; i < rows.length; i++) {
+                var tableIdCell = rows[i].getElementsByTagName("td")[0];
+                if (tableIdCell) {
+                    var tableId = extractTableNumber(tableIdCell.innerText); // Extract numeric part from cell text
+                    console.log("Row Table ID:", tableId);
+                    console.log("Row:", rows[i]); // Add this line to check the row element
+                    if (selectedTable === null || tableId === selectedTable) {
+                        rows[i].style.display = "";
+                    } else {
+                        rows[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+        function calculateTotal(tableId) {
+            var table = document.getElementById("table-content");
+            var rows = table.getElementsByTagName("tr");
+            var total = 0;
+            for (var i = 1; i < rows.length; i++) {
+                var tableIdCell = rows[i].getElementsByTagName("td")[0];
+                if (tableIdCell) {
+                    var cellTableId = extractTableNumber(tableIdCell.innerText); // Extract numeric part from cell text
+                    if (cellTableId === tableId) {
+                        var priceCell = rows[i].getElementsByTagName("td")[2].innerText;
+                        var quantityCell = rows[i].getElementsByTagName("td")[3].innerText;
+                        var price = parseFloat(priceCell.replace('£', '')); // Remove currency symbol and convert to float
+                        var quantity = parseInt(quantityCell);
+                        total += price * quantity;
+                    }
+                }
+            }
+            return "£" + total.toFixed(2); // Return the total formatted as currency
+        }
+
+    </script>
+</body>
+</html>
