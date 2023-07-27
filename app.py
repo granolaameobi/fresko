@@ -73,7 +73,7 @@ def reservation():
 
                 msg = Message(subject=f"{first_name}, you're going to Fresko!",
                               sender=sender, recipients=[email])
-                msg.html=render_template('reservation_confirmation.html', first_name=first_name, last_name=last_name,
+                msg.html=render_template('email_confirmation.html', first_name=first_name, last_name=last_name,
                                     email=email,contact_number=contact_number,date=date,
                                     time=time, party_size=party_size, comment=comment)
                 mail.send(message=msg)
