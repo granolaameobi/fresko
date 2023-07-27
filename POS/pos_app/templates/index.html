@@ -12,8 +12,42 @@
           <p>Login</p>
         </div>
       </a>
+      {% else %}
+      <form action="/dummy-orders" method="POST" onsubmit="handleFormSubmit(event)">
+        <input type="submit" id="dummy-orders-btn" class="large-menu-button" value="Create Dummy orders">
+      </form>
       {% endif %}
+      
     </div>
     <img src="static/images/landing_page_bowl.png" alt="Landing Page Image" class="landing_page_bowl">
   </div>
+
+  <script>
+    function handleFormSubmit(event) {
+      event.preventDefault(); // Prevent the default form submission
+
+      var button = document.getElementById("dummy-orders-btn");
+      button.disabled = true; // Disable the button to prevent multiple clicks
+
+      // Submit the form asynchronously using fetch
+      fetch("/dummy-orders", {
+        method: "POST",
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // Handle the response (if needed)
+          console.log(data);
+
+          // Re-enable the button after a short delay (e.g., 2 seconds)
+          setTimeout(function () {
+            button.disabled = false;
+          }, 2000);
+        })
+        .catch((error) => {
+          // Handle any errors (if needed)
+          console.error("Error:", error);
+          button.disabled = false; // Re-enable the button on error as well
+        });
+    }
+  </script>
 {% endblock %}

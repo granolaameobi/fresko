@@ -2,7 +2,7 @@
 
 -- select * from "Order";
 
--- select * from "OrderItem";
+select * from create_dummy_orders();
 
 SELECT * FROM get_todays_orders();
 

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fresko POS</title>
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <h1>Table Confirmation</h1>
+    <div id="table-display">
+        <h2>Booking:</h2>
+        <table id="table-content">
+            <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Party size</th>
+                <th>Additional comments</th>
+                <th>Assigned tables </th>
+            </tr>
+            <tr>
+                <td>{{ confirmation_details.date }}</td>
+                <td>{{ confirmation_details.time }}</td>
+                <td>{{ confirmation_details.party_size }}</td>
+                <td>{{ confirmation_details.comment }}</td>
+                <td>{{ confirmation_details.assigned_tables }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="back-to-home-container">
+        <a href="/home">Back to Home</a>
+    </div>
+</body>
+</html>

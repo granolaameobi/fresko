@@ -1,10 +1,10 @@
-from flask import Blueprint, render_template, request
-from pos_app.models import table_assigner, find_available_tables
+from flask import Blueprint, render_template, request, redirect, url_for, flash
+from pos_app.models import table_assigner, find_available_tables, make_booking
 
 table_assignment_bp = Blueprint('table_assignment', __name__)
 
 @table_assignment_bp.route('/table-assignment')
-def view_stock():
+def table_assignment():
     return render_template('table-assignment.html')
 
 
@@ -19,4 +19,17 @@ def handle_reservation():
     available_tables = find_available_tables(date_time)
     assigned_tables = table_assigner(available_tables, party_size)
 
-    return f'Assigned on {assigned_tables}, with comment {comment}'
+    print(assigned_tables)
+
+    make_booking(assigned_tables, party_size, date_time, comment=comment)
+
+    confirmation_details = {
+        'date': date,
+        'time': time,
+        'party_size': party_size,
+        'comment': comment,
+        'assigned_tables' : assigned_tables
+    }
+
+    return render_template('table-confirmation.html', confirmation_details=confirmation_details)
+

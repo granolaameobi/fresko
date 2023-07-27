@@ -14,7 +14,7 @@ DECLARE
   array_length INT;
   i INT;
 BEGIN
-  -- Insert a new order into the "order" table
+  -- Insert a new order into the "Order" table
   INSERT INTO "order" (time_ordered, time_delivered, table_id)
   VALUES (NOW(), NULL, p_table_id)
   RETURNING order_id INTO new_order_id;
@@ -22,7 +22,7 @@ BEGIN
   -- Determine the length of the input arrays
   array_length := array_length(p_menu_item_ids, 1);
 
-  -- Insert order items into the "order_item" table for each menu item
+  -- Insert order items into the "OrderItem" table for each menu item
   FOR i IN 1..array_length
   LOOP
     INSERT INTO "order_item" (order_id, menu_item_id, quantity)
@@ -40,7 +40,7 @@ Get todays orders
 -> TODO : Change to get either open or closed orders (might have to split into two funcs)
 */
 
-DROP FUNCTION get_todays_orders();
+-- DROP FUNCTION get_todays_orders();
 CREATE OR REPLACE FUNCTION get_todays_orders()
   RETURNS TABLE (
     order_id INT,
@@ -64,13 +64,13 @@ BEGIN
         ELSE 'open'
       END AS status
     FROM
-      "Order" o
+      "order" o
     INNER JOIN
-      "Order_item" oi ON o.order_id = oi.order_id
+      "order_item" oi ON o.order_id = oi.order_id
     INNER JOIN
-      "Menu_item" mi ON oi.menu_item_id = mi.menu_item_id
+      "menu_item" mi ON oi.menu_item_id = mi.menu_item_id
 	LEFT JOIN
-      "Payment" pa ON o.order_id = pa.order_id
+      "payment" pa ON o.order_id = pa.order_id
 	WHERE
       DATE(o.time_ordered) = CURRENT_DATE
 	GROUP BY
@@ -100,11 +100,11 @@ DECLARE
   table_id INT;
 BEGIN
   -- Loop through table IDs
-  FOR table_id IN SELECT DISTINCT "table_number".table_id FROM "Table_number"
+  FOR table_id IN SELECT DISTINCT "table_number".table_id FROM "table_number"
   LOOP
     -- Generate random menu_item_ids and quantities
     DECLARE
-      menu_item_ids INT[] := ARRAY(SELECT menu_item_id FROM "menu_item" ORDER BY random() LIMIT floor(random() * 2) + 5);
+      menu_item_ids INT[] := ARRAY(SELECT menu_item_id FROM "menu_item" ORDER BY random() LIMIT floor(random() * 2) + 3);
       quantities INT[] := ARRAY(SELECT floor(random() * 3) + 1 FROM generate_series(1, array_length(menu_item_ids, 1)));
     BEGIN
       -- Create the order
@@ -124,7 +124,8 @@ CREATE OR REPLACE FUNCTION insert_booking(
     new_table_ids INT[],
 	new_group_size INT,
     new_start_time TIMESTAMP DEFAULT NULL,
-    new_duration INTERVAL DEFAULT '1.5 hours'
+    new_duration INTERVAL DEFAULT '1.5 hours',
+	new_comment TEXT DEFAULT NULL
 )
 RETURNS VOID AS
 $$
@@ -139,9 +140,9 @@ BEGIN
     -- Loop through each table ID in the list
     FOREACH table_id IN ARRAY new_table_ids
     LOOP
-        -- Insert a new booking into the booking table
-        INSERT INTO "booking" (group_size, start_time, duration, table_id)
-        VALUES (new_group_size, new_start_time, new_duration, table_id);
+        -- Insert a new booking into the Booking table
+        INSERT INTO "booking" (group_size, start_time, duration, table_id, comments)
+        VALUES (new_group_size, new_start_time, new_duration, table_id, new_comment);
     END LOOP;
 END;
 $$

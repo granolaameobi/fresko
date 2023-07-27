@@ -21,6 +21,10 @@ body {
     letter-spacing: -0.05em;
 }
 
+h2 {
+    text-align: center;
+}
+
 .header {
     background-color: #FFFFFF;
     padding: 20px 20px;
@@ -214,6 +218,8 @@ h1 {
 }
 #table-content th {
     background-color: #f2f2f2;
+    position: sticky;
+    top: -1px;
 }
 #table-content tr:nth-child(even) {
     background-color: #f9f9f9;
@@ -283,6 +289,225 @@ select {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    background: url('path/to/your/select-arrow-icon.png') no-repeat right center;
     background-size: 20px 20px;
 }
+
+/* Add this to your 'style.css' file */
+
+/* Style for the modal backdrop */
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black backdrop */
+}
+
+/* Style for the modal container */
+.modal-dialog {
+    margin-top: 20vh; /* Adjust the modal's vertical position */
+}
+
+/* Style for the modal content */
+.modal-content {
+    border-radius: 10px; /* Rounded corners for the modal */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Drop shadow for the modal */
+}
+
+/* Style for the modal header */
+.modal-header {
+    border-bottom: none; /* Remove the border at the bottom of the header */
+}
+
+/* Style for the modal title */
+.modal-title {
+    font-weight: bold;
+}
+
+/* Style for the modal body */
+.modal-body {
+    padding: 20px; /* Add some padding to the modal body */
+}
+
+/* Style for the modal footer */
+.modal-footer {
+    border-top: none; /* Remove the border at the top of the footer */
+}
+
+/* Style for the 'Submit' button in the modal footer */
+#submit-button {
+    color: #fff; /* Text color */
+    background-color: #007bff; /* Primary color for the 'Submit' button */
+    border: none;
+}
+
+/* Style for the 'Cancel' button in the modal footer */
+.btn-secondary {
+    color: #333; /* Text color */
+    background-color: #e9ecef; /* Light gray background color for the 'Cancel' button */
+    border: none;
+}
+
+
+/* Apply styles to the table-selection container */
+#table-selection {
+    margin-top: 20px;
+    text-align: center; /* Center the content */
+}
+
+/* Style the label for the table dropdown */
+#table-selection label {
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Style the table dropdown */
+#table-dropdown {
+    padding: 8px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    width: 200px;
+    outline: none; /* Remove the default focus outline */
+    background-color: #fff; /* White background */
+}
+
+/* Style the table dropdown options */
+#table-dropdown option {
+    padding: 8px;
+    font-size: 16px;
+}
+
+/* Style the disabled option in the dropdown */
+#table-dropdown option:disabled {
+    color: #888;
+}
+
+/* Style the selected option in the dropdown */
+#table-dropdown option:checked {
+    background-color: #007bff;
+    color: #fff;
+}
+
+#table-content tr#total-row {
+    border-top: 4px double #000;
+    border-bottom: 4px double #000;
+}
+
+/* Apply styles to the split-payment container */
+#split-payment {
+    margin-top: 20px;
+    text-align: center; /* Center the content */
+}
+
+/* Style the label for the split-method dropdown */
+#split-payment label {
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Style the split-method dropdown */
+#split-method {
+    padding: 8px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    width: 250px;
+    outline: none; /* Remove the default focus outline */
+    background-color: #fff; /* White background */
+}
+
+/* Style the split-method dropdown options */
+#split-method option {
+    padding: 8px;
+    font-size: 16px;
+}
+
+/* Style the disabled option in the split-method dropdown */
+#split-method option:disabled {
+    color: #888;
+}
+
+/* Style the selected option in the split-method dropdown */
+#split-method option:checked {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Apply styles to the split-inputs container */
+#split-inputs {
+    margin-top: 20px;
+    text-align: center; /* Center the content */
+}
+
+/* Style the label for the item-dropdown */
+#by-items label {
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Style the item-dropdown */
+#item-dropdown {
+    padding: 8px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    width: 250px;
+    outline: none; /* Remove the default focus outline */
+    background-color: #fff; /* White background */
+}
+
+/* Style the item-dropdown options */
+#item-dropdown option {
+    padding: 8px;
+    font-size: 16px;
+}
+
+/* Style the disabled option in the item-dropdown */
+#item-dropdown option:disabled {
+    color: #888;
+}
+
+/* Style the selected option in the item-dropdown */
+#item-dropdown option:checked {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Apply styles to the other split inputs */
+#by-customers, #custom-amount {
+    margin-top: 20px;
+}
+
+
+/* Define the new class for the large menu button */
+.large-menu-button {
+    display: inline-block;
+    padding: 16px 24px; /* Adjust padding as needed */
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 20px; /* Adjust font size as needed */
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+/* Apply hover effect to the large menu button */
+.large-menu-button:hover {
+    background-color: #0056b3;
+}
+
+#table-container {
+    max-height: 200px; /* Adjust the height as needed */
+    overflow: auto;
+    position: relative;
+    background-color: #fff; /* White background */
+    width: 80%;
+    margin: 0 auto;
+}
+
+
+
+
+
+
