@@ -2,16 +2,26 @@ from flask import Flask, render_template, request
 import psycopg2
 import os
 from static.sql.functions import *
+from flask_mail import Mail, Message
 
 app = Flask(__name__)
+app.config.update(
+    MAIL_SERVER='smtp.gmail.com',
+    MAIL_PORT=587,
+    MAIL_USE_TLS=True,
+    MAIL_USERNAME='freskoconfirmation@gmail.com',
+    MAIL_PASSWORD=os.getenv('MAIL_PASSWORD')
+)
+mail = Mail(app)
 
 # Set db Constants
-host='localhost:5432'
+host='127.0.0.1'
 user=os.getenv('DB_USER')
 database=os.getenv('DB_NAME')
-
-# Set db Password
 password=os.getenv('DB_PASSWORD')
+
+# set email constants
+sender='freskogreek@gmail.com'
 
 @app.route('/')
 def index():
@@ -43,27 +53,36 @@ def reservation():
         comment = request.form['comment']
 
         # get tables(s)
-        available_tables=find_available_tables(start_time=date+' '+time+'.000000',duration='02:00:00.000000',
+        available_tables=find_available_tables(start_time=date+' '+time, duration='01:30:00.000000',
                                                host=host,database=database,
                                                user=user, password=password)
-        tables=table_assigner(available_tables=available_tables, party_size=party_size)
+        # tables=table_assigner(available_tables=available_tables, party_size=party_size)
 
         # write to db
-        sql="""INSERT INTO public."Booking" (booking_name, group_size, contact_phone, contact_email, start_time, table_id) VALUES (%s, %s, %s, %s, %s, %s);"""
-        data=(first_name+' '+last_name, party_size, contact_number, email, date+' '+time+'.000000', tables[0])
+        sql="""INSERT INTO public."booking" (booking_name, group_size, contact_phone, contact_email, start_time, table_id, comments) VALUES (%s, %s, %s, %s, %s, %s, %s);"""
         conn=connect_to_database(host=host, database=database, user=user,
                                  password=password)
         try:
+            tables=table_assigner(available_tables=available_tables, party_size=party_size)
             with conn.cursor() as cursor:
-                cursor.execute(sql, data)
-                conn.commit()
+                for table in tables:
+                    cursor.execute(sql, (first_name+' '+last_name, party_size, contact_number, email, date+' '+time, table, comment))
+                    conn.commit()
                 cursor.close()
                 conn.close()
+
+                msg = Message(subject=f"{first_name}, you're going to Fresko!",
+                              sender=sender, recipients=[email])
+                msg.html=render_template('email_confirmation.html', first_name=first_name, last_name=last_name,
+                                    email=email,contact_number=contact_number,date=date,
+                                    time=time, party_size=party_size, comment=comment)
+                mail.send(message=msg)
+                
                 return render_template('reservation_confirmation.html', first_name=first_name, last_name=last_name,
                                     email=email,contact_number=contact_number,date=date,
                                     time=time, party_size=party_size, comment=comment)
         except:
-            return 'Error inserting data into database'
+            return render_template('sorry.html')
     else:
         # Render the reservation form
         return render_template('reservation_form.html')

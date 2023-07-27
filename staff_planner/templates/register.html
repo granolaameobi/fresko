@@ -1,0 +1,18 @@
+<!-- register.html -->
+{% extends "base.html" %}
+
+{% block title %}Registration{% endblock %}
+
+{% block content %}
+<h1 style="text-align: center;">Employee Registration</h1>
+<form method="POST" action="{{ url_for('register') }}">
+    <label for="username">Username</label>
+    <input type="text" name="username" required>
+    <label for="email">Email</label>
+    <input type="email" name="email" required>
+    <label for="password">Password</label>
+    <input type="password" name="password" required>
+    <button class="curved-box" type="submit">Register</button>
+</form>
+<p style="text-align: center;">Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
+{% endblock %}
