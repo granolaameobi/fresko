@@ -172,5 +172,3 @@ def SQL_query(select_query, host, database, user, password, to_return_rows=True)
         cursor.close()
         connection.commit()  # Commit the transaction
         connection.close()
-    
-
