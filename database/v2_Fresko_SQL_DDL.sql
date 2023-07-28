@@ -91,7 +91,9 @@ CREATE TABLE IF NOT EXISTS "menu_item" (
   menu_item_id SERIAL PRIMARY KEY,
   menu_item_name TEXT,
   price MONEY,
-  category TEXT
+  category TEXT,
+  date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  date_removed TIMESTAMP DEFAULT NULL
 );
 
 -- Create the order_item table
