@@ -498,7 +498,7 @@ select {
 }
 
 #table-container {
-    max-height: 200px; /* Adjust the height as needed */
+    max-height: 300px; 
     overflow: auto;
     position: relative;
     background-color: #fff; /* White background */

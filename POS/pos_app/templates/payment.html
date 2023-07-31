@@ -20,6 +20,7 @@
     <div id="table-display">
         <table id="table-content">
             <tr>
+                <th style="width: 15%;">Order ID</th>
                 <th style="width: 15%;">Table ID</th>
                 <th style="width: 30%;">Item Name</th>
                 <th style="width: 10%;">Price</th>
@@ -29,6 +30,7 @@
                 {% for order in open_orders %} 
                     {% if order.table_id == selectedTable %}
                         <tr>
+                            <td>{{ order.order_id }}</td>
                             <td>{{ order.table_id }}</td>
                             <td>{{ order.menu_item_name }}</td>
                             <td>{{ order.price }}</td>
@@ -39,6 +41,7 @@
             {% else %}
                 {% for order in open_orders %} 
                     <tr>
+                        <td>{{ order.order_id }}</td>
                         <td>{{ order.table_id }}</td>
                         <td>{{ order.menu_item_name }}</td>
                         <td>{{ order.price }}</td>
@@ -49,11 +52,25 @@
 
 
             <tr id="total-row">
-                <td colspan="3">Total</td>
+                <td colspan="4">Total</td>
                 <td></td>
             </tr>
         </table>
     </div>
+
+    <form id="pay-total-form" method="post" action="{{ url_for('payment.pay_total') }}">
+        <input type="hidden" name="table_id" id="table-id-input" value="">
+        <input type="hidden" name="total_cost" id="total-cost-input" value="">
+        <button type="button" onclick="submitPayTotalForm()">Pay Total</button>
+    </form>
+    
+
+    <div>
+        <!-- Add buttons to navigate to different payment type pages -->
+        <button onclick="window.location.href='/pay-item'">Pay by Item</button>
+        <button onclick="window.location.href='/pay-people'">Pay Split by People</button>
+        <button onclick="window.location.href='/pay-custom'">Pay Custom Amount</button>
+    <div>
 
     <div id="back-to-home-container">
         <a href="/home">Back to Home</a>
@@ -61,6 +78,7 @@
 
     <script>
         var selectedTable = null;
+        var totalAmount = null;
       
         function updateSelectedTable() {
           var dropdown = document.getElementById("table-dropdown");
@@ -71,7 +89,7 @@
         }
 
         function updateTotalRow() {
-            var totalAmount = calculateTotal(selectedTable);
+            totalAmount = calculateTotal(selectedTable);
             var totalRow = document.getElementById("total-row");
 
             if (selectedTable !== null) {
@@ -99,7 +117,7 @@
             var table = document.getElementById("table-content");
             var rows = table.getElementsByTagName("tr");
             for (var i = 1; i < rows.length; i++) {
-                var tableIdCell = rows[i].getElementsByTagName("td")[0];
+                var tableIdCell = rows[i].getElementsByTagName("td")[1];
                 if (tableIdCell) {
                     var tableId = extractTableNumber(tableIdCell.innerText); // Extract numeric part from cell text
                     console.log("Row Table ID:", tableId);
@@ -118,12 +136,12 @@
             var rows = table.getElementsByTagName("tr");
             var total = 0;
             for (var i = 1; i < rows.length; i++) {
-                var tableIdCell = rows[i].getElementsByTagName("td")[0];
+                var tableIdCell = rows[i].getElementsByTagName("td")[1];
                 if (tableIdCell) {
                     var cellTableId = extractTableNumber(tableIdCell.innerText); // Extract numeric part from cell text
                     if (cellTableId === tableId) {
-                        var priceCell = rows[i].getElementsByTagName("td")[2].innerText;
-                        var quantityCell = rows[i].getElementsByTagName("td")[3].innerText;
+                        var priceCell = rows[i].getElementsByTagName("td")[3].innerText;
+                        var quantityCell = rows[i].getElementsByTagName("td")[4].innerText;
                         var price = parseFloat(priceCell.replace('£', '')); // Remove currency symbol and convert to float
                         var quantity = parseInt(quantityCell);
                         total += price * quantity;
@@ -132,6 +150,21 @@
             }
             return "£" + total.toFixed(2); // Return the total formatted as currency
         }
+
+        function submitPayTotalForm() {
+            // Get the form and input elements
+            var form = document.getElementById("pay-total-form");
+            var tableIdInput = document.getElementById("table-id-input");
+            var totalCostInput = document.getElementById("total-cost-input")
+
+            // Set the value of the table_id input to the selectedTable
+            tableIdInput.value = selectedTable;
+            totalCostInput.value = totalAmount;
+
+            // Submit the form
+            form.submit();
+        }
+        
 
     </script>
 </body>
