@@ -1,6 +1,6 @@
 import psycopg2 
 from collections import Counter
-from flask import session
+from datetime import datetime
 
 
 # Connect to the PostgreSQL database
@@ -282,15 +282,13 @@ def get_stock():
     """
     Fetches the current stock data.
     """
-    # try:
-        # query = """
-        #     SELECT cs.ingredient_id, i.ingredient_name, cs.expiry_date, cs.quantity, cs.units
-        #     FROM "Current_stock" cs
-        #     INNER JOIN "Ingredient" i ON cs.ingredient_id = i.ingredient_id
-        # """
-        # stock_data = SQL_query(query)
+    query = """
+        SELECT cs.ingredient_id, i.ingredient_name, cs.expiry_date, cs.quantity, i.unit
+        FROM "current_stock" cs
+        INNER JOIN "ingredient" i ON cs.ingredient_id = i.ingredient_id
+    """
+    stock_data = SQL_query(query)
 
-    stock_data = [(1,'Ing 1', '22/07/2022', 4, 'kg')]
     return [
             {
                 'ingredient_id': stock[0],
@@ -306,10 +304,16 @@ def get_stock():
 
 def get_orders(status):
     '''
-    Fetches the current orders
+    Fetches the current orders based on the given status.
+
+    Parameters:
+        status (str): The status of the orders to fetch (open or closed).
+
+    Returns:
+        list: A list of dictionaries containing order details with keys 'table_id', 'menu_item_name', 'price', and 'quantity'.
     '''
 
-    query = f"SELECT table_id, menu_item_name, price, quantity \
+    query = f"SELECT table_id, menu_item_name, price, quantity, order_id \
                     FROM get_todays_orders() WHERE status = '{status}'"
             
     orders = SQL_query(query)
@@ -319,11 +323,39 @@ def get_orders(status):
             'table_id' : order[0],
             'menu_item_name' : order[1],
             'price' : order[2],
-            'quantity': order[3]
+            'quantity': order[3],
+            'order_id': order[4]
         }
 
         for order in orders
     ]
+
+
+def get_order_total(order_id):
+    """
+    Get the total cost of an order from the database.
+
+    Parameters:
+        order_id (int): The unique identifier of the order.
+
+    Returns:
+        float: The total cost of the specified order as a float.
+
+    This function queries the database to get the total cost of a specific order identified by the provided `order_id`.
+    It uses the SQL function `get_order_total_cost` with the given order_id as an argument to calculate the total cost.
+    The `SQL_query` function is responsible for executing the query and returning the result.
+
+    Example:
+        order_id = 123
+        total_cost = get_order_total(order_id)
+        print(f"The total cost of order {order_id} is £{total_cost}")
+    """
+    query = f'SElECT * from get_order_total_cost({order_id});'
+
+    total = SQL_query(query)[0][0]
+
+    total_float = float(total[1:])
+    return total_float
 
 
 def make_booking(table_ids, group_size, start_time, comment, duration = '2 hours'):
@@ -351,5 +383,100 @@ def make_booking(table_ids, group_size, start_time, comment, duration = '2 hours
     SQL_query(sql_booking, to_return_rows=False)
 
 
+def get_table_order(table_id):
+    '''
+    Get all orders and the total cost for a specific table.
+
+    This function retrieves all open orders with their details and the total cost
+    for a specified table identified by the provided `table_id`. The function queries the
+    database to find all open orders associated with the specified table, calculates the
+    total cost for these orders, and returns the order details along with the total cost.
+
+    Args:
+        table_id (int): The ID of the table for which to retrieve orders and the total cost.
+
+    Returns:
+        tuple: A tuple containing two elements.
+            - The first element is a list of dictionaries, each representing an order. Each
+              dictionary contains the following keys:
+                - 'order_id' (int): The ID of the order.
+                - 'menu_item_name' (str): The name of the menu item.
+                - 'price' (str): The price of the menu item as a string, e.g., '£15.99'.
+                - 'quantity' (int): The quantity of the menu item ordered.
+            - The second element is the total cost (float) for all orders on the table.
+
+    '''
+
+    query = f"SELECT order_id, menu_item_name, price, quantity FROM get_todays_orders() WHERE status = 'open' and table_id = {table_id}"
+            
+    items = SQL_query(query)
+
+    _, _, prices, quantities = zip(*items)
+
+    total_cost = sum([float(price[1:])*quantity for price, quantity in zip(prices, quantities)])
+
+    order_details =  [
+        {
+            'order_id' : order[0],
+            'menu_item_name' : order[1],
+            'price' : order[2],
+            'quantity': order[3],
+        }
+
+        for order in items
+    ]
+
+    return order_details, total_cost
+
+
     
+def make_payment(table_id):
+    '''
+    Inserts a payment record into the "payment" table with the provided table_id.
+
+    Parameters:
+        amount (float): The payment amount.
+        order_id (int): The order ID to associate the payment with.
+
+    Returns:
+        None
+    '''
+    orders_and_amounts = get_orders_from_table(table_id=table_id)
+    payment_time = datetime.now()
+    for order_id, amount in orders_and_amounts:
+        print(f'Paying: {amount} on Order:{order_id}')
+        sql_payment = f"""INSERT INTO payment (order_id, amount, payment_time)
+                        VALUES ({order_id}, {amount}, '{payment_time}'); """
+        SQL_query(sql_payment, to_return_rows=False)
+
+
+def get_orders_from_table(table_id):
+    """Retrieve order IDs and their respective totals for a given table.
+
+    This function retrieves the order IDs and their corresponding totals for a specific table
+    identified by the provided `table_id`. It queries the database to find the distinct order
+    IDs associated with the specified table, then calculates the totals for each of those orders.
+
+    Args:
+        table_id (int): The ID of the table for which to retrieve orders and totals.
+
+    Returns:
+        tuple: A tuple containing two lists.
+            - The first element is a list of order IDs (int) associated with the table.
+            - The second element is a list of corresponding order totals (float).
+
+    Example:
+        >>> order_ids, totals = get_orders_from_table(3)
+        >>> print(order_ids)
+        [101, 102, 105]
+        >>> print(totals)
+        [24.99, 17.50, 38.75]
+    """
+    sql_order = f"SELECT distinct(order_id) from get_todays_orders() where table_id = {table_id};"
+    order_ids_tuples = SQL_query(sql_order)
+    order_ids = [order_id_tuple[0] for order_id_tuple in order_ids_tuples]
+    totals = [get_order_total(order_id) for order_id in order_ids]
+
+
+    return zip(order_ids, totals)
 
