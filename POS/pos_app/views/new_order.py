@@ -10,8 +10,19 @@ def new_order():
 
     menu_data = dict()
 
+    print(menu_courses)
+
     for course in course_names:
         ids,names,prices,_ = get_menu_items(course=course)
+
+        if course in ['wine', 'drink', 'beer', 'fresko cocktail', 'mocktail', 'classic cocktail', 'cider']:
+            course = 'drink'
+        if course == 'add-on':
+            course = 'add_on'
+        if course == 'hot meze':
+            course = 'hot_meze'
+        if course == 'cold meze':
+            course = 'cold_meze'
 
 
         menu_data[course] = zip(ids, names, prices)

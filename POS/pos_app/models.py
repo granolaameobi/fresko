@@ -179,7 +179,11 @@ def get_menu_items(course=None):
     # Extract item names/ids
     menu_ids, menu_names, prices, courses = zip(*menu_items)
 
-    return list(menu_ids), list(menu_names), list(prices), list(courses)
+    courses = list(courses)
+
+    
+
+    return list(menu_ids), list(menu_names), list(prices), courses
 
 
 def get_tables_numbers():
