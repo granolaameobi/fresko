@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template,request,redirect, url_for, session
-from pos_app.models import get_orders, make_payment, get_orders_from_table
+from pos_app.models import get_orders, make_payment
 
 payment_bp = Blueprint('payment', __name__)
 

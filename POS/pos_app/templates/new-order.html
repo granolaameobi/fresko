@@ -7,15 +7,34 @@
 <body>
     <h1>Add a new order</h1>
     <div class="menu-tabs">
-        <button class="tablinks active" onclick="openTab(event, 'starter')">Starters</button>
+        <button class="tablinks active" onclick="openTab(event, 'dip')">Dip</button>
+        <button class="tablinks" onclick="openTab(event, 'salad')">Salad</button>
+        <button class="tablinks" onclick="openTab(event, 'add-on')">Add-ons</button>
         <button class="tablinks" onclick="openTab(event, 'main')">Main Courses</button>
-        <button class="tablinks" onclick="openTab(event, 'side')">Sides</button>
+        <button class="tablinks" onclick="openTab(event, 'cold-meze')">Cold Meze</button>
+        <button class="tablinks" onclick="openTab(event, 'hot-meze')">Hot Meze</button>
         <button class="tablinks" onclick="openTab(event, 'drink')">Drinks</button>
     </div>
 
-    <div id="starter" class="tabcontent">
+    <div id="dip" class="tabcontent">
         <div class="grid-container">
-            {% for item in menu_data.starter %}
+            {% for item in menu_data.dip %}
+                <button class="dish-btn" onclick="addToOrder('{{ item[0] }}', '{{ item[1] }}', '{{ item[2] }}')">{{ item[1] }}</button>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div id="salad" class="tabcontent">
+        <div class="grid-container">
+            {% for item in menu_data.salad %}
+                <button class="dish-btn" onclick="addToOrder('{{ item[0] }}', '{{ item[1] }}', '{{ item[2] }}')">{{ item[1] }}</button>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div id="add-on" class="tabcontent">
+        <div class="grid-container">
+            {% for item in menu_data.add_on %}
                 <button class="dish-btn" onclick="addToOrder('{{ item[0] }}', '{{ item[1] }}', '{{ item[2] }}')">{{ item[1] }}</button>
             {% endfor %}
         </div>
@@ -29,9 +48,17 @@
         </div>
     </div>
 
-    <div id="side" class="tabcontent">
+    <div id="cold-meze" class="tabcontent">
         <div class="grid-container">
-            {% for item in menu_data.side %}
+            {% for item in menu_data.cold_meze %}
+                <button class="dish-btn" onclick="addToOrder('{{ item[0] }}', '{{ item[1] }}', '{{ item[2] }}')">{{ item[1] }}</button>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div id="hot-meze" class="tabcontent">
+        <div class="grid-container">
+            {% for item in menu_data.hot_meze %}
                 <button class="dish-btn" onclick="addToOrder('{{ item[0] }}', '{{ item[1] }}', '{{ item[2] }}')">{{ item[1] }}</button>
             {% endfor %}
         </div>

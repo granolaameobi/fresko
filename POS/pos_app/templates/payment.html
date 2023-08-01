@@ -61,16 +61,9 @@
     <form id="pay-total-form" method="post" action="{{ url_for('payment.pay_total') }}">
         <input type="hidden" name="table_id" id="table-id-input" value="">
         <input type="hidden" name="total_cost" id="total-cost-input" value="">
-        <button type="button" onclick="submitPayTotalForm()">Pay Total</button>
+        <button type="menu-button" onclick="submitPayTotalForm()">Pay Total</button>
     </form>
     
-
-    <div>
-        <!-- Add buttons to navigate to different payment type pages -->
-        <button onclick="window.location.href='/pay-item'">Pay by Item</button>
-        <button onclick="window.location.href='/pay-people'">Pay Split by People</button>
-        <button onclick="window.location.href='/pay-custom'">Pay Custom Amount</button>
-    <div>
 
     <div id="back-to-home-container">
         <a href="/home">Back to Home</a>
