@@ -28,7 +28,7 @@ BEGIN
   -- Insert order items into the "OrderItem" table for each menu item
   FOR i IN 1..array_length
   LOOP
-    INSERT INTO "order_item" (order_id, menu_item_id, quantity)
+    INSERT INTO "Order_item" (order_id, menu_item_id, quantity)
     VALUES (new_order_id, p_menu_item_ids[i], p_quantities[i]);
     
     -- Update current stock for each ingredient used in the order
@@ -146,7 +146,7 @@ CREATE OR REPLACE FUNCTION insert_booking(
 	new_group_size INT,
     new_start_time TIMESTAMP DEFAULT NULL,
     new_duration INTERVAL DEFAULT '1.5 hours',
-	new_comment TEXT DEFAULT NULL
+    new_comment TEXT DEFAULT NULL
 )
 RETURNS VOID AS
 $$

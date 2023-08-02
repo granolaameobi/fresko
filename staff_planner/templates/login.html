@@ -1,0 +1,17 @@
+<!-- login.html -->
+{% extends "base.html" %}
+
+{% block title %}Employee Login{% endblock %}
+
+{% block content %}
+<h1 style="text-align: center;">Employee Login</h1>
+<form method="POST" action="{{ url_for('login') }}">
+    <label for="username">Username</label>
+    <input type="text" name="username" required>
+    <label for="password">Password</label>
+    <input type="password" name="password" required>
+    <button class="curved-box" type="submit">Login</button>
+</form>
+<p style="text-align: center;">Don't have an account? <a href="{{ url_for('register') }}">Register</a></p>
+{% endblock %}
+
