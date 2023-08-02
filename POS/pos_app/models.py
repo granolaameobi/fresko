@@ -1,6 +1,7 @@
 import psycopg2 
 from collections import Counter
-from datetime import datetime
+
+
 
 
 # Connect to the PostgreSQL database
@@ -65,6 +66,8 @@ def find_available_tables(start_time, duration = '2 hours'):
     '''
 
     # Connect to the PostgreSQL database
+
+    print(start_time)
     tables_query = f"""
             SELECT t.table_id, t.capacity
             FROM "table_number" t
@@ -414,6 +417,7 @@ def make_booking(table_ids, group_size, start_time, comment, duration = '2 hours
     Example:
         make_booking([1, 2, 3], 6, '2023-07-25 14:30:00', '2 gluten free people', '2 hours')
     """
+
     if comment:
         sql_booking = f"SELECT insert_booking(ARRAY{table_ids}, {group_size}, '{start_time}'::timestamp without time zone, '{duration}'::interval, '{comment}')"
     else:

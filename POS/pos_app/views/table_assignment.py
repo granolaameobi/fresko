@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, session
 from pos_app.models import table_assigner, find_available_tables, make_booking, get_accessible_pages
+from datetime import datetime
 
 table_assignment_bp = Blueprint('table_assignment', __name__)
 
@@ -26,7 +27,13 @@ def handle_reservation():
     comment = request.form.get('comment')
 
     date_time = date +' ' + time
-    available_tables = find_available_tables(date_time)
+
+    if len(date_time) < 19:
+        date_time = str(datetime.now())[2:-7]
+        date = date_time.split(' ')[0]
+        time = date_time.split(' ')[1]
+
+    available_tables = find_available_tables(start_time=date_time)
     assigned_tables = table_assigner(available_tables, party_size)
 
     print(assigned_tables)
