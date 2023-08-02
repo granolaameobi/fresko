@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Fresko POS</title>
-    <link rel="stylesheet" href="static/css/style.css">
-</head>
-<body>
+{% extends 'base.html' %}
+    
+{% block title %}Fresko{% endblock %}
+
+{% block content %}
     <h1>Today's Orders</h1>
     <div class="menu-tabs">
         <button class="tablinks active" onclick="openTab(event, 'open-orders')">Open Orders</button>
@@ -78,6 +76,4 @@
             evt.currentTarget.className += " active";
         }
     </script>
-    
-</body>
-</html>
+{% endblock %}

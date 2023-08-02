@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template, request, jsonify
-from pos_app.models import get_menu_items, place_order, get_tables_numbers
+from flask import Blueprint, render_template, request, jsonify, session
+from pos_app.models import get_menu_items, place_order, get_tables_numbers, get_accessible_pages
 
 new_order_bp = Blueprint('new_order', __name__)
 
@@ -26,12 +26,22 @@ def new_order():
 
 
         menu_data[course] = zip(ids, names, prices)
+
+        # Check if the user_role is present in the session
+    if 'user_role' in session:
+        user_role = session['user_role']
+    else:
+        user_role = 'Signed out'  # Set a default value if user_role is not present
+
+    accessible_pages = get_accessible_pages(user_role)
     
     table_numbers = get_tables_numbers()
 
     return render_template('new-order.html',
                            menu_data=menu_data,
-                           table_numbers = table_numbers)
+                           table_numbers = table_numbers,
+                           accessible_pages = accessible_pages,
+                           user_role = user_role)
 
 @new_order_bp.route('/confirm_order', methods=['POST'])
 def confirm_order():

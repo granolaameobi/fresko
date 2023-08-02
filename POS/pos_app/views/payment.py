@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template,request,redirect, url_for, session
-from pos_app.models import get_orders, make_payment
+from pos_app.models import get_orders, make_payment, get_accessible_pages
 
 payment_bp = Blueprint('payment', __name__)
 
@@ -13,10 +13,20 @@ def payment():
     table_numbers = list(table_numbers)
     table_numbers.sort()
 
+    # Check if the user_role is present in the session
+    if 'user_role' in session:
+        user_role = session['user_role']
+    else:
+        user_role = 'Signed out'  # Set a default value if user_role is not present
+
+    accessible_pages = get_accessible_pages(user_role)
+
     # print(table_numbers)
     return render_template('payment.html',
                            open_orders = current_open_orders,
-                           table_numbers = table_numbers)
+                           table_numbers = table_numbers,
+                           accessible_pages = accessible_pages,
+                           user_role = user_role)
 
 
 @payment_bp.route('/pay-total', methods=['POST'])
