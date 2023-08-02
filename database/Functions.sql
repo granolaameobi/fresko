@@ -1,7 +1,6 @@
 /*
 ---------------------------------------------------------------------------------------------
 Function to add a new order to the database more easily
--> TODO : Add trigger to update stock counts when this is called
 */
 CREATE OR REPLACE FUNCTION create_new_order(
   p_menu_item_ids INT[],
@@ -28,7 +27,7 @@ BEGIN
   -- Insert order items into the "OrderItem" table for each menu item
   FOR i IN 1..array_length
   LOOP
-    INSERT INTO "Order_item" (order_id, menu_item_id, quantity)
+    INSERT INTO "order_item" (order_id, menu_item_id, quantity)
     VALUES (new_order_id, p_menu_item_ids[i], p_quantities[i]);
     
     -- Update current stock for each ingredient used in the order
@@ -58,10 +57,8 @@ $$ LANGUAGE plpgsql;
 /*
 ---------------------------------------------------------------------------------------------
 Get todays orders
--> TODO : Change to get either open or closed orders (might have to split into two funcs)
 */
 
--- DROP FUNCTION get_todays_orders();
 CREATE OR REPLACE FUNCTION get_todays_orders()
   RETURNS TABLE (
     order_id INT,
@@ -146,7 +143,7 @@ CREATE OR REPLACE FUNCTION insert_booking(
 	new_group_size INT,
     new_start_time TIMESTAMP DEFAULT NULL,
     new_duration INTERVAL DEFAULT '1.5 hours',
-    new_comment TEXT DEFAULT NULL
+	new_comment TEXT DEFAULT NULL
 )
 RETURNS VOID AS
 $$
@@ -193,29 +190,3 @@ BEGIN
 END;
 $$
 LANGUAGE plpgsql;
-
-
-
-
-
-
-/*
----------------------------------------------------------------------------------------------
-Clear database if want to reset tables
-*/
-
-CREATE OR REPLACE FUNCTION drop_all_tables()
-  RETURNS VOID
-AS $$
-DECLARE
-  table_name_var TEXT;
-BEGIN
-  -- Get the names of all tables in the current schema
-  FOR table_name_var IN (SELECT table_name FROM information_schema.tables WHERE table_schema = current_schema())
-  LOOP
-    -- Construct the DROP TABLE statement for each table and execute it
-    EXECUTE 'DROP TABLE IF EXISTS "' || table_name_var || '" CASCADE;';
-  END LOOP;
-END;
-$$ LANGUAGE plpgsql;
-
