@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Fresko POS</title>
-    <link rel="stylesheet" href="static/css/style.css">
-</head>
-<body>
+{% extends 'base.html' %}
+    
+{% block title %}Fresko{% endblock %}
+
+{% block content %}
     <h1>Add a new order</h1>
     <div class="menu-tabs">
         <button class="tablinks active" onclick="openTab(event, 'dip')">Dip</button>
@@ -184,6 +182,4 @@
             xhr.send(JSON.stringify(requestData));
     }
     </script>
-    
-</body>
-</html>
+{% endblock %}
