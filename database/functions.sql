@@ -13,6 +13,9 @@ DECLARE
   new_order_id INT;
   array_length INT;
   i INT;
+  new_ingredient_id INT;
+  ingredient_quantity_rec RECORD;
+  new_ingredient_quantity NUMERIC;
 BEGIN
   -- Insert a new order into the "Order" table
   INSERT INTO "order" (time_ordered, time_delivered, table_id)
@@ -27,12 +30,30 @@ BEGIN
   LOOP
     INSERT INTO "order_item" (order_id, menu_item_id, quantity)
     VALUES (new_order_id, p_menu_item_ids[i], p_quantities[i]);
+    
+    -- Update current stock for each ingredient used in the order
+    FOR ingredient_quantity_rec IN (
+      SELECT r.ingredient_id, r.quantity * p_quantities[i] AS ingredient_quantity
+      FROM "recipe" AS r
+      WHERE r.menu_item_id = p_menu_item_ids[i]
+    )
+    LOOP
+      new_ingredient_id := ingredient_quantity_rec.ingredient_id;
+      new_ingredient_quantity := ingredient_quantity_rec.ingredient_quantity;
+      
+      UPDATE "current_stock"
+      SET quantity = quantity - new_ingredient_quantity
+      WHERE ingredient_id = new_ingredient_id;
+    END LOOP;
   END LOOP;
 
   -- Return the new order_id
   RETURN new_order_id;
 END;
 $$ LANGUAGE plpgsql;
+
+
+
 
 /*
 ---------------------------------------------------------------------------------------------
@@ -147,6 +168,33 @@ BEGIN
 END;
 $$
 LANGUAGE plpgsql;
+
+
+
+/*
+---------------------------------------------------------------------------------------------
+Get order total cost
+*/
+
+CREATE OR REPLACE FUNCTION get_order_total_cost(order_id_param INT) 
+RETURNS MONEY AS
+$$
+DECLARE
+    total_cost MONEY := 0;
+BEGIN
+    SELECT SUM(oi.quantity * mi.price)
+    INTO total_cost
+    FROM "order" o
+    JOIN "order_item" oi ON o.order_id = oi.order_id
+    JOIN "menu_item" mi ON oi.menu_item_id = mi.menu_item_id
+    WHERE o.order_id = order_id_param;
+    
+    RETURN total_cost;
+END;
+$$
+LANGUAGE plpgsql;
+
+
 
 
 

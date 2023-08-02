@@ -234,19 +234,39 @@ def place_order(order_ids, table_id):
 
 
 def authenticate_user(username, password):
-    # Connect to the database (replace these with your actual database connection details)
+    """Authenticate a user based on their username and password.
+
+    This function attempts to authenticate a user by querying the database to
+    find a matching username and password in the 'users' table. If a match is found,
+    it returns the user's role; otherwise, it returns None to indicate authentication failure.
+
+    Args:
+        username (str): The username of the user to authenticate.
+        password (str): The password associated with the given username.
+
+    Returns:
+        str or None: The user's role as a string if authentication is successful, or None if authentication fails.
+
+    Example:
+        >>> authenticate_user('john_doe', 'secret_password')
+        'admin'
+        >>> authenticate_user('invalid_user', 'invalid_password')
+        None
+    """
+        
+    if username == 'admin' and password == 'pass':
+        return 'admin' #For now just change this to what I want
+    elif username == 'manager' and password == 'pass':
+        return 'manager'
+    elif username == 'staff' and password == 'pass':
+        return 'staff'
+    else:
+        return None
+    
+    # #Not in DB yet -> but would be
     # connection = connect_to_database()
     # cursor = connection.cursor()
 
-    # Hash the password (you should use a strong password hashing library like bcrypt)
-    # hashed_password = hashlib.sha256(password.encode()).hexdigest()
-    if username == 'a' and password == 'p':
-        print('You are an admin')
-        return 'admin' #For now just change this to what I want
-    else:
-        print('No authentication for you!')
-        return None
-    #Not in DB yet -> add this when back
     # # Execute the SQL query to retrieve the user's role
     # select_query = f"SELECT role FROM users WHERE username = {username} AND password = {password};"
     
@@ -285,6 +305,20 @@ def get_accessible_pages(user_role):
 def get_stock():
     """
     Fetches the current stock data.
+
+    This function retrieves the current stock data from the 'current_stock' table in the database,
+    including the ingredient ID, ingredient name, expiry date, quantity, and unit. It performs an
+    inner join with the 'ingredient' table to get additional information about each ingredient.
+
+    Returns:
+        list: A list of dictionaries, each representing an ingredient in the stock. Each dictionary
+        contains the following keys:
+            - 'ingredient_id' (int): The unique identifier of the ingredient.
+            - 'ingredient_name' (str): The name of the ingredient.
+            - 'expiry_date' (date): The expiry date of the ingredient.
+            - 'quantity' (float): The quantity of the ingredient in stock.
+            - 'units' (str): The unit of measurement for the ingredient.
+
     """
     query = """
         SELECT cs.ingredient_id, i.ingredient_name, cs.expiry_date, cs.quantity, i.unit

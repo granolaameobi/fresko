@@ -1,44 +1,30 @@
-CREATE OR REPLACE FUNCTION update_current_stock()
+-- --check if any ingredient qunatity is less than the threshold
+CREATE OR REPLACE FUNCTION check_low_threshold()
 RETURNS TRIGGER AS $$
 DECLARE
-    item RECORD;
+  ingredient_rec RECORD;
 BEGIN
-    -- Loop through each item in the order
-    FOR item IN SELECT * FROM "order_item" WHERE order_id = NEW.order_id LOOP
-        -- Update the current stock for each ingredient in the recipe
-        UPDATE "current_stock"
-        SET quantity = quantity - (item.quantity * recipe.quantity)
-        FROM "recipe"
-        WHERE "current_stock".ingredient_id = recipe.ingredient_id
-        AND recipe.menu_item_id = item.menu_item_id;
-    END LOOP;
-    
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER after_order_placed
-AFTER INSERT ON "order"
-FOR EACH ROW
-EXECUTE FUNCTION update_current_stock();
-
-
-
---check if any ingredient qunatity is less than the threshold
-CREATE OR REPLACE FUNCTION stock_check()
-RETURNS TRIGGER AS $$
-BEGIN
-    IF NEW.quantity < NEW.low_threshold THEN
-        RAISE EXCEPTION 'Ingredient % needs resupply', NEW.ingredient_name;
+  -- Check if any ingredient goes below the low threshold
+  FOR ingredient_rec IN (
+    SELECT ingredient_id, SUM(quantity) AS total_quantity
+    FROM "current_stock"
+    GROUP BY ingredient_id
+  )
+  LOOP
+    IF ingredient_rec.total_quantity < (SELECT low_threshold FROM "ingredient" WHERE ingredient_id = ingredient_rec.ingredient_id) THEN
+      -- Perform any action or raise a warning/log as needed
+      RAISE NOTICE 'Ingredient % is below the low threshold!', ingredient_rec.ingredient_id;
     END IF;
-    RETURN NEW;
+  END LOOP;
+  
+  RETURN NULL; -- The trigger is after insert/update, so we don't need to change the inserted/updated row.
 END;
 $$ LANGUAGE plpgsql;
 
+-- Create the trigger
+CREATE OR REPLACE TRIGGER check_low_threshold_trigger
+AFTER INSERT OR UPDATE ON "current_stock"
+FOR EACH STATEMENT
+EXECUTE FUNCTION check_low_threshold();
 
---Activates after the stock is updated e.g. an order cooked
-CREATE TRIGGER stock_check_trigger
-AFTER UPDATE ON current_stock
-FOR EACH ROW
-EXECUTE FUNCTION stock_check();
 
