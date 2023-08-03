@@ -5,7 +5,6 @@
     <link rel="stylesheet" href="static/css/style.css">
 </head>
 <body>
-    <h1>Login</h1>
 
     {% if error %}
         <p style="color: red;">{{ error }}</p>
@@ -13,13 +12,18 @@
 
     {% if user_role == "Signed out" %}
         <!-- Show login form if user_role is None -->
-        <form method="post">
-            <label for="username">Username:</label>
-            <input type="text" name="username" required><br>
-            <label for="password">Password:</label>
-            <input type="password" name="password" required><br>
-            <input type="submit" value="Login">
-        </form>
+        <h1 style="text-align: center;">Login Form</h1>
+        <div class="container">
+            <div class="form-wrapper">
+                <form method="post">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" required>
+                    <label for="password">Password</label>
+                    <input type="password" name="password" required>
+                    <input type="submit" value="Login">
+                </form>
+            <div>
+        <div>
     {% else %}
         <!-- Show message if user_role is not None -->
         <p>You are already logged in as {{ user_role }}.</p>
