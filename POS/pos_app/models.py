@@ -1,5 +1,6 @@
 import psycopg2 
 from collections import Counter
+from datetime import datetime
 
 
 
@@ -39,11 +40,11 @@ def SQL_query(select_query, to_return_rows=True):
     connection = connect_to_database()
     cursor = connection.cursor()
 
+    #Set money type to £s
     cursor.execute('SET lc_monetary = \'en_GB\';')
-    cursor.execute(select_query)
 
-    
-    # connection.commit() 
+    #Execute the select query
+    cursor.execute(select_query)
 
     if to_return_rows:
         # Fetch all the rows returned by the query
@@ -68,10 +69,6 @@ def find_available_tables(start_time, duration = '2 hours'):
     - tables: A list of tuples containing the available table IDs and their capacities.
               Each tuple has the format (table_id, capacity).
     '''
-
-    # Connect to the PostgreSQL database
-
-    print(start_time)
     tables_query = f"""
             SELECT t.table_id, t.capacity
             FROM "table_number" t
@@ -140,7 +137,7 @@ def table_assigner(available_tables, party_size, table_combination=[]):
         return table_combination
 
     # Extract table IDs and capacities to make the next part easier
-    ids, capacities = zip(*available_tables)
+    _, capacities = zip(*available_tables)
 
     # Check if the total capacity of available tables is insufficient for the party size
     if sum(list(capacities)) < party_size:
@@ -187,32 +184,28 @@ def get_menu_items(course=None):
     # Extract item names/ids
     menu_ids, menu_names, prices, courses = zip(*menu_items)
 
-    courses = list(courses)
-
-    
-
-    return list(menu_ids), list(menu_names), list(prices), courses
+    return list(menu_ids), list(menu_names), list(prices), list(courses)
 
 
 def get_tables_numbers():
-        '''
-        Retrieves the table numbers from the database.
+    '''
+    Retrieves the table numbers from the database.
 
-        Returns:
-        - table_numbers: A list of table numbers.
-        '''
-        try:
-            # Execute the SQL query to select table numbers
-            select_query = "SELECT table_id FROM \"table_number\";"
+    Returns:
+    - table_numbers: A list of table numbers.
+    '''
+    try:
+        # Execute the SQL query to select table numbers
+        select_query = "SELECT table_id FROM \"table_number\";"
 
-            # Fetch all the rows returned by the query
-            table_numbers = SQL_query(select_query)
+        # Fetch all the rows returned by the query
+        table_numbers = SQL_query(select_query)
 
-            # Extract as list of strings
-            table_numbers = ['Table ' + str(number[0]) for number in table_numbers]
-            return table_numbers
-        except Exception as e:
-            print("Error", str(e))
+        # Extract as list of strings
+        table_numbers = ['Table ' + str(number[0]) for number in table_numbers]
+        return table_numbers
+    except Exception as e:
+        print("Error", str(e))
 
 
 
@@ -297,8 +290,6 @@ def get_accessible_pages(user_role):
 
     Returns:
         dict: A dictionary representing the accessible pages for the given user role.
-
-    Explanation:
     """
     accessible_pages = {
         'new_order': user_role in ['admin', 'manager', 'staff'],
@@ -421,7 +412,6 @@ def make_booking(table_ids, group_size, start_time, comment, duration = '2 hours
     Example:
         make_booking([1, 2, 3], 6, '2023-07-25 14:30:00', '2 gluten free people', '2 hours')
     """
-
     if comment:
         sql_booking = f"SELECT insert_booking(ARRAY{table_ids}, {group_size}, '{start_time}'::timestamp without time zone, '{duration}'::interval, '{comment}')"
     else:
@@ -458,8 +448,8 @@ def get_table_order(table_id):
             
     items = SQL_query(query)
 
+    #Find the total cost of the items
     _, _, prices, quantities = zip(*items)
-
     total_cost = sum([float(price[1:])*quantity for price, quantity in zip(prices, quantities)])
 
     order_details =  [
@@ -491,7 +481,6 @@ def make_payment(table_id):
     orders_and_amounts = get_orders_from_table(table_id=table_id)
     payment_time = datetime.now()
     for order_id, amount in orders_and_amounts:
-        print(f'Paying: {amount} on Order:{order_id}')
         sql_payment = f"""INSERT INTO payment (order_id, amount, payment_time)
                         VALUES ({order_id}, {amount}, '{payment_time}'); """
         SQL_query(sql_payment, to_return_rows=False)
@@ -508,9 +497,9 @@ def get_orders_from_table(table_id):
         table_id (int): The ID of the table for which to retrieve orders and totals.
 
     Returns:
-        tuple: A tuple containing two lists.
-            - The first element is a list of order IDs (int) associated with the table.
-            - The second element is a list of corresponding order totals (float).
+        Zipped lisy: A list containing tuples.
+            - The first element of each tuple is order ID (int) associated with the table.
+            - The second element of each tuple is the corresponding order total (float).
 
     Example:
         >>> order_ids, totals = get_orders_from_table(3)
