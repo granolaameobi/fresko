@@ -38,7 +38,11 @@ def SQL_query(select_query, to_return_rows=True):
     connection = connect_to_database()
     cursor = connection.cursor()
 
+    cursor.execute('SET lc_monetary = \'en_GB\';')
     cursor.execute(select_query)
+
+    
+    # connection.commit() 
 
     if to_return_rows:
         # Fetch all the rows returned by the query

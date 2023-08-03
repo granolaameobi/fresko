@@ -24,8 +24,13 @@ app.register_blueprint(payment_bp)
 # Home route to render index.html
 @app.route('/')
 def index():
-    user_role = 'Signed out' # Replace this with your code to get the user's role
-    accessible_pages = get_accessible_pages(None)
+
+    if 'user_role' in session:
+        user_role = session['user_role']
+        accessible_pages = get_accessible_pages(user_role)
+    else:
+        user_role = 'Signed out' 
+        accessible_pages = get_accessible_pages(None)
     return render_template('index.html',
                         accessible_pages = accessible_pages,
                         user_role = user_role)
