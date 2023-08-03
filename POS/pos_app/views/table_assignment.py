@@ -26,20 +26,23 @@ def handle_reservation():
     party_size = int(request.form.get('party_size'))
     comment = request.form.get('comment')
 
+    #Combine date and time to enter to SQL
     date_time = date +' ' + time
 
-    if len(date_time) < 19:
-        date_time = str(datetime.now())[2:-7]
+    #If date or time not selected, take current time
+    if len(date_time) < 16:
+        date_time = str(datetime.now())[:-7]
         date = date_time.split(' ')[0]
         time = date_time.split(' ')[1]
 
+    #Find avilable tables for th group size
     available_tables = find_available_tables(start_time=date_time)
     assigned_tables = table_assigner(available_tables, party_size)
 
-    print(assigned_tables)
-
+    #Enter a booking on those tables
     make_booking(assigned_tables, party_size, date_time, comment=comment)
 
+    #Send the confirmation details
     confirmation_details = {
         'date': date,
         'time': time,
@@ -47,8 +50,5 @@ def handle_reservation():
         'comment': comment,
         'assigned_tables' : assigned_tables
     }
-
-
-
     return render_template('table-confirmation.html', confirmation_details=confirmation_details)
 

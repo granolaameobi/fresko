@@ -10,8 +10,6 @@ def new_order():
 
     menu_data = dict()
 
-    print(menu_courses)
-
     for course in course_names:
         ids,names,prices,_ = get_menu_items(course=course)
 
@@ -56,5 +54,4 @@ def confirm_order():
     # Here, you can process the confirmed order as needed
 
     place_order(item_ids, table_number)
-    # print(f"Confirmed Order:{item_ids} on Table {table_number}")
     return jsonify({"message": "Order confirmed successfully!"})
