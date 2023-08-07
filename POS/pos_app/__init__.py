@@ -6,6 +6,7 @@ from pos_app.views.view_stock import view_stock_bp
 from pos_app.views.view_orders import view_orders_bp
 from pos_app.views.table_assignment import table_assignment_bp
 from pos_app.views.payment import payment_bp
+from pos_app.views.feedback import feedback_bp
 from pos_app.models import get_accessible_pages
 
 # Set up the flask app
@@ -20,6 +21,8 @@ app.register_blueprint(view_stock_bp)
 app.register_blueprint(view_orders_bp)
 app.register_blueprint(table_assignment_bp)
 app.register_blueprint(payment_bp)
+app.register_blueprint(feedback_bp)
+
 
 # Home route to render index.html
 @app.route('/')

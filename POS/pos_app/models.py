@@ -13,6 +13,12 @@ def connect_to_database():
     If unsuccessful, resturns the error recieved
     '''
     try:
+        # connection = psycopg2.connect(
+        #     host="35.205.66.81",
+        #     database="Fresko",
+        #     user="postgres", #Remember to change these details
+        #     password="Fresko2023"
+        # )
         connection = psycopg2.connect(
             #!!!!!!Remember to change these details!!!!!!!!
             host="HOST_ADDRESS",
@@ -297,6 +303,7 @@ def get_accessible_pages(user_role):
         'payment': user_role in ['admin', 'manager', 'staff'],
         'view_stock': user_role in ['admin', 'manager'],
         'table_assignment': user_role in ['admin', 'manager', 'staff'],
+        'feedback': user_role in ['admin', 'manager', 'staff'],
         'sign_out': user_role != None
     }
     return accessible_pages
@@ -515,4 +522,21 @@ def get_orders_from_table(table_id):
 
 
     return zip(order_ids, totals)
+
+def submit_feedback_to_db(name, rating, email, message):
+    """
+    Inserts feedback details into the 'feedback' table.
+
+    Parameters:
+        name (str): The name of the person providing the feedback.
+        rating (int): The rating /5 stars.
+        email (str): The email address of the person providing the feedback.
+        message (str): The feedback message.
+
+    Returns:
+        None: This function does not return anything explicitly, but it inserts
+        the feedback data into the database.
+    """
+    sql_feedback =  f"INSERT INTO feedback (name, rating, email, message) VALUES ('{name}', '{rating}', '{email}', '{message}')"
+    SQL_query(select_query=sql_feedback, to_return_rows=False)
 
