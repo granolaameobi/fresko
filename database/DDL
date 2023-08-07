@@ -1,24 +1,3 @@
-/*
-Use this to drop all tables to reset
-
-CREATE OR REPLACE FUNCTION drop_all_tables()
-  RETURNS VOID
-AS $$
-DECLARE
-  table_name_var TEXT;
-BEGIN
-  -- Get the names of all tables in the current schema
-  FOR table_name_var IN (SELECT table_name FROM information_schema.tables WHERE table_schema = current_schema())
-  LOOP
-    -- Construct the DROP TABLE statement for each table and execute it
-    EXECUTE 'DROP TABLE IF EXISTS "' || table_name_var || '" CASCADE;';
-  END LOOP;
-END;
-$$ LANGUAGE plpgsql;
-
-SELECT drop_all_tables();
-*/
-
 
 --Create employee table
 CREATE TABLE IF NOT EXISTS "employee" (
@@ -91,7 +70,9 @@ CREATE TABLE IF NOT EXISTS "menu_item" (
   menu_item_id SERIAL PRIMARY KEY,
   menu_item_name TEXT,
   price MONEY,
-  category TEXT
+  category TEXT,
+  date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  date_removed TIMESTAMP DEFAULT NULL
 );
 
 -- Create the order_item table
@@ -104,17 +85,6 @@ CREATE TABLE IF NOT EXISTS "order_item" (
   FOREIGN KEY (order_id) REFERENCES "order" (order_id),
   FOREIGN KEY (menu_item_id) REFERENCES "menu_item" (menu_item_id)
 );
-
-
-/*-- Create link table between booking and table_number
-CREATE TABLE "BookingLinkTableNumber" (
-  booking_id INT,
-  table_id INT,
-  PRIMARY KEY (booking_id, table_id),
-  FOREIGN KEY (booking_id) REFERENCES "booking" (booking_id),
-  FOREIGN KEY (table_id) REFERENCES "table_number" (table_id)
-);
-*/ -- Probably not needed
 
 --Create supplier table
 CREATE TABLE IF NOT EXISTS "supplier" (

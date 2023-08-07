@@ -729,3 +729,21 @@ h4 {
     height: 300px;
     width: auto;
   }
+
+  .backtoreservation-button {
+    margin-top: 10px;
+    text-align: center;
+    height: 30px;
+    border-radius: 20px;
+    border: 1px solid #366B4C;
+    background-color: #366B4C;
+    color: white;
+    width: 200px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }

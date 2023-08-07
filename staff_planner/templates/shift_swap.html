@@ -1,0 +1,42 @@
+<!-- shift_swap.html -->
+{% extends "base.html" %}
+
+{% block title %}Shift Swap{% endblock %}
+
+{% block content %}
+<h1>Shift Swaps</h1>
+
+<!-- Display available shifts for swapping -->
+<h2>Available Shifts</h2>
+{% if available_shifts %}
+    <ul>
+        {% for shift in available_shifts %}
+            <li>
+                {{ shift.start_time }} to {{ shift.end_time }}
+                <a href="{{ url_for('request_swap', shift_id=shift.id) }}">Request Swap</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No available shifts for swapping.</p>
+{% endif %}
+
+<!-- Display shift swap requests -->
+
+<h2>Shift Swap Requests</h2>
+<div id="shift-swap-requests">
+    {% if shift_swap_requests %}
+        <ul>
+            {% for request in shift_swap_requests %}
+                <li>
+                    Your shift: {{ request.your_shift.start_time }} to {{ request.your_shift.end_time }}
+                    Requested swap: {{ request.requested_shift.start_time }} to {{ request.requested_shift.end_time }}
+                    <a href="{{ url_for('accept_swap', request_id=request.id) }}">Accept</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No shift swap requests found.</p>
+    {% endif %}
+</div>
+{% endblock %}

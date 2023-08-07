@@ -20,10 +20,11 @@ def connect_to_database():
         #     password="Fresko2023"
         # )
         connection = psycopg2.connect(
-            host="127.0.0.1",
-            database="Restaurant",
-            user="postgres", #Remember to change these details
-            password="PostGres"
+            #!!!!!!Remember to change these details!!!!!!!!
+            host="HOST_ADDRESS",
+            database="DB_NAME",
+            user="USER_NAME", 
+            password="USER_PASSWORD"
         )
         return connection
     except (Exception, psycopg2.Error) as error:

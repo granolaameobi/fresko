@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@200&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <section class="header">
+        <nav>
+            <a href="/"><img src="static/images/logo.png" alt="Restaurant Logo"></a>
+            {% if current_user.is_authenticated %}
+            <div class="nav-links">
+                <ul>
+                    <li><a href="/availability" class="button">Manage Availability</a></li>
+                    <li><a href="/manage_shifts" class="button">Manage Shifts</a></li>
+                    <li><a href="/shift_swap" class="button">Shift Swap</a></li>
+                    <li><a href="/notifications" class="button">Notifications</a></li>
+                    <li><a href="/logout" class="button">Logout</a></li> 
+                </ul>
+            </div>
+            {% endif %}
+        </nav>
+    </section>
+    <div class="body-container">
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+    <section class="footer">
+        <div class="footer-section">
+          <img src="static/images/logo.png" alt="Restaurant Logo" class="small-logo">
+          <p class="address">
+            25-27 Clare Street<br>
+            Bristol<br>
+            City of Bristol<br>
+            BS1 1XA
+          </p>
+          <p class="footer-text">© 2023 Fresko. All Rights Reserved.</p>
+        </div>
+    </section>
+</body>
+</html>
+

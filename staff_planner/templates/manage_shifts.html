@@ -1,0 +1,32 @@
+<!-- manage_shifts.html -->
+{% extends "base.html" %}
+
+{% block title %}Manage Shifts{% endblock %}
+
+{% block content %}
+<h1>Manage Shifts</h1>
+
+<!-- Display existing shifts -->
+<h2>Existing Shifts</h2>
+{% if current_user.shifts %}
+    <ul>
+        {% for shift in current_user.shifts %}
+            <li>{{ shift.start_time }} to {{ shift.end_time }}
+                <a href="{{ url_for('delete_shift', shift_id=shift.id) }}">Delete</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No shifts found.</p>
+{% endif %}
+
+<!-- Add new shift form -->
+<h2>Add New Shift</h2>
+<form method="POST" action="{{ url_for('add_shift') }}">
+    <label for="start_time">Start Time</label>
+    <input type="datetime-local" name="start_time" required>
+    <label for="end_time">End Time</label>
+    <input type="datetime-local" name="end_time" required>
+    <button class="curved-box" type="submit">Add Shift</button>
+</form>
+{% endblock %}

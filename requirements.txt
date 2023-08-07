@@ -3,3 +3,4 @@ Flask-WTF==0.15.1
 SQLAlchemy==1.4.25
 pytest==7.4.0
 psycopg2-binary
+Flask-Mail==0.9.1
