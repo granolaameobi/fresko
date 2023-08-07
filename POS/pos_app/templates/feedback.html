@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Fresko{% endblock %}
+
+{% block content %}
+    <h1>Feedback form</h1>
+    
+    <div class="container">
+        <form action="/submit-feedback" method="post">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="rating">Rating:</label>
+                <div class="rating-stars">
+                    <span class="star" onclick="setRating(1)" title="1 star">&#9733;</span>
+                    <span class="star" onclick="setRating(2)" title="2 stars">&#9733;</span>
+                    <span class="star" onclick="setRating(3)" title="3 stars">&#9733;</span>
+                    <span class="star" onclick="setRating(4)" title="4 stars">&#9733;</span>
+                    <span class="star" onclick="setRating(5)" title="5 stars">&#9733;</span>
+                </div>
+                <input type="hidden" id="rating" name="rating" value="0" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Submit Feedback">
+            </div>
+        </form>
+    </div>
+
+    <div id="back-to-home-container">
+        <a href="/home">Back to Home</a>
+    </div>
+
+    <script>
+        function setRating(stars) {
+            const ratingContainer = document.querySelector('.rating-stars');
+            const ratingInput = document.querySelector('#rating');
+            ratingInput.value = stars;
+            for (let i = 0; i < 5; i++) {
+                ratingContainer.children[i].classList.toggle('selected', i < stars);
+            }
+        }
+    </script>
+{% endblock %}

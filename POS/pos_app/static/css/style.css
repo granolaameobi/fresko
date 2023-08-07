@@ -506,6 +506,16 @@ select {
     margin: 0 auto;
 }
 
+.rating-stars {
+    font-size: 30px;
+}
+.star {
+    cursor: pointer;
+}
+.selected {
+    color: gold;
+}
+
 
 
 
