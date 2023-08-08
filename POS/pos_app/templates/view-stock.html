@@ -4,6 +4,15 @@
 
 {% block content %}
     <h1>Stock Submenu</h1>
+    <div class="search-bar">
+        <label for="ingredient-search">Search by Ingredient Name:</label>
+        <input type="text" id="ingredient-search" name="ingredient-search" placeholder="Enter ingredient name..." onkeyup="filterTable()">
+    </div>
+
+    <div class="sort-button-container">
+        <button id="sort-by-expiry">Sort by Expiry Date</button>
+    </div>
+
     <div id = table-container>
         <h2>Current Stock</h2>
         <table id="table-content">
@@ -28,4 +37,28 @@
     <div id="back-to-home-container">
         <a href="/home">Back to Home</a>
     </div>
+    <script>
+        function filterTable() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("ingredient-search");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("table-content");
+            tr = table.getElementsByTagName("tr");
+        
+            for (i = 1; i < tr.length; i++) { // Start from 1 to skip header row
+                td = tr[i].getElementsByTagName("td")[1]; // Get the second column (Ingredient Name)
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+        </script>
+        
+        <script src="static/js/sort.js"></script>
+        
 {% endblock %}
