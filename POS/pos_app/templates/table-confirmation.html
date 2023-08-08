@@ -1,33 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Fresko POS</title>
-    <link rel="stylesheet" href="static/css/style.css">
-</head>
-<body>
-    <h1>Table Confirmation</h1>
-    <div id="table-display">
-        <h2>Booking:</h2>
-        <table id="table-content">
-            <tr>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Party size</th>
-                <th>Additional comments</th>
-                <th>Assigned tables </th>
-            </tr>
-            <tr>
-                <td>{{ confirmation_details.date }}</td>
-                <td>{{ confirmation_details.time }}</td>
-                <td>{{ confirmation_details.party_size }}</td>
-                <td>{{ confirmation_details.comment }}</td>
-                <td>{{ confirmation_details.assigned_tables }}</td>
-            </tr>
-        </table>
-    </div>
+{% extends 'base.html' %}
 
-    <div id="back-to-home-container">
-        <a href="/home">Back to Home</a>
+{% block title %}Fresko{% endblock %}
+
+{% block content %}
+    <div class="confirmation-container">
+        <h1>Table Confirmation</h1>
+        <div class="confirmation-details">
+            <h2>Booking:</h2>
+            <p><strong>Date:</strong> {{ confirmation_details.date }}</p>
+            <p><strong>Time:</strong> {{ confirmation_details.time }}</p>
+            <p><strong>Party size:</strong> {{ confirmation_details.party_size }}</p>
+            <p><strong>Additional comments:</strong> {{ confirmation_details.comment }}</p>
+            <p><strong>Assigned table(s):</strong> {{ confirmation_details.assigned_tables }}</p>
+        </div>
+
+        <div class="back-to-home-container">
+            <a href="/home">Back to Home</a>
+        </div>
     </div>
-</body>
-</html>
+{% endblock %}

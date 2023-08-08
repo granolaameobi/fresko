@@ -13,7 +13,8 @@ def feedback():
 
     accessible_pages = get_accessible_pages(user_role)
     return render_template('feedback.html',
-                           accessible_pages = accessible_pages)
+                           accessible_pages = accessible_pages,
+                           current_page = 'feedback')
 
 @feedback_bp.route('/submit-feedback', methods=['POST'])
 def submit_feedback():
@@ -24,8 +25,19 @@ def submit_feedback():
 
     submit_feedback_to_db(name, rating, email, message)
 
+    # Check if the user_role is present in the session
+    if 'user_role' in session:
+        user_role = session['user_role']
+    else:
+        user_role = 'Signed out'  # Set a default value if user_role is not present
+
+    accessible_pages = get_accessible_pages(user_role)
+
     return render_template('feedback-confirmation.html',
                            name = name,
                            rating = rating,
                            email = email,
-                           message = message)
+                           message = message,
+                           accessible_pages = accessible_pages,
+                           user_role = user_role,
+                           current_page = 'feedback')

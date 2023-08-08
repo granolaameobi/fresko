@@ -1,16 +1,17 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Fresko POS</title>
-        <link rel="stylesheet" href="static/css/style.css">
-    </head>
-<body>
-    <h1>Payment Successful!</h1>
-    <p>Thank you for your payment.</p>
-    <p>Total Amount: {{ total_amount }}</p>
-    <p>Table ID: {{ table_id }}</p>
-    <div id="back-to-home-container">
-        <a href="/home">Back to Home</a>
+{% extends 'base.html' %}
+
+{% block title %}Fresko{% endblock %}
+
+{% block content %}
+    <div class="confirmation-container">
+        <h1>Payment Successful!</h1>
+        <div class="confirmation-details">
+            <p>Thank you for your payment.</p>
+            <p><strong>Total Amount:</strong> {{ total_amount }}</p>
+            <p><strong>Table ID:</strong> {{ table_id }}</p>
+        </div>
+        <div class="back-to-home-container">
+            <a href="/home">Back to Home</a>
+        </div>
     </div>
-</body>
-</html>
+{% endblock %}

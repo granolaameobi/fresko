@@ -59,7 +59,9 @@
     <form id="pay-total-form" method="post" action="{{ url_for('payment.pay_total') }}">
         <input type="hidden" name="table_id" id="table-id-input" value="">
         <input type="hidden" name="total_cost" id="total-cost-input" value="">
-        <button class="menu-button" onclick="submitPayTotalForm()">Pay Total</button>
+        <div class="pay-button-container">
+            <button class="menu-button pay-button" onclick="submitPayTotalForm()">Pay Total</button>
+        </div>
     </form>
     
 

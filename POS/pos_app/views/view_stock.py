@@ -16,4 +16,5 @@ def view_stock():
     return render_template('view-stock.html',
                            stock_data = current_stock,
                            accessible_pages = accessible_pages,
-                           user_role = user_role)
+                           user_role = user_role,
+                           current_page = 'view-stock')

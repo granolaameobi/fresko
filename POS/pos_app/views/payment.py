@@ -26,7 +26,8 @@ def payment():
                            open_orders = current_open_orders,
                            table_numbers = table_numbers,
                            accessible_pages = accessible_pages,
-                           user_role = user_role)
+                           user_role = user_role,
+                           current_page = 'payment')
 
 
 @payment_bp.route('/pay-total', methods=['POST'])
@@ -52,7 +53,18 @@ def payment_confirmation():
     # Clear the session data to avoid keeping unnecessary information
     session.pop('total_amount', None)
     session.pop('table_id', None)
+    
+    # Check if the user_role is present in the session
+    if 'user_role' in session:
+        user_role = session['user_role']
+    else:
+        user_role = 'Signed out'  # Set a default value if user_role is not present
+
+    accessible_pages = get_accessible_pages(user_role)
 
     return render_template('payment-confirmation.html',
                            total_amount=total_amount,
-                           table_id=table_id)
+                           table_id=table_id,
+                           accessible_pages = accessible_pages,
+                           user_role = user_role,
+                           current_page = 'payment')
