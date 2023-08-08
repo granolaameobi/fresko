@@ -156,6 +156,7 @@ h1 {
     margin-bottom: 20px;
 }
 
+
 .dish-btn {
     display: block;
     padding: 10px 20px;
@@ -170,6 +171,7 @@ h1 {
 .dish-btn:hover {
     background-color: #45a049;
 }
+
 
 
 #table-selection {
@@ -201,6 +203,7 @@ h1 {
     font-weight: bold; /* Bold text for active button */
     border-radius: 10px; /* Add curved corners */
     padding: 5px 10px;
+    border: 1px solid #366B4C;
 }
 
 #table-display {
@@ -607,3 +610,59 @@ select {
     background-color: #458966; /* Change background color when hovered */
     color: white; /* Change text color when hovered */
 }
+
+
+/* Style for the search bar container */
+.search-bar {
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Style for the search label */
+.search-bar label {
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Style for the search input */
+#ingredient-search {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 50%; /* Adjust the width as needed */
+    box-sizing: border-box;
+    font-size: 16px;
+    outline: none;
+    text-align: center;
+    margin: 0 auto; /* Center the search bar */
+}
+
+
+/* ... (other styles) ... */
+
+.sort-button-container {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#sort-by-expiry {
+    color: #366B4C;
+    text-decoration: none;
+    background-color: white;
+    font-weight: bold;
+    border-radius: 10px;
+    padding: 5px 10px;
+    border: 1px solid #366B4C;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#sort-by-expiry:hover {
+    background-color: #366B4C;
+    color: white;
+}
+
+
