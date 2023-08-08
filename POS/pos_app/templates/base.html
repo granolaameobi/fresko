@@ -16,22 +16,22 @@
             <div class="nav-links">
                 <ul>
                     {% if accessible_pages.new_order %}
-                    <li><a href="/new-order" class="button">New order</a></li>
+                    <li><a href="/new-order" class="button  {% if current_page == 'new-order' %}active{% endif %}">New order</a></li>
                     {% endif %}
                     {% if accessible_pages.view_orders %}
-                    <li><a href="/view-orders" class="button">View Orders</a></li>
+                    <li><a href="/view-orders" class="button  {% if current_page == 'view-orders' %}active{% endif %}">View Orders</a></li>
                     {% endif %}
                     {% if accessible_pages.view_stock %}
-                    <li><a href="/view-stock" class="button">View Stock</a></li>
+                    <li><a href="/view-stock" class="button  {% if current_page == 'view-stock' %}active{% endif %}">View Stock</a></li>
                     {% endif %}
                     {% if accessible_pages.payment %}
-                    <li><a href="/payment" class="button">Payment</a></li>
+                    <li><a href="/payment" class="button  {% if current_page == 'payment' %}active{% endif %}">Payment</a></li>
                     {% endif %}
                     {% if accessible_pages.table_assignment %}
-                    <li><a href="/table-assignment" class="button">Table Assignment</a></li>
+                    <li><a href="/table-assignment" class="button  {% if current_page == 'table-assignment' %}active{% endif %}">Table Assignment</a></li>
                     {% endif %}
                     {% if accessible_pages.feedback %}
-                    <li><a href="/feedback" class="button">Feedback</a></li>
+                    <li><a href="/feedback" class="button  {% if current_page == 'feedback' %}active{% endif %}">Feedback</a></li>
                     {% endif %}
                     {% if accessible_pages.sign_out %}
                     <li><a href="/log-out" class="button">Sign out</a></li>

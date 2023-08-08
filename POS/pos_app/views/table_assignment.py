@@ -16,7 +16,8 @@ def table_assignment():
     accessible_pages = get_accessible_pages(user_role)
     return render_template('table-assignment.html',
                            accessible_pages = accessible_pages,
-                           user_role = user_role)
+                           user_role = user_role,
+                           current_page = 'table-assignment')
 
 
 @table_assignment_bp.route('/reservation', methods=['POST'])
@@ -48,7 +49,19 @@ def handle_reservation():
         'time': time,
         'party_size': party_size,
         'comment': comment,
-        'assigned_tables' : assigned_tables
+        'assigned_tables' : ', '.join(str(id) for id in assigned_tables)
     }
-    return render_template('table-confirmation.html', confirmation_details=confirmation_details)
+
+    # Check if the user_role is present in the session
+    if 'user_role' in session:
+        user_role = session['user_role']
+    else:
+        user_role = 'Signed out'  # Set a default value if user_role is not present
+
+    accessible_pages = get_accessible_pages(user_role)
+    return render_template('table-confirmation.html', 
+                           confirmation_details=confirmation_details,
+                           accessible_pages = accessible_pages,
+                           user_role = user_role,
+                           current_page = 'table-assignment')
 

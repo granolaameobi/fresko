@@ -19,4 +19,5 @@ def view_orders():
                            open_orders_data = current_open_orders,
                            closed_orders_data = current_closed_orders,
                            accessible_pages = accessible_pages,
-                           user_role = user_role)
+                           user_role = user_role,
+                           current_page = 'view-orders')

@@ -75,7 +75,7 @@ nav img {
 }
 
 .menu-button {
-    margin-top: 20px;
+    margin-top: 40px;
     text-align: center;
     width: 120px;
     height: 30px;
@@ -196,6 +196,11 @@ h1 {
 #back-to-home-container a {
     color: #366B4C;
     text-decoration: none;
+    display: inline-block; /* Display as inline-block to surround the text */
+    background-color: white;
+    font-weight: bold; /* Bold text for active button */
+    border-radius: 10px; /* Add curved corners */
+    padding: 5px 10px;
 }
 
 #table-display {
@@ -516,9 +521,89 @@ select {
     color: gold;
 }
 
+.pay-button-container {
+    margin-top: 20px; /* Add space above the button */
+    text-align: center;
+}
+
+.button.active {
+    background-color: #C0D5B2; /* Light green background for active button */
+    font-weight: bold; /* Bold text for active button */
+    border-radius: 10px; /* Add curved corners */
+    padding: 5px 10px;
+}
+
+.confirmation-container {
+    text-align: center;
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 600px;
+}
+
+.confirmation-container h1 {
+    color: #366B4C;
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.confirmation-details {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 20px auto;
+    max-width: 400px;
+}
+
+.confirmation-details h2 {
+    color: #000;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.confirmation-details p {
+    margin-bottom: 10px; /* Add spacing between paragraphs */
+    font-size: 18px; /* Increase font size */
+}
+
+.confirmation-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.confirmation-table th, .confirmation-table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ccc;
+}
+
+.back-to-home-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.back-to-home-container a {
+    color: #366B4C;
+    text-decoration: none;
+    display: inline-block;
+    background-color: white;
+    font-weight: bold;
+    border-radius: 10px;
+    padding: 8px 20px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.back-to-home-container a:hover {
+    background-color: #366B4C;
+    color: white;
+}
 
 
-
-
-
-
+.button:hover {
+    background-color: #458966; /* Change background color when hovered */
+    color: white; /* Change text color when hovered */
+}

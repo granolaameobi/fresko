@@ -39,7 +39,8 @@ def new_order():
                            menu_data=menu_data,
                            table_numbers = table_numbers,
                            accessible_pages = accessible_pages,
-                           user_role = user_role)
+                           user_role = user_role,
+                           current_page = 'new-order')
 
 @new_order_bp.route('/confirm_order', methods=['POST'])
 def confirm_order():

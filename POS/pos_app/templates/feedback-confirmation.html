@@ -1,18 +1,19 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Fresko POS</title>
-        <link rel="stylesheet" href="static/css/style.css">
-    </head>
-<body>
-    <h1>Feedback Successful!</h1>
-    <p>Thank you for your feedback, we'll take that on board.</p>
-    <p>Name: {{ name }}</p>
-    <p>Rating: {{rating}} star(s)</p>
-    <p>Email: {{ email }}</p>
-    <p>Message: {{ message }}</p>
-    <div id="back-to-home-container">
-        <a href="/home">Back to Home</a>
+{% extends 'base.html' %}
+
+{% block title %}Fresko{% endblock %}
+
+{% block content %}
+    <div class="confirmation-container">
+            <h1>Feedback Successfully Submitted!</h1>
+            <p>Thank you for providing your valuable feedback. We appreciate your input and will use it to enhance your experience.</p>
+            <div class="confirmation-details">
+                <p><strong>Name:</strong> {{ name }}</p>
+                <p><strong>Rating:</strong> {{ rating }} star(s)</p>
+                <p><strong>Email:</strong> {{ email }}</p>
+                <p><strong>Message:</strong> {{ message }}</p>
+            </div>
+            <div class="back-to-home-container">
+                <a href="/home">Back to Home</a>
+            </div>
     </div>
-</body>
-</html>
+{% endblock %}
