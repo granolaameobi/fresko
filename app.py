@@ -3,6 +3,7 @@ import psycopg2
 import os
 from static.sql.functions import *
 from flask_mail import Mail, Message
+from datetime import date
 
 app = Flask(__name__)
 app.config.update(
@@ -95,10 +96,142 @@ def nutrition():
 def delivery():
     return render_template('delivery.html')
 
-@app.route('/testimonials')
+@app.route('/testimonials', methods=['GET', 'POST'])
 def testimonials():
-    return render_template('testimonials.html')
+# Calculate current date
+    current_date = date.today().strftime('%Y-%m-%d')
 
+    likert_questions = [
+        {
+            'label': 'Food Quality',
+            'name': 'food_quality',
+            'options': [
+                {'value': '1', 'label': 'Very Dissatisfactory'},
+                {'value': '2', 'label': 'Dissatisfactory'},
+                {'value': '3', 'label': 'Average'},
+                {'value': '4', 'label': 'Satisfactory'},
+                {'value': '5', 'label': 'Very Satisfactory'}
+            ]
+        },
+        {
+            'label': 'Overall Service Quality',
+            'name': 'overall_service_quality',
+            'options': [
+                {'value': '1', 'label': 'Very Dissatisfactory'},
+                {'value': '2', 'label': 'Dissatisfactory'},
+                {'value': '3', 'label': 'Average'},
+                {'value': '4', 'label': 'Satisfactory'},
+                {'value': '5', 'label': 'Very Satisfactory'}
+            ]
+        },
+        {
+            'label': 'Restaurant Cleanliness',
+            'name': 'restaurant_cleanliness',
+            'options': [
+                {'value': '1', 'label': 'Very Dissatisfactory'},
+                {'value': '2', 'label': 'Dissatisfactory'},
+                {'value': '3', 'label': 'Average'},
+                {'value': '4', 'label': 'Satisfactory'},
+                {'value': '5', 'label': 'Very Satisfactory'}
+            ]
+        },
+        {
+            'label': 'Order Accuracy',
+            'name': 'order_accuracy',
+            'options': [
+                {'value': '1', 'label': 'Very Dissatisfactory'},
+                {'value': '2', 'label': 'Dissatisfactory'},
+                {'value': '3', 'label': 'Average'},
+                {'value': '4', 'label': 'Satisfactory'},
+                {'value': '5', 'label': 'Very Satisfactory'}
+            ]
+        },
+        {
+            'label': 'Speed of Service',
+            'name': 'speed_of_service',
+            'options': [
+                {'value': '1', 'label': 'Very Slow'},
+                {'value': '2', 'label': 'Slow'},
+                {'value': '3', 'label': 'Average'},
+                {'value': '4', 'label': 'Fast'},
+                {'value': '5', 'label': 'Very Fast'}
+            ]
+        },
+        {
+            'label': 'Value for Money',
+            'name': 'value_for_money',
+            'options': [
+                {'value': '1', 'label': 'Too Expensive'},
+                {'value': '2', 'label': 'Pricey'},
+                {'value': '3', 'label': 'Average'},
+                {'value': '4', 'label': 'Good'},
+                {'value': '5', 'label': 'Very Good'}
+            ]
+        },
+        {
+            'label': 'Accessibility (Location, Facilities, Menu Legibility etc.)',
+            'name': 'accessibility',
+            'options': [
+                {'value': '1', 'label': 'Very Bad'},
+                {'value': '2', 'label': 'Bad'},
+                {'value': '3', 'label': 'Average'},
+                {'value': '4', 'label': 'Good'},
+                {'value': '5', 'label': 'Very Good'}
+            ]
+        },
+        {
+            'label': 'Overall Experience',
+            'name': 'overall_experience',
+            'options': [
+                {'value': '1', 'label': 'Poor'},
+                {'value': '2', 'label': 'Below Average'},
+                {'value': '3', 'label': 'Average'},
+                {'value': '4', 'label': 'Above Average'},
+                {'value': '5', 'label': 'Excellent'}      
+            ]
+        }
+    ]
+
+    if request.method == 'POST':
+        # Extract form data
+        first_name = request.form['first_name']
+        last_name = request.form['last_name']
+        email = request.form['email']
+        phone = request.form['phone']
+        day_visited = request.form['day_visited']
+        food_quality = int(request.form['food_quality']) # Convert to int
+        overall_service_quality = int(request.form['overall_service_quality']) 
+        restaurant_cleanliness = int(request.form['restaurant_cleanliness'])
+        order_accuracy = int(request.form['order_accuracy'])
+        speed_of_service = int(request.form['speed_of_service'])  
+        value_for_money = int(request.form['value_for_money'])
+        accessibility = int(request.form['accessibility'])
+        overall_experience = int(request.form['overall_experience'])
+        comments = request.form['comments']
+
+        # Insert feedback data into PostgreSQL database
+        conn = psycopg2.connect(host=host, database=database, user=user, password=password)
+        try:
+            with conn.cursor() as cursor:
+                sql = """INSERT INTO public.testimonials (first_name, last_name, email, phone, day_visited,
+                         food_quality, overall_service_quality, restaurant_cleanliness, order_accuracy,
+                         speed_of_service, value_for_money, accessibility, overall_experience, comments)
+                         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"""
+                cursor.execute(sql, (first_name, last_name, email, phone, day_visited,
+                                    food_quality, overall_service_quality, restaurant_cleanliness,
+                                    order_accuracy, speed_of_service, value_for_money,
+                                    accessibility, overall_experience, comments))
+                conn.commit()
+            return render_template('testimonials_confirmation.html')  # Create a confirmation page
+        except Exception as e:
+            print(e)
+            return render_template('testimonials_error.html')  # Create an error page
+        finally:
+            conn.close()
+    else:
+        print("Password value:", password) 
+        return render_template('testimonials.html', likert_questions=likert_questions, current_date=current_date)
+    
 @app.route('/about-us')
 def about_us():
     return render_template('about-us.html')

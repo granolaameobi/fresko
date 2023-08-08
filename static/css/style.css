@@ -345,14 +345,6 @@ h1, .menu-button, img {
     color: white;
 }
 
-.tomato_garlic {
-    position: absolute;
-    left: -200px;
-    top: 120px;
-    width: 500px;
-    z-index: -1;
-}
-
 .lemon_slice {
     position: absolute;
     left: 150px;
@@ -746,4 +738,60 @@ h4 {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
+}
+
+.centered-curved-box {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    max-width: 800px; /* Adjust the maximum width as needed */
+}
+
+.feedback-form {
+    text-align: center;
+    padding: 20px;
+}
+
+.likert-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.likert-table th,
+.likert-table td {
+    padding: 5px;
+    text-align: center;
+}
+
+.likert-question {
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+.star-rating-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.star-rating-table td {
+    padding: 5px;
+    text-align: center;
+    border: none;
+    width: 20px; /* Adjust width as needed */
+}
+
+.star-rating-row {
+    font-weight: bold;
+}
+
+.feedback-form {
+    text-align: center;
+}
+
+.separator {
+    margin-top: 20px;
+}
+
+.intro-paragraph {
+    margin-top: 20px;
+}
