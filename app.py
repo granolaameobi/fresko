@@ -16,7 +16,7 @@ app.config.update(
 mail = Mail(app)
 
 # Set db Constants
-host='127.0.0.1'
+host='35.205.66.81'
 user=os.getenv('DB_USER')
 database=os.getenv('DB_NAME')
 password=os.getenv('DB_PASSWORD')
@@ -150,44 +150,44 @@ def testimonials():
             'label': 'Speed of Service',
             'name': 'speed_of_service',
             'options': [
-                {'value': '1', 'label': 'Very Slow'},
-                {'value': '2', 'label': 'Slow'},
+                {'value': '1', 'label': 'Very Dissatisfactory'},
+                {'value': '2', 'label': 'Dissatisfactory'},
                 {'value': '3', 'label': 'Average'},
-                {'value': '4', 'label': 'Fast'},
-                {'value': '5', 'label': 'Very Fast'}
+                {'value': '4', 'label': 'Satisfactory'},
+                {'value': '5', 'label': 'Very Satisfactory'}
             ]
         },
         {
             'label': 'Value for Money',
             'name': 'value_for_money',
             'options': [
-                {'value': '1', 'label': 'Too Expensive'},
-                {'value': '2', 'label': 'Pricey'},
+                {'value': '1', 'label': 'Very Dissatisfactory'},
+                {'value': '2', 'label': 'Dissatisfactory'},
                 {'value': '3', 'label': 'Average'},
-                {'value': '4', 'label': 'Good'},
-                {'value': '5', 'label': 'Very Good'}
+                {'value': '4', 'label': 'Satisfactory'},
+                {'value': '5', 'label': 'Very Satisfactory'}
             ]
         },
         {
             'label': 'Accessibility (Location, Facilities, Menu Legibility etc.)',
             'name': 'accessibility',
             'options': [
-                {'value': '1', 'label': 'Very Bad'},
-                {'value': '2', 'label': 'Bad'},
+                {'value': '1', 'label': 'Very Dissatisfactory'},
+                {'value': '2', 'label': 'Dissatisfactory'},
                 {'value': '3', 'label': 'Average'},
-                {'value': '4', 'label': 'Good'},
-                {'value': '5', 'label': 'Very Good'}
+                {'value': '4', 'label': 'Satisfactory'},
+                {'value': '5', 'label': 'Very Satisfactory'}
             ]
         },
         {
             'label': 'Overall Experience',
             'name': 'overall_experience',
             'options': [
-                {'value': '1', 'label': 'Poor'},
-                {'value': '2', 'label': 'Below Average'},
+                {'value': '1', 'label': 'Very Dissatisfactory'},
+                {'value': '2', 'label': 'Dissatisfactory'},
                 {'value': '3', 'label': 'Average'},
-                {'value': '4', 'label': 'Above Average'},
-                {'value': '5', 'label': 'Excellent'}      
+                {'value': '4', 'label': 'Satisfactory'},
+                {'value': '5', 'label': 'Very Satisfactory'}     
             ]
         }
     ]
