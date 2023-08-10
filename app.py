@@ -54,36 +54,36 @@ def reservation():
         comment = request.form['comment']
 
         # get tables(s)
-        available_tables=find_available_tables(start_time=date+' '+time, duration='01:30:00.000000',
-                                               host=host,database=database,
-                                               user=user, password=password)
+        available_tables=find_available_tables(start_time=date+' '+time, duration='01:30:00')
         # tables=table_assigner(available_tables=available_tables, party_size=party_size)
 
         # write to db
         sql="""INSERT INTO public."booking" (booking_name, group_size, contact_phone, contact_email, start_time, table_id, comments) VALUES (%s, %s, %s, %s, %s, %s, %s);"""
-        conn=connect_to_database(host=host, database=database, user=user,
-                                 password=password)
+        conn=connect_to_database()
+        
+        tables=table_assigner(available_tables=available_tables, party_size=party_size)
+        with conn.cursor() as cursor:
+            for table in tables:
+                cursor.execute(sql, (first_name+' '+last_name, party_size, contact_number, email, date+' '+time, table, comment))
+                conn.commit()
+            cursor.close()
+            conn.close()
+        print(tables)
         try:
-            tables=table_assigner(available_tables=available_tables, party_size=party_size)
-            with conn.cursor() as cursor:
-                for table in tables:
-                    cursor.execute(sql, (first_name+' '+last_name, party_size, contact_number, email, date+' '+time, table, comment))
-                    conn.commit()
-                cursor.close()
-                conn.close()
-
-                msg = Message(subject=f"{first_name}, you're going to Fresko!",
-                              sender=sender, recipients=[email])
-                msg.html=render_template('email_confirmation.html', first_name=first_name, last_name=last_name,
-                                    email=email,contact_number=contact_number,date=date,
-                                    time=time, party_size=party_size, comment=comment)
-                mail.send(message=msg)
-                
-                return render_template('reservation_confirmation.html', first_name=first_name, last_name=last_name,
-                                    email=email,contact_number=contact_number,date=date,
-                                    time=time, party_size=party_size, comment=comment)
-        except:
-            return render_template('sorry.html')
+            msg = Message(subject=f"{first_name}, you're going to Fresko!",
+                            sender=sender, recipients=[email])
+            msg.html=render_template('email_confirmation.html', first_name=first_name, last_name=last_name,
+                                email=email,contact_number=contact_number,date=date,
+                                time=time, party_size=party_size, comment=comment)
+            mail.send(message=msg)
+        except Exception as e:
+                print(e, '<------------THIS WAS THE ERROR')
+                return render_template('sorry.html')
+        return render_template('reservation_confirmation.html', first_name=first_name, last_name=last_name,
+                            email=email,contact_number=contact_number,date=date,
+                            time=time, party_size=party_size, comment=comment)
+        
+            
     else:
         # Render the reservation form
         return render_template('reservation_form.html')
@@ -210,7 +210,7 @@ def testimonials():
         comments = request.form['comments']
 
         # Insert feedback data into PostgreSQL database
-        conn = psycopg2.connect(host=host, database=database, user=user, password=password)
+        conn = connect_to_database()
         try:
             with conn.cursor() as cursor:
                 sql = """INSERT INTO public.testimonials (first_name, last_name, email, phone, day_visited,
@@ -224,7 +224,7 @@ def testimonials():
                 conn.commit()
             return render_template('testimonials_confirmation.html')  # Create a confirmation page
         except Exception as e:
-            print(e)
+            print(e, '<-----THIS WAS THE ERROR')
             return render_template('testimonials_error.html')  # Create an error page
         finally:
             conn.close()

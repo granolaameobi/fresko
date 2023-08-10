@@ -2,25 +2,23 @@ import psycopg2
 
 
 # Connect to the PostgreSQL database
-def connect_to_database(host, database, user, password):
+def connect_to_database():
     '''
     Connects to postgreSQL database
     
     If unsuccessful, resturns the error recieved
     '''
-    try:
-        connection = psycopg2.connect(
-            host=host,
-            database=database,
-            user=user, #Remember to change these details
-            password=password
-        )
-        return connection
-    except (Exception, psycopg2.Error) as error:
-        print("Database Connection Error", str(error))
-        return None
 
-def find_available_tables(start_time, duration, host, database, user, password):
+    connection = psycopg2.connect(
+        host="35.205.66.81",
+        database="Fresko",
+        user="postgres", #Remember to change these details
+        password="Fresko2023"
+    )
+    print('---------connected-----------------')
+    return connection
+
+def find_available_tables(start_time, duration):
     '''
     Finds the available tables based on the given start time and duration.
 
@@ -34,33 +32,29 @@ def find_available_tables(start_time, duration, host, database, user, password):
     '''
 
     # Connect to the PostgreSQL database
-    connection = connect_to_database(host=host,database=database,user=user,
-                                     password=password)
+    connection = connect_to_database()
     cursor = connection.cursor()
 
-    
-    try:
-        # Execute the SQL query to find available tables
-        cursor.execute(f""" 
-            SELECT t.table_id, t.capacity
-            FROM "table_number" t
-            LEFT JOIN (
-            SELECT DISTINCT table_id
-            FROM "booking"
-            WHERE start_time < '{start_time}'::timestamp + INTERVAL '{duration}'
-            AND start_time + duration > '{start_time}'
-            ) b ON t.table_id = b.table_id
-            WHERE b.table_id IS NULL 
-        """)
 
-        # Fetch all the rows returned by the query
-        rows = cursor.fetchall()
+    # Execute the SQL query to find available tables
+    cursor.execute(f""" 
+        SELECT t.table_id, t.capacity
+        FROM "table_number" t
+        LEFT JOIN (
+        SELECT DISTINCT table_id
+        FROM "booking"
+        WHERE start_time < '{start_time}'::timestamp + INTERVAL '{duration}'
+        AND start_time + duration > '{start_time}'
+        ) b ON t.table_id = b.table_id
+        WHERE b.table_id IS NULL 
+    """)
 
-        # Extract table IDs and capacities from the rows
-        tables = rows
-    except Exception as e:
-        print(f"An error occurred: {str(e)}")
-        return 
+    # Fetch all the rows returned by the query
+    rows = cursor.fetchall()
+
+    # Extract table IDs and capacities from the rows
+    tables = rows
+
 
 
     # Close the database connection
@@ -144,7 +138,7 @@ def table_assigner(available_tables, party_size, table_combination=[]):
     return table_assigner(available_tables, party_size, table_combination)
 
 
-def SQL_query(select_query, host, database, user, password, to_return_rows=True):
+def SQL_query(select_query, to_return_rows=True):
     """
     Executes the given SQL query and returns the result if specified.
 
@@ -155,7 +149,7 @@ def SQL_query(select_query, host, database, user, password, to_return_rows=True)
     Returns:
     - rows (list): The fetched rows if `to_return_rows` is True, else None.
     """
-    connection = connect_to_database(host, database, user, password)
+    connection = connect_to_database()
     cursor = connection.cursor()
 
     cursor.execute(select_query)
