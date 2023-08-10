@@ -151,7 +151,7 @@ h1 {
 /* Use CSS Grid for the buttons */
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(8, 1fr);
     grid-gap: 10px;
     margin-bottom: 20px;
 }
@@ -229,9 +229,8 @@ h1 {
     position: sticky;
     top: -1px;
 }
-#table-content tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
+
+
 #table-content tr:hover {
     background-color: #e6e6e6;
 }
@@ -663,6 +662,37 @@ select {
 #sort-by-expiry:hover {
     background-color: #366B4C;
     color: white;
+}
+
+#restock-button {
+    color: #366B4C;
+    text-decoration: none;
+    background-color: white;
+    font-weight: bold;
+    border-radius: 10px;
+    padding: 5px 10px;
+    border: 1px solid #366B4C;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#restock-button:hover {
+    background-color: #366B4C;
+    color: white;
+}
+
+.low-stock {
+    background-color: #ffcccc; /* Light red background */
+    color: white; /* White text color */
+}
+
+
+.warning-message {
+    display: none; /* Hide by default */
+    background-color: #ffcccc; /* Light red background */
+    border: 1px solid #ff9999; /* Darker red border */
+    padding: 10px;
+    margin-bottom: 10px;
 }
 
 

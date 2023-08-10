@@ -46,13 +46,17 @@ def new_order():
 def confirm_order():
     order_data = request.get_json()
     
-    # Extract item_ids and table_number from the nested dictionary
-    item_ids = order_data.get('itemIds', [])
+    # Extract item_ids, table_number, and comments from the nested dictionary
+    item_data = order_data.get('items', [])
     table_name = order_data.get('tableNumber')
+
+    # Extract item details including comments
+    item_ids = [item['id'] for item in item_data]
+    comments = [item['comment'] for item in item_data]
 
 
     table_number = int(table_name.split(' ')[-1])
     # Here, you can process the confirmed order as needed
 
-    place_order(item_ids, table_number)
+    place_order(item_ids, table_number, comments)
     return jsonify({"message": "Order confirmed successfully!"})

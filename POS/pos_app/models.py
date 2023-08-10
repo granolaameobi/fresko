@@ -215,7 +215,7 @@ def get_tables_numbers():
 
 
 
-def place_order(order_ids, table_id):
+def place_order(order_ids, table_id, comments = None):
     """
     Place an order by calling a PostgreSQL function with the provided order IDs and quantities.
 
@@ -234,8 +234,12 @@ def place_order(order_ids, table_id):
         quantities.append(int(quantity))
 
     # Execute query to call function in PostgreSQL
-    select_query = f"SELECT create_new_order(ARRAY{ids}, \
-                    ARRAY{quantities}, {table_id});"
+    if comments:
+        select_query = f"SELECT create_new_order_with_comments(ARRAY{ids}, \
+                        ARRAY{quantities}, {table_id}, ARRAY{comments});"
+    else:
+        select_query = f"SELECT create_new_order(ARRAY{ids}, \
+                        ARRAY{quantities}, {table_id});"
     #Execute the SQL query
     SQL_query(select_query, to_return_rows= False)
 
@@ -303,7 +307,7 @@ def get_accessible_pages(user_role):
         'payment': user_role in ['admin', 'manager', 'staff'],
         'view_stock': user_role in ['admin', 'manager'],
         'table_assignment': user_role in ['admin', 'manager', 'staff'],
-        'feedback': user_role in ['admin', 'manager', 'staff'],
+        # 'feedback': user_role in ['admin', 'manager', 'staff'],
         'sign_out': user_role != None
     }
     return accessible_pages
@@ -327,23 +331,45 @@ def get_stock():
 
     """
     query = """
-        SELECT cs.ingredient_id, i.ingredient_name, cs.expiry_date, cs.quantity, i.unit
+        SELECT cs.ingredient_id, i.ingredient_name, TO_TIMESTAMP(AVG(EXTRACT(epoch FROM cs.expiry_date))), sum(cs.quantity), AVG(i.low_threshold_grams), i.unit
         FROM "current_stock" cs
         INNER JOIN "ingredient" i ON cs.ingredient_id = i.ingredient_id
+        GROUP BY cs.ingredient_id, i.ingredient_name, i.unit
     """
     stock_data = SQL_query(query)
+
+    stock_data_new = []
+
+    for stock in stock_data:
+        stock = list(stock)
+        if stock[5] in ['kg', 'l', 'units']:
+            stock[3] = stock[3]/1000
+            stock[4] = stock[4]/1000
+        stock_data_new.append(stock)
 
     return [
             {
                 'ingredient_id': stock[0],
                 'ingredient_name': stock[1],
-                'expiry_date': stock[2],
-                'quantity': stock[3],
-                'units': stock[4]
+                'expiry_date': str(stock[2])[:10],
+                'quantity': round(stock[3],2),
+                'low_threshold' : round(stock[4], 2),
+                'units': stock[5]
             }
-            for stock in stock_data
+            for stock in stock_data_new
         ]
 
+def calculate_low_stock_ingredients(stock_data):
+    low_stock = []
+    for stock in stock_data:
+        if stock['quantity'] < stock['low_threshold']:
+            low_stock.append(stock['ingredient_name'])
+
+    return low_stock
+
+
+def restock():
+    SQL_query('select restock_ingredients();' , to_return_rows=False)
 
 
 def get_orders(status):
