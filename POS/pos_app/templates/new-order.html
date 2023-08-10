@@ -72,6 +72,13 @@
         </div>
     </div>
 
+    <div id="comment-input-container">
+        <input type="text" id="globalCommentInput" placeholder="Add a comment">
+        <div>
+            <button class="menu-button" onclick="updateGlobalComment()">Apply Comment</button>
+        </div>
+    </div>
+
     <div id="table-selection">
         <label for="table-dropdown">Select a table number:</label>
         <select id="table-dropdown" onchange="updateSelectedTable()">
@@ -87,6 +94,7 @@
             <tr>
                 <th>Item ID</th>
                 <th>Item Name</th>
+                <th>Comment</th>
                 <th>Price</th>
             </tr>
         </table>
@@ -108,6 +116,7 @@
 
         var current_order = [];
         var selectedTable = null;
+        var globalComment = "";
 
         function updateSelectedTable(){
             var dropdown = document.getElementById("table-dropdown");
@@ -134,8 +143,14 @@
         }
 
         function addToOrder(itemId, itemName, itemPrice) {
-            current_order.push({id: itemId, name: itemName, price: itemPrice});
+            current_order.push({ id: itemId, name: itemName, price: itemPrice, comment: globalComment });
+            globalComment = ""; // Reset the global comment
             updateOrderTable();
+        }
+
+        function updateGlobalComment() {
+            var commentInput = document.getElementById("globalCommentInput");
+            globalComment = commentInput.value;
         }
 
         function updateOrderTable() {
@@ -149,11 +164,12 @@
                 var row = table.insertRow(-1);
                 var idCell = row.insertCell(0);
                 var nameCell = row.insertCell(1);
-                var priceCell = row.insertCell(2);
+                var commentCell = row.insertCell(2)
+                var priceCell = row.insertCell(3);
                 nameCell.innerHTML = current_order[i].name;
                 idCell.innerHTML = current_order[i].id;
+                commentCell.innerHTML = current_order[i].comment;
                 priceCell.innerHTML = current_order[i].price;
-
             }
         }
 
@@ -163,11 +179,13 @@
                 return; // Exit the function if no table number is selected
             }
 
-            var itemIds = current_order.map(item => item.id);
+            var itemData = current_order.map(item => {
+                return { id: item.id, comment: item.comment || "" };
+            });
 
             // Include the selected table number in the request data
             var requestData = {
-                "itemIds": itemIds,
+                "items": itemData,
                 "tableNumber": selectedTable
             };
 

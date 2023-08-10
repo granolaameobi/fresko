@@ -4,6 +4,13 @@
 
 {% block content %}
     <h1>Stock Submenu</h1>
+
+    <div class="warning-message" id="warning-message">
+        {% if low_stock_ingredients %}
+            <p>Warning: The following ingredients are low in stock: {{ low_stock_ingredients|join(', ') }}.</p>
+        {% endif %}
+    </div>
+
     <div class="search-bar">
         <label for="ingredient-search">Search by Ingredient Name:</label>
         <input type="text" id="ingredient-search" name="ingredient-search" placeholder="Enter ingredient name..." onkeyup="filterTable()">
@@ -11,6 +18,10 @@
 
     <div class="sort-button-container">
         <button id="sort-by-expiry">Sort by Expiry Date</button>
+    </div>
+
+    <div class="sort-button-container">
+        <button id="restock-button">Restock</button>
     </div>
 
     <div id = table-container>
@@ -21,14 +32,16 @@
                 <th style="width: 30%;">Ingredient Name</th>
                 <th style="width: 15%;">Expiry Date</th>
                 <th style="width: 10%;">Quantity</th>
+                <th style="width: 10%;">Low Threshold</th>
                 <th style="width: 10%;">Units</th>
             </tr>
             {% for stock in stock_data %}
-            <tr>
+            <tr class="{% if stock.quantity < stock.low_threshold %}low-stock{% endif %}">
                 <td>{{ stock.ingredient_id }}</td>
                 <td>{{ stock.ingredient_name }}</td>
                 <td>{{ stock.expiry_date }}</td>
                 <td>{{ stock.quantity }}</td>
+                <td>{{ stock.low_threshold }}</td>
                 <td>{{ stock.units }}</td>
             </tr>
             {% endfor %}
@@ -57,8 +70,55 @@
                 }
             }
         }
-        </script>
-        
-        <script src="static/js/sort.js"></script>
+
+        function updateHighlighting() {
+            var table = document.getElementById("table-content");
+            var rows = table.getElementsByTagName("tr");
+            
+            for (var i = 1; i < rows.length; i++) {
+                var quantityCell = rows[i].getElementsByTagName("td")[3];
+                var thresholdCell = rows[i].getElementsByTagName("td")[4];
+                var quantity = parseInt(quantityCell.textContent || quantityCell.innerText);
+                var threshold = parseInt(thresholdCell.textContent || thresholdCell.innerText);
+                
+                if (quantity < threshold) {
+                    rows[i].classList.add("low-stock");
+                } else {
+                    rows[i].classList.remove("low-stock");
+                }
+            }
+        }
+
+        // Update the warning message when the page loads or quantities change
+        window.addEventListener("load", function() {
+            updateHighlighting();
+            updateWarningMessage();
+        });
+
+        function updateWarningMessage() {
+            var warningMessage = document.getElementById("warning-message");
+            var lowStockIngredients = {{ low_stock_ingredients|tojson|safe }};
+            
+            if (lowStockIngredients.length > 0) {
+                warningMessage.style.display = "block";
+            } else {
+                warningMessage.style.display = "none";
+            }
+        }
+
+        // Add an event listener to the button
+        document.getElementById("restock-button").addEventListener("click", function() {
+            // Make a request to the restock endpoint
+            fetch('/restock')
+                // For example, you can display a message to the user
+                alert("Stock restock initiated");
+
+        });
+
+        // Call updateHighlighting() when the page loads or quantities change
+        window.addEventListener("load", updateHighlighting);
+    </script>
+    
+    <script src="static/js/sort.js"></script>
         
 {% endblock %}
