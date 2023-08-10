@@ -18,7 +18,11 @@
         <div id="dip" class="tabcontent">
             <div class="grid-container">
                 {% for item in menu_data.dip %}
-                    <button class="dish-btn" onclick="addToOrder('{{ item[0] }}', '{{ item[1] }}', '{{ item[2] }}')">{{ item[1] }}</button>
+                    {% if item[3] == 'Out of Stock' %}
+                        <button class="dish-btn dish-out-of-stock">{{ item[1] }}</button>
+                    {% else %}
+                        <button class="dish-btn" onclick="addToOrder('{{ item[0] }}', '{{ item[1] }}', '{{ item[2] }}')">{{ item[1] }}</button>
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>
@@ -26,7 +30,11 @@
         <div id="salad" class="tabcontent">
             <div class="grid-container">
                 {% for item in menu_data.salad %}
-                    <button class="dish-btn" onclick="addToOrder('{{ item[0] }}', '{{ item[1] }}', '{{ item[2] }}')">{{ item[1] }}</button>
+                    {% if item[3] == 'Out of Stock' %}
+                        <button class="dish-btn dish-out-of-stock">{{ item[1] }}</button>
+                    {% else %}
+                        <button class="dish-btn" onclick="addToOrder('{{ item[0] }}', '{{ item[1] }}', '{{ item[2] }}')">{{ item[1] }}</button>
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>
@@ -34,7 +42,11 @@
         <div id="add-on" class="tabcontent">
             <div class="grid-container">
                 {% for item in menu_data.add_on %}
-                    <button class="dish-btn" onclick="addToOrder('{{ item[0] }}', '{{ item[1] }}', '{{ item[2] }}')">{{ item[1] }}</button>
+                    {% if item[3] == 'Out of Stock' %}
+                        <button class="dish-btn dish-out-of-stock">{{ item[1] }}</button>
+                    {% else %}
+                        <button class="dish-btn" onclick="addToOrder('{{ item[0] }}', '{{ item[1] }}', '{{ item[2] }}')">{{ item[1] }}</button>
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>
@@ -42,7 +54,11 @@
         <div id="main" class="tabcontent">
             <div class="grid-container">
                 {% for item in menu_data.main %}
-                    <button class="dish-btn" onclick="addToOrder('{{ item[0] }}', '{{ item[1] }}', '{{ item[2] }}')">{{ item[1] }}</button>
+                    {% if item[3] == 'Out of Stock' %}
+                        <button class="dish-btn dish-out-of-stock">{{ item[1] }}</button>
+                    {% else %}
+                        <button class="dish-btn" onclick="addToOrder('{{ item[0] }}', '{{ item[1] }}', '{{ item[2] }}')">{{ item[1] }}</button>
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>
@@ -50,7 +66,11 @@
         <div id="cold-meze" class="tabcontent">
             <div class="grid-container">
                 {% for item in menu_data.cold_meze %}
-                    <button class="dish-btn" onclick="addToOrder('{{ item[0] }}', '{{ item[1] }}', '{{ item[2] }}')">{{ item[1] }}</button>
+                    {% if item[3] == 'Out of Stock' %}
+                        <button class="dish-btn dish-out-of-stock">{{ item[1] }}</button>
+                    {% else %}
+                        <button class="dish-btn" onclick="addToOrder('{{ item[0] }}', '{{ item[1] }}', '{{ item[2] }}')">{{ item[1] }}</button>
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>
@@ -58,7 +78,11 @@
         <div id="hot-meze" class="tabcontent">
             <div class="grid-container">
                 {% for item in menu_data.hot_meze %}
-                    <button class="dish-btn" onclick="addToOrder('{{ item[0] }}', '{{ item[1] }}', '{{ item[2] }}')">{{ item[1] }}</button>
+                    {% if item[3] == 'Out of Stock' %}
+                        <button class="dish-btn dish-out-of-stock">{{ item[1] }}</button>
+                    {% else %}
+                        <button class="dish-btn" onclick="addToOrder('{{ item[0] }}', '{{ item[1] }}', '{{ item[2] }}')">{{ item[1] }}</button>
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>
@@ -66,7 +90,11 @@
         <div id="drink" class="tabcontent">
             <div class="grid-container">
                 {% for item in menu_data.drink %}
-                    <button class="dish-btn" onclick="addToOrder('{{ item[0] }}', '{{ item[1] }}', '{{ item[2] }}')">{{ item[1] }}</button>
+                    {% if item[3] == 'Out of Stock' %}
+                        <button class="dish-btn dish-out-of-stock">{{ item[1] }}</button>
+                    {% else %}
+                        <button class="dish-btn" onclick="addToOrder('{{ item[0] }}', '{{ item[1] }}', '{{ item[2] }}')">{{ item[1] }}</button>
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>

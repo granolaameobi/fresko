@@ -5,13 +5,13 @@ new_order_bp = Blueprint('new_order', __name__)
 
 @new_order_bp.route('/new-order')
 def new_order():
-    _,_,_, menu_courses = get_menu_items()
+    _,_,_, menu_courses, _ = get_menu_items()
     course_names = list(set(menu_courses))
 
     menu_data = dict()
 
     for course in course_names:
-        ids,names,prices,_ = get_menu_items(course=course)
+        ids,names,prices,_, in_stock = get_menu_items(course=course)
 
         if course in ['wine', 'drink', 'beer', 'fresko cocktail', 'mocktail', 'classic cocktail', 'cider']:
             course = 'drink'
@@ -23,7 +23,7 @@ def new_order():
             course = 'cold_meze'
 
 
-        menu_data[course] = zip(ids, names, prices)
+        menu_data[course] = zip(ids, names, prices, in_stock)
 
         # Check if the user_role is present in the session
     if 'user_role' in session:

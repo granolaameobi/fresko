@@ -180,17 +180,39 @@ def get_menu_items(course=None):
     - courses: A list of menu item courses.
     '''
     if course:
-        select_query = f"SELECT menu_item_id, menu_item_name, price, category \
-                        FROM \"menu_item\" where category = '{course}';"
+        select_query = f"SELECT \
+                            mi.menu_item_id, \
+                            mi.menu_item_name,\
+                            mi.price, \
+                            mi.category, \
+                            CASE \
+                                WHEN oosmi.menu_item_id IS NOT NULL THEN 'Out of Stock' \
+                                ELSE 'In Stock' \
+                            END AS stock_status \
+                        FROM \"menu_item\" mi \
+                        LEFT JOIN \"out_of_stock_menu_items\" oosmi ON mi.menu_item_id = oosmi.menu_item_id \
+                        WHERE mi.category = '{course}';"
     else:
-        select_query = f"SELECT menu_item_id, menu_item_name, price, category FROM \"menu_item\";"
+        select_query  = f"SELECT \
+                            mi.menu_item_id, \
+                            mi.menu_item_name,\
+                            mi.price, \
+                            mi.category, \
+                            CASE \
+                                WHEN oosmi.menu_item_id IS NOT NULL THEN 'Out of Stock' \
+                                ELSE 'In Stock' \
+                            END AS stock_status \
+                        FROM \"menu_item\" mi \
+                        LEFT JOIN \"out_of_stock_menu_items\" oosmi ON mi.menu_item_id = oosmi.menu_item_id;"
     
     menu_items = SQL_query(select_query)
 
     # Extract item names/ids
-    menu_ids, menu_names, prices, courses = zip(*menu_items)
+    menu_ids, menu_names, prices, courses, in_stock = zip(*menu_items)
 
-    return list(menu_ids), list(menu_names), list(prices), list(courses)
+    # print(menu_names , in_stock)
+
+    return list(menu_ids), list(menu_names), list(prices), list(courses), list(in_stock)
 
 
 def get_tables_numbers():
