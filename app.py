@@ -3,7 +3,7 @@ import psycopg2
 import os
 from static.sql.functions import *
 from flask_mail import Mail, Message
-from datetime import date
+from datetime import date, datetime
 
 app = Flask(__name__)
 app.config.update(
@@ -54,39 +54,44 @@ def reservation():
         comment = request.form['comment']
 
         # get tables(s)
-        available_tables=find_available_tables(start_time=date+' '+time, duration='01:30:00')
-        # tables=table_assigner(available_tables=available_tables, party_size=party_size)
+        available_tables = find_available_tables(start_time=date + ' ' + time, duration='01:30:00')
+        # tables = table_assigner(available_tables=available_tables, party_size=party_size)
 
         # write to db
-        sql="""INSERT INTO public."booking" (booking_name, group_size, contact_phone, contact_email, start_time, table_id, comments) VALUES (%s, %s, %s, %s, %s, %s, %s);"""
-        conn=connect_to_database()
-        
-        tables=table_assigner(available_tables=available_tables, party_size=party_size)
+        sql = """INSERT INTO public."booking" (booking_name, group_size, contact_phone, contact_email, start_time, table_id, comments) VALUES (%s, %s, %s, %s, %s, %s, %s);"""
+        conn = connect_to_database()
+
+        tables = table_assigner(available_tables=available_tables, party_size=party_size)
         with conn.cursor() as cursor:
             for table in tables:
-                cursor.execute(sql, (first_name+' '+last_name, party_size, contact_number, email, date+' '+time, table, comment))
+                cursor.execute(sql, (first_name + ' ' + last_name, party_size, contact_number, email, date + ' ' + time, table, comment))
                 conn.commit()
             cursor.close()
             conn.close()
         print(tables)
-        try:
-            msg = Message(subject=f"{first_name}, you're going to Fresko!",
-                            sender=sender, recipients=[email])
-            msg.html=render_template('email_confirmation.html', first_name=first_name, last_name=last_name,
-                                email=email,contact_number=contact_number,date=date,
-                                time=time, party_size=party_size, comment=comment)
-            mail.send(message=msg)
-        except Exception as e:
-                print(e, '<------------THIS WAS THE ERROR')
-                return render_template('sorry.html')
+
+#        try:
+#            msg = Message(subject=f"{first_name}, you're going to Fresko!",
+#                            sender=sender, recipients=[email])
+#            msg.html = render_template('email_confirmation.html', first_name=first_name, last_name=last_name,
+#                                    email=email, contact_number=contact_number, date=date,
+#                                    time=time, party_size=party_size, comment=comment)
+#            mail.send(message=msg)
+#        except Exception as e:
+#            print(e, '<------------THIS WAS THE ERROR')
+#            return render_template('sorry.html')
+
         return render_template('reservation_confirmation.html', first_name=first_name, last_name=last_name,
-                            email=email,contact_number=contact_number,date=date,
-                            time=time, party_size=party_size, comment=comment)
-        
-            
+                               email=email, contact_number=contact_number, date=date,
+                               time=time, party_size=party_size, comment=comment)
     else:
+
+        # Calculate current date
+        current_date = datetime.now().date().isoformat()
+
         # Render the reservation form
-        return render_template('reservation_form.html')
+        return render_template('reservation_form.html', current_date=current_date)
+
 
 @app.route('/nutrition')
 def nutrition():

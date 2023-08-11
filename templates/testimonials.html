@@ -41,7 +41,7 @@
         </p>
         <div class="centered-curved-box">
             <div class="feedback-form">
-                <form action="/testimonials" method="post">
+                <form action="/testimonials" method="post" onsubmit="return validateForm()">
                     <div class="form-row">
                         <div class="form-col">
                             <label for="first_name">First Name</label>
@@ -124,4 +124,47 @@
         </div>
     </div>
     <br><br><br><br><br>
+
+    <script>
+        function validateForm() {
+            // Validate required fields
+            var requiredFields = ['first_name', 'last_name', 'email', 'phone', 'day_visited'];
+            for (var i = 0; i < requiredFields.length; i++) {
+                var fieldValue = document.getElementById(requiredFields[i]).value.trim();
+                if (fieldValue === '') {
+                    alert("Please fill in all required fields.");
+                    return false;
+                }
+            }
+        
+            // Validate radio buttons
+            var radioGroups = ['food_quality', 'overall_service_quality', 'restaurant_cleanliness',
+                               'order_accuracy', 'speed_of_service', 'value_for_money',
+                               'accessibility', 'overall_experience'];
+            var anyRadioSelected = false;
+            for (var i = 0; i < radioGroups.length; i++) {
+                var radios = document.getElementsByName(radioGroups[i]);
+                var checked = false;
+                for (var j = 0; j < radios.length; j++) {
+                    if (radios[j].checked) {
+                        checked = true;
+                        anyRadioSelected = true;
+                        break;
+                    }
+                }
+                if (!checked) {
+                    alert("Please select a rating for all questions.");
+                    return false;
+                }
+            }
+        
+            if (!anyRadioSelected) {
+                alert("Please select a rating for at least one question.");
+                return false;
+            }
+        
+            return true;
+        }
+        </script>
+
 {% endblock %}
